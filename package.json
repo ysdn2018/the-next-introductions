@@ -18,6 +18,7 @@
     "gatsby-source-filesystem": "^1.5.11",
     "gatsby-transformer-remark": "^1.7.26",
     "gatsby-transformer-sharp": "^1.6.16",
+    "react-load-script": "^0.0.6",
     "styled-components": "^2.4.0"
   },
   "keywords": [
