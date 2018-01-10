@@ -22,10 +22,9 @@ collections:
   - name: "pages"
     label: "Pages"
     files:
-      - file: "src/pages/cms/about.md"
+      - file: "src/pages/cms/about/about.md"
         label: "About"
         name: "about"
-        create: true
         fields:
           - {label: "Template Key", name: "templateKey", widget: "hidden", default: "about-page"}
           - {label: "Path", name: "path", widget: "hidden", default: "/about"}

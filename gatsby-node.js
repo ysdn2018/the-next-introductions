@@ -11,13 +11,13 @@
 
  exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
-   if (node.internal.mediaType == "image/png" || node.internal.mediaType === `image/jpeg`) {
-     if (!fs.existsSync(staticImagePath)){
-       fs.mkdirSync(staticImagePath);
-     }
-
-     fs.createReadStream("./src/" + node.relativePath).pipe(fs.createWriteStream(staticImagePath + node.base));
-   }
+   // if (node.internal.mediaType == "image/png" || node.internal.mediaType === `image/jpeg`) {
+   //   if (!fs.existsSync(staticImagePath)){
+   //     fs.mkdirSync(staticImagePath);
+   //   }
+   //
+   //   fs.createReadStream("./src/" + node.relativePath).pipe(fs.createWriteStream(staticImagePath + node.base));
+   // }
  }
 
  exports.createPages = ({ boundActionCreators, graphql }) => {
