@@ -8,7 +8,7 @@ public_folder: /images
 collections:
   - name: "posts"
     label: "Posts"
-    folder: "src/pages/posts"
+    folder: "src/pages/cms/posts"
     create: true
     slug: "{{slug}}"
     fields:
@@ -22,7 +22,7 @@ collections:
   - name: "pages"
     label: "Pages"
     files:
-      - file: "src/pages/about/about.md"
+      - file: "src/pages/cms/about.md"
         label: "About"
         name: "about"
         fields:
@@ -30,7 +30,7 @@ collections:
           - {label: "Path", name: "path", widget: "hidden", default: "/about"}
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Body", name: "body", widget: "markdown"}
-      - file: "src/pages/example/example.md"
+      - file: "src/pages/cms/example.md"
         label: "Example Page"
         name: "example"
         fields:
