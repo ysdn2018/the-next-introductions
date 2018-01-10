@@ -22,7 +22,7 @@ collections:
   - name: "pages"
     label: "Pages"
     files:
-      - file: "src/pages/content/about.md"
+      - file: "src/pages/content/about/about.md"
         label: "About"
         name: "about"
         fields:
@@ -30,7 +30,7 @@ collections:
           - {label: "Path", name: "path", widget: "hidden", default: "/about"}
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Body", name: "body", widget: "markdown"}
-      - file: "src/pages/content/example.md"
+      - file: "src/pages/content/example/example.md"
         label: "Example"
         name: "example"
         fields:
