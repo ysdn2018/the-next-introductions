@@ -3,22 +3,16 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 
 const Container = styled.div`
-
+  color: pink;
 `
 
-class IndexPage extends React.Component {
-  render() {
-    return(
-      <Container>
+const IndexPage = ({ data }) => (
+    <Container>
+      <h1>the-next-base Boilerplate</h1>
+      <h3>currently WIP</h3>
+    </Container>
+)
 
-        <h1>hey</h1>
-
-
-
-      </Container>
-    )
-  }
-}
 
 export const query = graphql`
   query IndexQuery {

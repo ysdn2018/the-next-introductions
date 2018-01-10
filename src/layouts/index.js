@@ -3,38 +3,31 @@ import PropTypes from 'prop-types'
 import Link from 'gatsby-link'
 import Helmet from 'react-helmet'
 import styled, { injectGlobal } from 'styled-components'
+import 'normalize.css'
 
 import RobotoMonoRegular from "../assets/fonts/RobotoMono-Regular.woff"
 import RobotoMonoRegular2 from "../assets/fonts/RobotoMono-Regular.woff2"
 
+const HeaderContainer = styled.div`
+
+`
+
+const Container = styled.div`
+
+`
+
 const Header = () => (
-  <div
-    style={{
-      background: 'rebeccapurple',
-      marginBottom: '1.45rem',
-    }}
-  >
-    <div
-      style={{
-        margin: '0 auto',
-        maxWidth: 960,
-        padding: '1.45rem 1.0875rem',
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: 'white',
-            textDecoration: 'none',
-          }}
-        >
-          Gatsby
+  <HeaderContainer>
+    <div>
+      <h1>
+        <Link to="/">
+          the next base
         </Link>
       </h1>
     </div>
-  </div>
+  </HeaderContainer>
 )
+
 
 const TemplateWrapper = ({ children }) => (
   <Container>
@@ -43,14 +36,14 @@ const TemplateWrapper = ({ children }) => (
       meta={[
         { name: 'description', content: 'Sample' },
         { name: 'keywords', content: 'sample, something' },
-      ]}
-    />
+      ]}/>
 
     <Header />
 
     <div>
       {children()}
     </div>
+
   </Container>
 )
 
