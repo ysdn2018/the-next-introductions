@@ -3,7 +3,7 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Script from 'react-load-script';
 
-const Container = new styled.div`
+const Container = styled.div`
 
 `
 
