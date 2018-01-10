@@ -4,7 +4,7 @@ export default ({ data }) => {
   const { markdownRemark: post } = data;
   return (
     <div>
-      <h1>{data.frontmatter.title}</h1>
+      <h1></h1>
     </div>
   );
 };
