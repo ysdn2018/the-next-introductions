@@ -1,6 +1,6 @@
 import React from 'react'
 
-
+// page component
 export default function NotFoundPage() {
   return (
     <div>

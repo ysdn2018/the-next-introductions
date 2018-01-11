@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'
 
+// page template component
 function ExamplePage({ data }) {
   const pageData = data.markdownRemark.frontmatter;
   return (
@@ -15,13 +16,14 @@ function ExamplePage({ data }) {
           {text}
         </div>
       ))}
-      
+
     </div>
   );
 };
 
 export default ExamplePage;
 
+// template query
 export const aboutPageQuery = graphql`
   query ExamplePage($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {

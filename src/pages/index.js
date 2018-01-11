@@ -3,7 +3,7 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Button from '../components/Button'
 
-// styled-components
+// styled components
 const Container = styled.div`
   color: pink;
 `

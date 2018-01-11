@@ -8,7 +8,7 @@ import RobotoMonoRegular from "../assets/fonts/RobotoMono-Regular.woff"
 import RobotoMonoRegular2 from "../assets/fonts/RobotoMono-Regular.woff2"
 
 
-
+// styled components
 const Container = styled.div`
   margin: 1rem;
 `
@@ -17,6 +17,7 @@ const HeaderContainer = styled.div`
 
 `
 
+// components
 function Header () {
   return (
     <HeaderContainer>

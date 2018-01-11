@@ -1,5 +1,6 @@
 import React from 'react';
 
+// page template component
 function Post({ data }) {
   const post = data.markdownRemark;
   return (
@@ -12,6 +13,7 @@ function Post({ data }) {
 
 export default Post;
 
+// template query
 export const aboutPageQuery = graphql`
   query PostPage($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
