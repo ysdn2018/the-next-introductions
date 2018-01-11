@@ -1,9 +1,9 @@
 # the-next-base
 Boilerplate base website for the next.
 
-Will be a basic setup of Gatsby with Styled-Components. It will be accompanied with a startup guide.
+Basic setup of Gatsby with Styled-Components. It will be accompanied with a startup guide.
 
-Not using Netlify CMS as of right now. 
+Not using Netlify CMS as of right now.
 
 To get your own version, click the button below.
 
