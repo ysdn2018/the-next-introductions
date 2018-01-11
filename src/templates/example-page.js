@@ -9,9 +9,13 @@ function ExamplePage({ data }) {
       <div>{pageData.description}</div>
 
       <h3>List</h3>
+
       {pageData.exampleList.map( ({ text }) => (
-        <div>{text}</div>
+        <div key={text}>
+          {text}
+        </div>
       ))}
+      
     </div>
   );
 };

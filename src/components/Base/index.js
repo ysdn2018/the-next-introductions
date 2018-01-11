@@ -1,17 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Container = styled.button`
+const Container = styled.div`
   outline: none;
-  background-color: none;
-
 `
 
 const Text = styled.p`
 
 `
 
-export default function Button(props) {
+export default function Base(props) {
   return (
     <Container>
       <Text>{props.text}</Text>

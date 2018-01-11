@@ -4,6 +4,7 @@ function Post({ data }) {
   const post = data.markdownRemark;
   return (
     <div>
+      <h3>{post.title}</h3>
       <div dangerouslySetInnerHTML={{ __html: post.html }}></div>
     </div>
   );
