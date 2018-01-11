@@ -4,29 +4,33 @@ import Link from 'gatsby-link'
 import Helmet from 'react-helmet'
 import styled, { injectGlobal } from 'styled-components'
 import 'normalize.css'
-
 import RobotoMonoRegular from "../assets/fonts/RobotoMono-Regular.woff"
 import RobotoMonoRegular2 from "../assets/fonts/RobotoMono-Regular.woff2"
+
+
+
+const Container = styled.div`
+  margin: 1rem;
+`
 
 const HeaderContainer = styled.div`
 
 `
 
-const Container = styled.div`
+function Header () {
+  return (
+    <HeaderContainer>
+      <div>
+        <h1>
+          <Link to="/">
+            the next base
+          </Link>
+        </h1>
+      </div>
+    </HeaderContainer>
+  )
+}
 
-`
-
-const Header = () => (
-  <HeaderContainer>
-    <div>
-      <h1>
-        <Link to="/">
-          the next base
-        </Link>
-      </h1>
-    </div>
-  </HeaderContainer>
-)
 
 
 const TemplateWrapper = ({ children }) => (
@@ -36,7 +40,8 @@ const TemplateWrapper = ({ children }) => (
       meta={[
         { name: 'description', content: 'Sample' },
         { name: 'keywords', content: 'sample, something' },
-      ]}/>
+      ]}
+    />
 
     <Header />
 
@@ -53,7 +58,9 @@ TemplateWrapper.propTypes = {
 
 export default TemplateWrapper
 
-
+/* Global Site Styles
+ * used for importing fonts and setting up sizes
+ */
 injectGlobal`
   *, *:before, *:after {
       box-sizing: border-box;

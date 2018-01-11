@@ -1,13 +1,15 @@
 import React from 'react';
 
-export default ({ data }) => {
-  const { markdownRemark: post } = data;
+function Post({ data }) {
+  const post = data.markdownRemark;
   return (
     <div>
-      <h1></h1>
+      <div dangerouslySetInnerHTML={{ __html: post.html }}></div>
     </div>
   );
 };
+
+export default Post;
 
 export const aboutPageQuery = graphql`
   query PostPage($path: String!) {
