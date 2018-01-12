@@ -27,8 +27,30 @@ const Container = styled.div`
   margin: 0rem;
 `
 
+const InnerContainer = styled.div`
+  margin-top: 6rem;
+`
+
+const TitleLink = styled(Link)`
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 const HeaderContainer = styled.div`
   z-index: 2;
+  position: fixed;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  height: 6rem;
+
+  display: flex;
+  align-items: center;
 `
 
 // components
@@ -37,9 +59,9 @@ function Header () {
     <HeaderContainer>
       <div>
         <h1>
-          <Link to="/">
+          <TitleLink to="/">
             the next base
-          </Link>
+          </TitleLink>
         </h1>
       </div>
     </HeaderContainer>
@@ -60,9 +82,9 @@ const TemplateWrapper = ({ children }) => (
 
     <Header />
 
-    <div>
+    <InnerContainer>
       {children()}
-    </div>
+    </InnerContainer>
 
   </Container>
 )
@@ -75,6 +97,8 @@ export default TemplateWrapper
 
 /* Global Site Styles
  * used for importing fonts and setting up sizes
+ * also for default values
+ * avoid using for anything else
  */
 injectGlobal`
   *, *:before, *:after {

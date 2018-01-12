@@ -30,7 +30,6 @@ export default function IndexPage({ data }) {
 
   return (
     <Container>
-      <h1>the-next-base Boilerplate</h1>
       <h3>dynamic pages:</h3>
 
       {pages.map( ({ node: page }) => (
