@@ -41,8 +41,8 @@ export default class IndexPage extends React.Component {
   }
 
   render() {
-    const pages = props.data.allMarkdownRemark.edges;
-    
+    const pages = this.props.data.allMarkdownRemark.edges;
+
     return (
       <Container>
         <h1>the-next-base Boilerplate</h1>
