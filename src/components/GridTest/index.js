@@ -4,8 +4,8 @@ import styled from 'styled-components'
 
 // styled components
 const Container = styled.div`
-	height: ${props => props.height};
-  width: ${props => props.width};
+	height: 80vh;
+  border: 1px solid black;
 	margin: auto;
 	display: grid;
 	background-color: black;
@@ -14,8 +14,8 @@ const Container = styled.div`
 `
 
 const Child = styled.div`
-	border: 0.1px solid black;
-  background-color: white;
+	border: 1px solid black;
+	opacity: 0.1;
 `
 
 
@@ -26,10 +26,51 @@ export default class Grid extends React.Component {
 
     this.rows = 11;
     this.cols = 8;
+
+    let children = [];
+
+    for (let x = 0; x <= this.rows; x++) {
+      for (let y = 0; y <= this.cols; y++) {
+        children.push(`r${x} c${y}`)
+      }
+    }
+
+    this.state = {
+      children: children,
+      items: []
+    }
   }
 
   onComponentDidMount() {
-    console.log(this.componentContainer.offsetWidth);
+    this.setState({
+      items: this.randomizeGrid()
+    })
+  }
+
+  randomizeGrid = () => {
+    let items = [];
+    const amount = 20;
+
+    for (let i = 0; i <= amount; i++) {
+      let row = Math.floor(Math.random()*this.rows+1);
+      let rLength = Math.floor(Math.random()*(this.rows-row));
+
+      let col = Math.floor(Math.random()*this.cols+1);
+      let cLength = Math.floor(Math.random()*(this.cols-col));
+
+      items.push({
+        r1: row,
+        r2: row+rLength,
+        c1: col,
+        c2: col+cLength
+      });
+    }
+
+    this.setState({
+      items: items
+    })
+
+    return items;
   }
 
   doppler = (num, direction) => {
@@ -49,44 +90,16 @@ export default class Grid extends React.Component {
   }
 
   render() {
-
-    let items = [];
-    const amount = 20;
-
-    for (let x = 0; x <= this.rows; x++) {
-      for (let y = 0; y <= this.rows; y++) {
-        items.push({
-          r1: x,
-          r2: x+1,
-          c1: y,
-          c2: y+1
-        });
-      }
-    }
-
-    for (let i = 0; i <= amount; i++) {
-      let row = Math.floor(Math.random()*this.rows+1);
-      let rLength = Math.floor(Math.random()*(this.rows-row));
-
-      let col = Math.floor(Math.random()*this.cols+1);
-      let cLength = Math.floor(Math.random()*(this.cols-col));
-
-
-    }
-
-
     return (
 			<Container
-        innerRef={container => {this.componentContainer = container}}
+        onClick={this.randomizeGrid}
         doppler={this.doppler}
         rows={this.rows}
-        cols={this.cols}
-        width={this.width}
-        height={this.props.height}>
+        cols={this.cols}>
 
 
 
-				{items.map((item, i) => {
+				{this.state.items.map((item, i) => {
 
 					let itemStyle = {
 						backgroundColor: "white",
@@ -100,7 +113,7 @@ export default class Grid extends React.Component {
 					}
 
 					return (
-						<Child style={itemStyle}
+						<div style={itemStyle}
 							row1={item.r1}
 							row2={item.r2}
 							col1={item.c1}

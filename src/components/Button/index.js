@@ -4,8 +4,13 @@ import styled from 'styled-components'
 // styled components
 const Container = styled.button`
   outline: none;
-  background-color: none;
+  background-color: transparent;
+  border: 1px solid black;
 
+  &:active {
+    background-color: black;
+    color: white;
+  }
 `
 
 const Text = styled.p`

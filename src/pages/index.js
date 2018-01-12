@@ -5,11 +5,13 @@ import Button from '../components/Button'
 
 // styled components
 const Container = styled.div`
-  color: pink;
+  color: black;
 `
 
 const PageLinkContainer = styled(Link)`
   border: 1px solid black;
+  padding: 1rem;
+  margin: 0.5rem;
   display: block;
 `
 
@@ -29,7 +31,7 @@ export default function IndexPage({ data }) {
   return (
     <Container>
       <h1>the-next-base Boilerplate</h1>
-      <h3>currently WIP</h3>
+      <h3>dynamic pages:</h3>
 
       {pages.map( ({ node: page }) => (
         <PageLink

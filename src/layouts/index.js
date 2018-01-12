@@ -24,11 +24,11 @@ import NeueHaasGrotDispItalic_woff2 from "../assets/fonts/NeueHaasGrotDisp-56Ita
 
 // styled components
 const Container = styled.div`
-  margin: 1rem;
+  margin: 0rem;
 `
 
 const HeaderContainer = styled.div`
-
+  z-index: 2;
 `
 
 // components
@@ -100,6 +100,13 @@ injectGlobal`
       -ms-text-size-adjust: 100%;
       -webkit-text-size-adjust: 100%;
       text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Haas Grot Display', 'Helvetica', 'Arial', sans-serif;
+    margin-top: 0;
+    margin-bottom: 0rem;
+    font-weight: 400;
   }
 
   @font-face {
