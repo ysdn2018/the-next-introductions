@@ -2,7 +2,6 @@ import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Button from '../components/Button'
-import Script from 'react-load-script';
 
 // styled components
 const Container = styled.div`
@@ -24,49 +23,26 @@ function PageLink(props) {
 }
 
 // page component
-export default class IndexPage extends React.Component {
+export default function IndexPage({ data }) {
+  const pages = data.allMarkdownRemark.edges;
 
-  // Netlify CMS stuff
-  handleScriptLoad() {
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on('init', user => {
-        if (!user) {
-          window.netlifyIdentity.on('login', () => {
-            document.location.href = '/admin/';
-          });
-        }
-      });
-    }
-    window.netlifyIdentity.init();
-  }
+  return (
+    <Container>
+      <h1>the-next-base Boilerplate</h1>
+      <h3>currently WIP</h3>
 
-  render() {
-    const pages = this.props.data.allMarkdownRemark.edges;
-
-    return (
-      <Container>
-        <h1>the-next-base Boilerplate</h1>
-        <h3>currently WIP</h3>
-
-        {pages.map( ({ node: page }) => (
-          <PageLink
-            to={page.frontmatter.path}
-            title={page.frontmatter.title}
-            key={page.id}
-          />
-        ))}
-
-        <Button text="this is a button component" />
-
-        <Script
-          url="https://identity.netlify.com/v1/netlify-identity-widget.js"
-          onLoad={this.handleScriptLoad.bind(this)}
+      {pages.map( ({ node: page }) => (
+        <PageLink
+          to={page.frontmatter.path}
+          title={page.frontmatter.title}
+          key={page.id}
         />
+      ))}
 
-      </Container>
-    )
-  }
+      <Button text="this is a button component" />
 
+    </Container>
+  )
 }
 
 // data query
