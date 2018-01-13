@@ -8,14 +8,9 @@ const Container = styled.div`
   width: ${props => props.width};
 	margin: auto;
 	display: grid;
-	background-color: black;
+
 	grid-template-columns: ${props => props.doppler(props.cols, "BACKWARD")};
 	grid-template-rows: ${props => props.doppler(props.rows, "FORWARD")};
-`
-
-const Child = styled.div`
-	border: 0.1px solid black;
-  background-color: white;
 `
 
 
@@ -24,12 +19,12 @@ export default class Grid extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.rows = 11;
-    // this.cols = 8;
-    this.rows = Math.floor(window.innerHeight/100);
-    this.cols = Math.floor(window.innerWidth/100);
-    console.log(this.rows, this.cols)
-    console.log(this.doppler(this.cols, "BACKWARD"))
+    if (typeof window !== `undefined`) {
+      this.rows = Math.floor(window.innerHeight/120);
+      this.cols = Math.floor(window.innerWidth/120);
+    } else {
+      this.rows = this.cols = 8;
+    }
   }
 
   doppler = (num, direction) => {
@@ -61,6 +56,7 @@ export default class Grid extends React.Component {
         width={this.props.width}
         height={this.props.height}>
 
+        {this.props.children}
 
 			</Container>
 		)

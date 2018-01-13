@@ -4,6 +4,7 @@ import Link from 'gatsby-link'
 import Helmet from 'react-helmet'
 import styled, { injectGlobal } from 'styled-components'
 import 'normalize.css'
+import Mark from '../components/Mark'
 
 // importing fonts
 import NeueHaasGrotTextRoman_eot from "../assets/fonts/NeueHaasGrotText-55Roman-Web.eot"
@@ -12,7 +13,6 @@ import NeueHaasGrotTextRoman_woff2 from "../assets/fonts/NeueHaasGrotText-55Roma
 import NeueHaasGrotTextItalic_eot from "../assets/fonts/NeueHaasGrotText-56Italic-Web.eot"
 import NeueHaasGrotTextItalic_woff from "../assets/fonts/NeueHaasGrotText-56Italic-Web.woff"
 import NeueHaasGrotTextItalic_woff2 from "../assets/fonts/NeueHaasGrotText-56Italic-Web.woff2"
-
 
 import NeueHaasGrotDispRoman_eot from "../assets/fonts/NeueHaasGrotDisp-55Roman-Web.eot"
 import NeueHaasGrotDispRoman_woff from "../assets/fonts/NeueHaasGrotDisp-55Roman-Web.woff"
@@ -28,29 +28,22 @@ const Container = styled.div`
 `
 
 const InnerContainer = styled.div`
-  margin-top: 6rem;
 `
 
 const TitleLink = styled(Link)`
   color: black;
   text-decoration: none;
   text-transform: uppercase;
-
-  &:hover {
-    text-decoration: underline;
-  }
 `
 
 const HeaderContainer = styled.div`
   z-index: 2;
   position: fixed;
   top: 0;
-  background-color: white;
-  width: 100%;
+  right: 0;
   height: 6rem;
 
   display: flex;
-  align-items: center;
 `
 
 // components
@@ -60,7 +53,7 @@ function Header () {
       <div>
         <h1>
           <TitleLink to="/">
-            the next base
+              <Mark/>
           </TitleLink>
         </h1>
       </div>
