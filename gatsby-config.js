@@ -1,4 +1,6 @@
-
+/*
+  This is where you tell Gatsby what plugins you are using
+*/
 module.exports = {
   siteMetadata: {
     title: `the next base`,

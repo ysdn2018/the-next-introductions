@@ -4,7 +4,6 @@ path: /about
 title: About Dynamic Pages
 subtitle: This is front the subtitle field, inserted in the template
 ---
-# Dynamic Pages
 The content folder is where all your information lives.
 
 You can create markdown files in here and use that data in other pages.

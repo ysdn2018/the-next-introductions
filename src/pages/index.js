@@ -14,7 +14,7 @@ const Subtitle = styled.div`
 `
 
 const List = styled.ul`
-  list-style: armenian;
+  list-style:
 `
 
 const LinkContainer = styled.li`

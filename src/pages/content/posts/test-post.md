@@ -15,4 +15,11 @@ In the `templateKey` field above you can see this post will use the post templat
 
 ## Images
 
-You can add images by linking to them `s` ![whatever alt text](../../assets/images/sloth.jpg)
+You can put images wherever you want. In this setup I made an images folder for content file images specifically, and then another site-wide one in `src/asssets/images` for when you wanna add stuff like logos, etc to the site design.
+
+You can add images by linking to them, you just put the alt text in the square brackets.
+
+This is what makes the image below appear.
+`![whatever alt text](../images/sloth.jpg)` ![whatever alt text](../images/sloth.jpg)
+
+It does all the crazy html image processing behind the scenes, making it optimized for retina screens, etc. Super easy.

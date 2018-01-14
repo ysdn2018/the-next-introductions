@@ -1,3 +1,6 @@
+/*
+  this is where the pages are generated
+*/
 const path = require('path');
 
 exports.createPages = ({ boundActionCreators, graphql }) => {
