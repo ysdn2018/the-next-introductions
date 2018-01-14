@@ -1,17 +1,27 @@
 import React from 'react';
+import styled from 'styled-components'
+
+
+// styled-components
+const Content = styled.div`
+  p {
+    max-width: 500px;
+  }
+`
+
 
 // page template component
-function Post({ data }) {
+export default function Post({ data }) {
   const post = data.markdownRemark;
+
   return (
     <div>
       <h3>{post.title}</h3>
-      <div dangerouslySetInnerHTML={{ __html: post.html }}></div>
+      <Content dangerouslySetInnerHTML={{ __html: post.html }}/>
     </div>
   );
 };
 
-export default Post;
 
 // template query
 export const aboutPageQuery = graphql`

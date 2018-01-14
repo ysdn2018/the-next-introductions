@@ -7,17 +7,18 @@ const Title = styled.h1`
 `
 
 // page template component
-function AboutPage({ data }) {
+export default function AboutPage({ data }) {
   const pageData = data.markdownRemark;
+
   return (
     <div>
-      <Title></Title>
+      <Title>{pageData.title}</Title>
+      <h2>{pageData.subtitle}</h2>
       <div dangerouslySetInnerHTML={{ __html: pageData.html }}></div>
     </div>
   );
 };
 
-export default AboutPage;
 
 // template query
 export const aboutPageQuery = graphql`

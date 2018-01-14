@@ -4,7 +4,6 @@ import Link from 'gatsby-link'
 import Helmet from 'react-helmet'
 import styled, { injectGlobal } from 'styled-components'
 import 'normalize.css'
-import Mark from '../components/Mark'
 
 // importing fonts
 import NeueHaasGrotTextRoman_eot from "../assets/fonts/NeueHaasGrotText-55Roman-Web.eot"
@@ -13,7 +12,6 @@ import NeueHaasGrotTextRoman_woff2 from "../assets/fonts/NeueHaasGrotText-55Roma
 import NeueHaasGrotTextItalic_eot from "../assets/fonts/NeueHaasGrotText-56Italic-Web.eot"
 import NeueHaasGrotTextItalic_woff from "../assets/fonts/NeueHaasGrotText-56Italic-Web.woff"
 import NeueHaasGrotTextItalic_woff2 from "../assets/fonts/NeueHaasGrotText-56Italic-Web.woff2"
-
 import NeueHaasGrotDispRoman_eot from "../assets/fonts/NeueHaasGrotDisp-55Roman-Web.eot"
 import NeueHaasGrotDispRoman_woff from "../assets/fonts/NeueHaasGrotDisp-55Roman-Web.woff"
 import NeueHaasGrotDispRoman_woff2 from "../assets/fonts/NeueHaasGrotDisp-55Roman-Web.woff2"
@@ -22,51 +20,56 @@ import NeueHaasGrotDispItalic_woff from "../assets/fonts/NeueHaasGrotDisp-56Ital
 import NeueHaasGrotDispItalic_woff2 from "../assets/fonts/NeueHaasGrotDisp-56Italic-Web.woff2"
 
 
+/*
+  Layout File
+  this file is the base of every page
+  useful for headers & navs
+
+  this is where global styles/font loading lives
+*/
+
+
 // styled components
 const Container = styled.div`
-  margin: 0rem;
+  margin: 4rem;
 `
 
 const InnerContainer = styled.div`
+
 `
 
 const TitleLink = styled(Link)`
   color: black;
   text-decoration: none;
   text-transform: uppercase;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `
 
 const HeaderContainer = styled.div`
-  z-index: 2;
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 6rem;
 
-  display: flex;
 `
+
 
 // components
 function Header () {
   return (
     <HeaderContainer>
-      <div>
-        <h1>
-          <TitleLink to="/">
-              <Mark/>
-          </TitleLink>
-        </h1>
-      </div>
+      <TitleLink to="/">
+          <h1>Boiled</h1>
+      </TitleLink>
     </HeaderContainer>
   )
 }
 
 
-
+// page component
 const TemplateWrapper = ({ children }) => (
   <Container>
     <Helmet
-      title="the-next-base"
+      title="boiled"
       meta={[
         { name: 'description', content: 'Sample' },
         { name: 'keywords', content: 'sample, something' },
@@ -75,6 +78,9 @@ const TemplateWrapper = ({ children }) => (
 
     <Header />
 
+    {/*
+      Children() is where your page content is inserted.
+    */}
     <InnerContainer>
       {children()}
     </InnerContainer>
@@ -87,6 +93,7 @@ TemplateWrapper.propTypes = {
 }
 
 export default TemplateWrapper
+
 
 /* Global Site Styles
  * used for importing fonts and setting up sizes

@@ -3,63 +3,67 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Button from '../components/Button'
 
-import Grid from '../components/Grid'
 
 // styled components
 const Container = styled.div`
-  color: black;
+
 `
 
 const Subtitle = styled.div`
-  padding: 1rem;
-  margin: 0.5rem;
-  grid-column: 1;
-  text-align: right;
+  text-align: left;
 `
 
-const PageLinkContainer = styled(Link)`
-  padding: 1rem;
-  margin: 0.5rem;
-  display: block;
+const List = styled.ul`
+  list-style: armenian;
+`
+
+const LinkContainer = styled.li`
+
+`
+
+const LinkText = styled(Link)`
+  font-style: italic;
   color: black;
 
-  grid-column: 2;
-
   &:hover {
-    font-style: italic;
+    text-decoration: none;
   }
 `
+
 
 // components
 function PageLink(props) {
   return (
-    <PageLinkContainer to={props.to}>
-      {props.title}
-    </PageLinkContainer>
+    <LinkContainer>
+      <LinkText to={props.to}>
+        {props.title}
+      </LinkText>
+    </LinkContainer>
   )
 }
+
 
 // page component
 export default function IndexPage({ data }) {
   const pages = data.allMarkdownRemark.edges;
 
   return (
-    <Grid
-      height="100vh"
-      width="100%">
+    <Container>
       <Subtitle>dynamic pages:</Subtitle>
 
-      {pages.map( ({ node: page }, i) => (
-        <PageLink
-          to={page.frontmatter.path}
-          title={page.frontmatter.title}
-          key={page.id}
-        />
-      ))}
+      <List>
+        {pages.map( ({ node: page }, i) => (
+          <PageLink
+            to={page.frontmatter.path}
+            title={page.frontmatter.title}
+            key={page.id}
+          />
+        ))}
+      </List>
 
       <Button text="this is a button component" />
 
-    </Grid>
+    </Container>
   )
 }
 

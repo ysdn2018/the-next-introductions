@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'gatsby-link'
 
+
 // page component
 export default function SecondPage() {
   return (

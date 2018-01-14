@@ -1,11 +1,21 @@
 import React from 'react';
 import styled from 'styled-components'
 
+
+// styled-components
+const Container = styled.div`
+  display: grid;
+  grid-template-rows: repeat(8, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5%;
+`
+
+
 // page template component
-function ExamplePage({ data }) {
+export default function ExamplePage({ data }) {
   const pageData = data.markdownRemark.frontmatter;
   return (
-    <div>
+    <Container>
       <h3>Description</h3>
       <div>{pageData.description}</div>
 
@@ -17,11 +27,10 @@ function ExamplePage({ data }) {
         </div>
       ))}
 
-    </div>
+    </Container>
   );
 };
 
-export default ExamplePage;
 
 // template query
 export const aboutPageQuery = graphql`
