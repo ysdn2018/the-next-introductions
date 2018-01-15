@@ -107,6 +107,7 @@ injectGlobal`
   }
 
   html {
+  ${'' /* Maybe Try?  font-size: calc(1.25vw + 62.5%); */}
     font-size: 62.5%;
     height: 100%;
   }
