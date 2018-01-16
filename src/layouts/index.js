@@ -32,10 +32,11 @@ import NeueHaasGrotDispItalic_woff2 from "../assets/fonts/NeueHaasGrotDisp-56Ita
 // styled components
 const Container = styled.div`
   margin: 4rem;
+  height: 100%;
 `
 
 const InnerContainer = styled.div`
-
+  height: 100%:
 `
 
 const TitleLink = styled(Link)`
@@ -114,6 +115,7 @@ injectGlobal`
 
   body {
       margin: 0;
+      height: 100%;
 
       font-size: 1.6em;
       line-height: 1.6;
@@ -125,6 +127,10 @@ injectGlobal`
       -ms-text-size-adjust: 100%;
       -webkit-text-size-adjust: 100%;
       text-rendering: optimizeLegibility;
+  }
+
+  #___gatsby {
+    height: 100%;
   }
 
   h1, h2, h3, h4, h5, h6 {
