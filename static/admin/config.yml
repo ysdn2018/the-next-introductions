@@ -31,7 +31,6 @@ collections:
         fields:
           - { name: templateKey, label: Template Key, widget: hidden, default: post}
           - { name: path, label: Path }
-          - { name: date, label: Date, widget: date }
           - { name: title, label: Title }
           - { name: subtitle, label: Subtitle }
           - { name: description, label: Description, widget: text }

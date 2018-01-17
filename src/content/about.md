@@ -1,7 +1,6 @@
 ---
 templateKey: about-page
 path: /about
-date: 2018-01-17T00:00:00-05:00
 title: About Dynamic Pages
 subtitle: 'This is front the subtitle field, inserted in the template'
 description: >
