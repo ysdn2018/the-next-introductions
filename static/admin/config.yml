@@ -16,19 +16,22 @@ collections:
       - { name: date, label: Date, widget: date }
       - { name: title, label: Title }
       - { name: body, label: Body, widget: markdown }
-  - name: about
-    label: AboutPage
-    file: src/content/about.md
-    fields:
-      - { name: templateKey, label: Template Key, widget: hidden, default: post}
-      - { name: path, label: Path }
-      - { name: date, label: Date, widget: date }
-      - { name: title, label: Title }
-      - { name: subtitle, label: Subtitle }
-      - { name: description, label: Description, widget: text }
-      - { name: body, label: Body, widget: markdown }
-      - label: Example List
-        name: exampleList
-        widget: list
+  - name: pages
+    label: Pages
+    files:
+      - name: about
+        label: AboutPage
+        file: src/content/about.md
         fields:
-          - { name: listItem, label: List Item, widget: string }
+          - { name: templateKey, label: Template Key, widget: hidden, default: post}
+          - { name: path, label: Path }
+          - { name: date, label: Date, widget: date }
+          - { name: title, label: Title }
+          - { name: subtitle, label: Subtitle }
+          - { name: description, label: Description, widget: text }
+          - { name: body, label: Body, widget: markdown }
+          - label: Example List
+            name: exampleList
+            widget: list
+            fields:
+              - { name: listItem, label: List Item, widget: string }
