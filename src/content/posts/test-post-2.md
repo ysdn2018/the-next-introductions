@@ -7,3 +7,5 @@ title: Text Post Two
 Posts are automatically created at the path defined above in the frontmatter. They use the same template (defined above).
 
 Here's another sloth.
+
+![sloth2](/assets/sloth2.png)
