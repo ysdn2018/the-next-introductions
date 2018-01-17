@@ -6,6 +6,11 @@ const Title = styled.h1`
 
 `
 
+const List = styled.ul`
+  display: flex;
+  justify-content: space-between;
+`
+
 // page template component
 export default function AboutPage({ data }) {
   const pageData = data.markdownRemark;
@@ -15,6 +20,15 @@ export default function AboutPage({ data }) {
       <Title>{pageData.title}</Title>
       <h2>{pageData.subtitle}</h2>
       <div dangerouslySetInnerHTML={{ __html: pageData.html }}></div>
+
+      <List>
+        {pageData.frontmatter.exampleList.map( (listItem, i) =>
+          <li key={i}>
+            {listItem.text}
+          </li>
+        )}
+      </List>
+
     </div>
   );
 };
@@ -28,6 +42,10 @@ export const aboutPageQuery = graphql`
       frontmatter {
         path
         title
+
+        exampleList {
+          text
+        }
       }
     }
   }

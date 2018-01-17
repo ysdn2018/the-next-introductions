@@ -19,3 +19,6 @@ You can create markdown files in here and use that data in other pages.
 The `templateKey` field above tells Gatsby which template in your `src/templates` folder to use when turning this markdown file into an actual page.
 
 You might just want to use dynamic pages for blog posts anyways and not use markdown files for other pages. To just create normal pages, you can do things like in `src/pages/page-2.js`.
+
+You can add content in the `frontmatter` part of file like lists if you want to be able to place content within more complex styles.
+This list below isn't actually part of the markdown.
