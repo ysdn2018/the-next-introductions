@@ -20,7 +20,7 @@ collections:
     label: Pages
     files:
       - name: about
-        label: AboutPage
+        label: About Page
         file: src/content/about.md
         fields:
           - { name: templateKey, label: Template Key, widget: hidden, default: post}
@@ -34,4 +34,4 @@ collections:
             name: exampleList
             widget: list
             fields:
-              - { name: listItem, label: List Item, widget: string }
+              - { name: text, label: Text, widget: string }
