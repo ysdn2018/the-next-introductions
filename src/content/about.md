@@ -1,18 +1,24 @@
 ---
-templateKey: 'about-page'
+templateKey: about-page
 path: /about
+date: 2018-01-17T00:00:00-05:00
 title: About Dynamic Pages
-subtitle: This is front the subtitle field, inserted in the template
+subtitle: 'This is front the subtitle field, inserted in the template'
+description: >
+  Sometimes pages have little bits of text rather than a main body section for
+  weirder layouts. Formatting text in frontmatter like this allows you to have
+  named little nodes of information.
+
+
+  This information isn't actually inserted in the page, you can add it similar
+  to how we added the list in the template file.
 exampleList:
   - text: list item one
   - text: list item two
   - text: list item three
   - text: list item four
-description: >
-  Sometimes pages have little bits of text rather than a main body section for weirder layouts. Formatting text in frontmatter like this allows you to have named little nodes of information. See how they are used in the 'example-page' template.
-  When you want a larger block of text, you add that little > up there and it allows you to kinda type a large block
 ---
-The content folder is where all your information lives.
+The content folder is where all your information for dynamic pages lives.
 
 You can create markdown files in here and use that data in other pages.
 
