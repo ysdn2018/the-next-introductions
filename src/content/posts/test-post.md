@@ -3,7 +3,6 @@ templateKey: post
 path: /test-post
 date: 2017-12-13T05:00:00.000Z
 title: Test Post
-subtitle: This is a test post
 ---
 ## This is a test post.
 
@@ -20,6 +19,7 @@ You can put images wherever you want. In this setup I made an images folder for 
 You can add images by linking to them, you just put the alt text in the square brackets.
 
 This is what makes the image below appear.
-`![whatever alt text](../images/sloth.jpg)` ![whatever alt text](../images/sloth.jpg)
+
+`![whatever alt text](../assets/sloth.jpg)` ![whatever alt text](../assets/sloth.jpg)
 
 It does all the crazy html image processing behind the scenes, making it optimized for retina screens, etc. Super easy.
