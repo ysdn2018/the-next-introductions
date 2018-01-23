@@ -36,7 +36,7 @@ It edits your static files and uses git to update them, meaning it has no speed 
 It's all setup on the site, you just need to setup Github authentication for yourself.
 
 ### Github authentication
-First you’ll need to add your deployed site as an OAuth application in your GitHub settings. [This guide](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider) shows you how.
+First you’ll need to add your deployed site as an OAuth application in your GitHub settings. [This guide](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider) shows you how (disregard the example code at the bottom).
 
 Then in your code in 'static/admin/config.yml' you'll want to let the cms know where your github repo is.
 
