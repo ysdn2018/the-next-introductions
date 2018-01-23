@@ -1,12 +1,9 @@
 # Boiled
 A minimal & opinionated Gatsby boilerplate.
 
-Basic setup of Gatsby with Styled-Components, and page generation using markdown.
-
-Easily pluggable with [Netlify CMS](https://www.netlifycms.org/) if you'd like.
+Basic setup of [Gatsby](https://www.gatsbyjs.org/) with [Styled-Components](https://www.styled-components.com/), and [Netlify CMS](https://www.netlifycms.org/).
 
 To get your own version, click the button below.
-
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/huntercaron/boiled)
 
@@ -18,7 +15,9 @@ To get your own version, click the button below.
 - [Node](https://nodejs.org/en/download/)
 - [Yarn](https://yarnpkg.com/en/docs/install)
 
-### First clone the repository using either the terminal or Github Desktop.
+### After installing, clone the repository using either the terminal or Github Desktop.
+
+### Setup and Running
 
 Then in your terminal, cd to the directory and run `yarn`.
 This will install all the dependencies for the project.
@@ -31,6 +30,7 @@ For other Gatsby commands look [here](https://www.gatsbyjs.org/docs/).
 I also strongly recommended the Gatsby tutorial [here](https://www.gatsbyjs.org/tutorial/).
 If using Netlify, simply commit to your site and it will rebuild.
 If using Github pages, follow the guide [here](https://www.gatsbyjs.org/docs/deploy-gatsby/#github-pages).
+Wanna learn more about Netlify CMS with Gatsby? [Here is a guide](https://www.gatsbyjs.org/docs/netlify-cms/).
 
 ## Extras
 ### Recommended Tools
@@ -43,3 +43,5 @@ If using Github pages, follow the guide [here](https://www.gatsbyjs.org/docs/dep
 ## Versions
 ### version 1.0.0
 Setup and examples of normal pages, and dynamic pages generated from markdown files (in src/pages/content).
+### version 1.1.0
+Now comes with Netlify CMS installed.

@@ -1,6 +1,6 @@
 {
-  "name": "the-next-base",
-  "description": "Base Site for YSDN 2018",
+  "name": "boiled",
+  "description": "minimal boilerplate for Gatsby",
   "version": "1.0.0",
   "author": "Hunter Caron <huntercaron@me.com>",
   "dependencies": {
