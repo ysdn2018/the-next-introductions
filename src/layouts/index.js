@@ -79,9 +79,8 @@ const TemplateWrapper = ({ children }) => (
     {/*
       Children() is where your page content is inserted.
     */}
-    <InnerContainer>
+
       {children()}
-    </InnerContainer>
 
   </Container>
 )
