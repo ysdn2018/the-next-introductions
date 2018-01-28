@@ -31,7 +31,6 @@ import NeueHaasGrotDispItalic_woff2 from "../assets/fonts/NeueHaasGrotDisp-56Ita
 
 // styled components
 const Container = styled.div`
-  margin: 4rem;
   height: 100%;
 `
 
@@ -76,8 +75,6 @@ const TemplateWrapper = ({ children }) => (
         { name: 'keywords', content: 'sample, something' },
       ]}
     />
-
-    <Header />
 
     {/*
       Children() is where your page content is inserted.
