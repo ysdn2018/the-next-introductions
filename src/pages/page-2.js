@@ -31,18 +31,18 @@ const list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13];
 export default class SecondPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.images = [];
   }
 
   handleScroll = (e) => {
     let scroll = this.container.scrollLeft;
-    let imagesWidth = this.images.offsetWidth;
-    console.log(e.deltaY);
+    let imagesWidth = this.imagebox.offsetWidth;
     let delta = e.deltaY;
     e.preventDefault();
 
     this.container.scrollLeft -= e.deltaY * 2;
 
-    // console.log(this.container)
     if(scroll >= imagesWidth-1) {
       this.container.scrollLeft = 1;
     }
@@ -50,6 +50,9 @@ export default class SecondPage extends React.Component {
     if(scroll == 0) {
       this.container.scrollLeft = imagesWidth-2
     }
+
+    console.log(this.images);
+
   }
 
   render() {
@@ -57,12 +60,16 @@ export default class SecondPage extends React.Component {
       <Container innerRef={(container) => { this.container = container; }} >
         <InnerContainer  onWheel={this.handleScroll} >
 
-          <ImagesContainer  innerRef={(images) => { this.images = images; }}>
-            {list.map( i => <Image key={i}/> )}
+          <ImagesContainer  innerRef={(imagebox) => { this.imagebox = imagebox; }}>
+            {list.map( i =>
+              <Image key={i} innerRef={(image) => { this.images.push({ num: i, element: image }) }} />
+            )}
           </ImagesContainer>
 
           <ImagesContainer>
-            {list.map( i => <Image key={i}/> )}
+            {list.map( i =>
+              <Image key={i}/>
+            )}
           </ImagesContainer>
 
         </InnerContainer>

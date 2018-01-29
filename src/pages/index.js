@@ -14,7 +14,9 @@ const Subtitle = styled.div`
 `
 
 const List = styled.ul`
-  list-style:
+  li {
+    margin-bottom: 2rem;
+  }
 `
 
 const LinkContainer = styled.li`
@@ -45,7 +47,7 @@ function PageLink(props) {
 
 // page component
 export default function IndexPage({ data }) {
-  const pages = data.allMarkdownRemark.edges;
+  const pages = data.allSitePage.edges;
 
   return (
     <Container>
@@ -54,8 +56,8 @@ export default function IndexPage({ data }) {
       <List>
         {pages.map( ({ node: page }, i) => (
           <PageLink
-            to={page.frontmatter.path}
-            title={page.frontmatter.title}
+            to={page.path}
+            title={page.path}
             key={page.id}
           />
         ))}
@@ -70,16 +72,12 @@ export default function IndexPage({ data }) {
 // data query
 export const query = graphql`
   query IndexQuery {
-    allMarkdownRemark {
+    allSitePage {
       totalCount
       edges {
         node {
           id
-          frontmatter {
-            title
-            path
-            date(formatString: "DD MMMM, YYYY")
-          }
+          path
         }
       }
     }
