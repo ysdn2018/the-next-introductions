@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
+import Student from '../components/Student'
 
 const Container = styled.div`
   height: 100%;
@@ -18,6 +19,7 @@ const Image = styled.div`
   height: 400px;
   margin-right: 20px;
   background-color: grey;
+  transform-origin: top right;
 `
 
 const ImagesContainer = styled.div`
@@ -39,6 +41,11 @@ export default class SecondPage extends React.Component {
       this.images[i].rect = {};
       this.images[i].num = i;
     }
+
+    this.state = {
+      scroll: 0
+    }
+
   }
 
   handleScroll = (e) => {
@@ -57,6 +64,10 @@ export default class SecondPage extends React.Component {
       this.container.scrollLeft = imagesWidth-2
     }
 
+    this.setState({
+      scroll: scroll
+    })
+
     for (let i in this.images) {
       let boundingRect = this.images[i].element.getBoundingClientRect();
       this.images[i].rect = boundingRect;
@@ -70,14 +81,38 @@ export default class SecondPage extends React.Component {
   render() {
     return (
       <Container innerRef={(container) => { this.container = container; }} >
-        <InnerContainer  onWheel={this.handleScroll} >
+        <InnerContainer onWheel={this.handleScroll} >
 
           <ImagesContainer  innerRef={(imagebox) => { this.imagebox = imagebox; }}>
-            {list.map( i =>
-              <Image key={i} offsetRight={this.images[i].rect.right || 0} innerRef={(image) => { this.images[i].element = image }}>
-                {i}
-              </Image>
-            )}
+
+
+{/*
+            {list.map(i =>
+              <Student
+                key={i}
+                parentScroll={i}
+              />
+            )} */}
+
+
+            {list.map( i => {
+              let offsetRight = Math.abs((window.innerWidth-this.images[i].rect.left)/window.innerWidth);
+
+              if (offsetRight > 1) {
+                offsetRight = 1;
+              }
+
+              let style = {
+                transform: `scale(${offsetRight})`
+              }
+              return (
+                <Image key={i} style={style} offsetRight={offsetRight} innerRef={(image) => { this.images[i].element = image }}>
+                  {i}
+                </Image>
+              )
+            })}
+
+
           </ImagesContainer>
 
           <ImagesContainer>
