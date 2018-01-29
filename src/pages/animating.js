@@ -49,6 +49,13 @@ export default class SecondPage extends React.Component {
 
   }
 
+  componentDidMount() {
+    this.state = {
+      scroll: 0,
+      windowWidth: window.innerWidth
+    }
+  }
+
   handleScroll = (e) => {
     let scroll = this.container.scrollLeft;
     let imagesWidth = this.imagebox.offsetWidth;
@@ -74,7 +81,7 @@ export default class SecondPage extends React.Component {
       let boundingRect = this.images[i].element.getBoundingClientRect();
       this.images[i].rect = boundingRect;
     }
-    // 
+    //
     // let winWidth = window.innerWidth;
     // let right = winWidth-this.images[3].rect.left;
     // console.log(right/winWidth);
