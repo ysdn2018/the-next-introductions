@@ -41,7 +41,7 @@ export default class SecondPage extends React.Component {
     let delta = e.deltaY;
     e.preventDefault();
 
-    this.container.scrollLeft -= e.deltaY * 2;
+    this.container.scrollLeft -= e.deltaY + e.deltaX * 2;
 
     if(scroll >= imagesWidth-1) {
       this.container.scrollLeft = 1;
