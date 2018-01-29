@@ -4,13 +4,14 @@ import styled from 'styled-components'
 
 const Container = styled.div`
   height: 100%;
+  overflow: auto;
 `
 
 const InnerContainer = styled.div`
   height: 100%;
   display: flex;
   width: 8000px;
-  justify-content: space-around;
+
 `
 
 const Image = styled.div`
@@ -19,6 +20,11 @@ const Image = styled.div`
   margin-right: 20px;
   background-color: grey;
 `
+
+const ImagesContainer = styled.div`
+  display: flex;
+`
+
 
 const list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13];
 
@@ -29,17 +35,34 @@ export default class SecondPage extends React.Component {
   }
 
   handleScroll = (e) => {
-    console.log(this.container.scrollLeft)
-    console.log("hey");
+    let scroll = this.container.scrollLeft;
+    let imagesWidth = this.images.offsetWidth;
+    console.log(scroll);
+    // console.log(this.container)
+    if(scroll >= imagesWidth-1) {
+      this.container.scrollLeft = 1;
+    }
+
+    if(scroll == 0) {
+      this.container.scrollLeft = imagesWidth-2
+    }
   }
 
   render() {
     return (
-      <div onScroll={this.handleScroll} ref={(container) => { this.container = container; }}>
-        <InnerContainer>
-          {list.map( i => <Image key={i}/> )}
+      <Container innerRef={(container) => { this.container = container; }} >
+        <InnerContainer  onWheel={this.handleScroll} >
+
+          <ImagesContainer  innerRef={(images) => { this.images = images; }}>
+            {list.map( i => <Image key={i}/> )}
+          </ImagesContainer>
+
+          <ImagesContainer>
+            {list.map( i => <Image key={i}/> )}
+          </ImagesContainer>
+
         </InnerContainer>
-      </div>
+      </Container>
     )
   }
 
