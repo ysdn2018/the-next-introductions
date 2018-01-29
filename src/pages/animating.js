@@ -43,7 +43,8 @@ export default class SecondPage extends React.Component {
     }
 
     this.state = {
-      scroll: 0
+      scroll: 0,
+      windowWidth: 0
     }
 
   }
@@ -65,17 +66,18 @@ export default class SecondPage extends React.Component {
     }
 
     this.setState({
-      scroll: scroll
+      scroll: scroll,
+      windowWidth: window.innerWidth
     })
 
     for (let i in this.images) {
       let boundingRect = this.images[i].element.getBoundingClientRect();
       this.images[i].rect = boundingRect;
     }
-
-    let winWidth = window.innerWidth;
-    let right = winWidth-this.images[3].rect.left;
-    console.log(right/winWidth);
+    // 
+    // let winWidth = window.innerWidth;
+    // let right = winWidth-this.images[3].rect.left;
+    // console.log(right/winWidth);
   }
 
   render() {
@@ -96,10 +98,10 @@ export default class SecondPage extends React.Component {
 
 
             {list.map( i => {
-              let offsetRight = Math.abs((window.innerWidth-this.images[i].rect.left)/window.innerWidth);
+              let offsetRight = Math.abs((this.state.windowWidth-this.images[i].rect.left)/this.state.windowWidth);
 
-              if (offsetRight > 1) {
-                offsetRight = 1;
+              if (offsetRight > 1.5) {
+                offsetRight = 1.5;
               }
 
               let style = {
