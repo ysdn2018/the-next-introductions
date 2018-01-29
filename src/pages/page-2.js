@@ -10,7 +10,6 @@ const Container = styled.div`
 const InnerContainer = styled.div`
   height: 100%;
   display: flex;
-  width: 8000px;
 
 `
 
@@ -37,7 +36,12 @@ export default class SecondPage extends React.Component {
   handleScroll = (e) => {
     let scroll = this.container.scrollLeft;
     let imagesWidth = this.images.offsetWidth;
-    console.log(scroll);
+    console.log(e.deltaY);
+    let delta = e.deltaY;
+    e.preventDefault();
+
+    this.container.scrollLeft -= e.deltaY * 2;
+
     // console.log(this.container)
     if(scroll >= imagesWidth-1) {
       this.container.scrollLeft = 1;
