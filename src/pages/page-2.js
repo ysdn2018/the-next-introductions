@@ -33,6 +33,12 @@ export default class SecondPage extends React.Component {
     super(props);
 
     this.images = [];
+
+    for (let i in list) {
+      this.images.push({});
+      this.images[i].rect = {};
+      this.images[i].num = i;
+    }
   }
 
   handleScroll = (e) => {
@@ -51,7 +57,12 @@ export default class SecondPage extends React.Component {
       this.container.scrollLeft = imagesWidth-2
     }
 
-    console.log(this.images);
+    for (let i in this.images) {
+      let boundingRect = this.images[i].element.getBoundingClientRect();
+      this.images[i].rect = boundingRect;
+
+      // console.log(this.images[i].rect);
+    }
 
   }
 
@@ -62,7 +73,9 @@ export default class SecondPage extends React.Component {
 
           <ImagesContainer  innerRef={(imagebox) => { this.imagebox = imagebox; }}>
             {list.map( i =>
-              <Image key={i} innerRef={(image) => { this.images.push({ num: i, element: image }) }} />
+              <Image key={i} offsetRight={this.images[i].rect.right || 0} innerRef={(image) => { this.images[i].element = image }}>
+                {this.images[i].rect.x || 0}
+              </Image>
             )}
           </ImagesContainer>
 
