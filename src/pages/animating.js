@@ -3,15 +3,21 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Student from '../components/Student'
 
-const Container = styled.div`
+const OuterContainer = styled.div`
   height: 100%;
+  overflow: hidden;
+`
+
+const Container = styled.div`
+  height: calc(100% + 15px);
+  margin-bottom: -15px;
   overflow: auto;
 `
 
 const InnerContainer = styled.div`
   height: 100%;
   display: flex;
-
+  padding-bottom: 15px !important;
 `
 
 const Image = styled.div`
@@ -58,11 +64,10 @@ export default class SecondPage extends React.Component {
       studentsWidth: 1000
     }
 
-    this.students = Array(list.length).fill({});
+    this.students = new Array(list.length*2).fill({});
   }
 
   componentDidMount() {
-    console.log(this.students[0].component.element);
     this.setState({
       windowWidth: window.innerWidth,
       studentsWidth: this.studentsContainer.offsetWidth
@@ -76,7 +81,7 @@ export default class SecondPage extends React.Component {
 
     this.container.scrollLeft -= e.deltaY + e.deltaX * 2;
 
-    if(scroll >= this.state.studentsWidth-1) {
+    if(scroll >= this.state.studentsWidth+3) {
       this.container.scrollLeft = 1;
     }
 
@@ -86,57 +91,59 @@ export default class SecondPage extends React.Component {
 
     this.setState({
       scroll: scroll,
-      windowWidth: window.innerWidth
     })
-
-
 
     this.updateChildren()
   }
 
-  updateChildren = () => {
-    for (let s in this.students) {
-      this.students[s].num = s;
-      let boundingRect = this.students[s].component.element.getBoundingClientRect();
-      this.students[s].rect = boundingRect;
+  updateWindowSize() {
+    this.setState({
+      windowWidth: window.innerWidth
+    })
+  }
 
-      this.students[s].offsetRight = (this.state.windowWidth - this.students[s].rect.left)/this.state.windowWidth;
+  updateChildren = () => {
+    for (let s = 0; s < this.students.length; s++) {
+      this.students[s].updateSize();
     }
   }
 
   render() {
     return (
-      <Container innerRef={(container) => { this.container = container; }} >
-        <InnerContainer onWheel={this.handleScroll} >
+      <OuterContainer>
+        <Container innerRef={(container) => { this.container = container; }}>
+          <InnerContainer onWheel={this.handleScroll}>
 
-          {/* <Students
-            windowWidth={this.state.windowWidth}
-            scroll={this.state.scroll}
-            studentRef={el => this.studentElement = el}
-          /> */}
+            <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
+              {list.map(i => {
+                return (
+                  <Student
+                    key={i}
+                    num={i}
+                    windowWidth={this.state.windowWidth}
+                    ref={el => this.students[i] = el }
+                  />
+                )
+              })}
+            </ImagesContainer>
 
-          <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
-            {list.map( i => {
-              let style = {
-                transform: `scale(${Math.min(Math.max(Math.abs(this.students[i].offsetRight), 0), 1.5)})`
-              }
+            <ImagesContainer>
+              {list.map(i => {
+                return (
+                  <Student
+                    key={i}
+                    num={i}
+                    windowWidth={this.state.windowWidth}
+                    ref={el => this.students[list.length + i] = el}
+                  />
+                )
+              })}
+            </ImagesContainer>
 
-              // console.log(this.students[i].offsetRight);
 
-              return (
-                <Student
-                  key={i}
-                  num={i}
-                  style={style}
-                  offsetRight={this.students[i].offsetRight}
-                  ref={el => this.students[i].component = el}
-                />
-              )
-            })}
-          </ImagesContainer>
-
-        </InnerContainer>
-      </Container>
+          </InnerContainer>
+        </Container>
+      </OuterContainer>
     )
   }
 

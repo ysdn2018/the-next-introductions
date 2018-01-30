@@ -30,17 +30,23 @@ export default class Student extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    // this.setState({
-    //   offsetRight: offsetRight
-    // })
+  updateSize = () => {
+    let boundingRect = this.element.getBoundingClientRect();
+
+    this.setState({
+      offsetRight: (this.props.windowWidth - boundingRect.left)/this.props.windowWidth
+    })
   }
 
   render() {
+    let style = {
+      transform: `scale(${Math.min(Math.max(Math.abs(this.state.offsetRight), 0), 1.5)})`
+    }
+
     return (
-      <Container innerRef={(container) => { this.element = container; }} style={this.props.style}>
+      <Container innerRef={(container) => { this.element = container; }} style={style}>
         <Text>{this.props.num}</Text>
-        <Text>{this.props.offsetRight}</Text>
+        <Text>{this.state.offsetRight}</Text>
       </Container>
     )
   }
