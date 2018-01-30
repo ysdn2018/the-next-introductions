@@ -43,6 +43,10 @@ export default class Student extends React.Component {
       transform: `scale(${Math.min(Math.max(Math.abs(this.state.offsetRight), 0), 1.5)})`
     }
 
+    // let style = {
+    //   transform: `scale(${this.state.offsetRight})`
+    // }
+
     return (
       <Container innerRef={(container) => { this.element = container; }} style={style}>
         <Text>{this.props.num}</Text>

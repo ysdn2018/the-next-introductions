@@ -71,7 +71,7 @@ export default class SecondPage extends React.Component {
     this.setState({
       windowWidth: window.innerWidth,
       studentsWidth: this.studentsContainer.offsetWidth
-    });
+    }, this.updateChildren);
   }
 
   handleScroll = (e) => {
