@@ -54,22 +54,19 @@ export default class SecondPage extends React.Component {
 
     this.state = {
       scroll: 0,
-      windowWidth: 0,
-      imagesWidth: 1000
+      windowWidth: 1000,
+      studentsWidth: 1000
     }
 
-    for (let s in list.length) {
-      
-    }
+    this.students = Array(list.length).fill({});
   }
 
   componentDidMount() {
-    console.log(this.imagebox);
-    this.state = {
-      scroll: 0,
+    console.log(this.students[0].component.element);
+    this.setState({
       windowWidth: window.innerWidth,
-      imagesWidth: this.imagebox.offsetWidth
-    }
+      studentsWidth: this.studentsContainer.offsetWidth
+    });
   }
 
   handleScroll = (e) => {
@@ -79,22 +76,32 @@ export default class SecondPage extends React.Component {
 
     this.container.scrollLeft -= e.deltaY + e.deltaX * 2;
 
-    if(scroll >= this.state.imagesWidth-1) {
+    if(scroll >= this.state.studentsWidth-1) {
       this.container.scrollLeft = 1;
     }
 
     if(scroll == 0) {
-      this.container.scrollLeft = this.state.imagesWidth-2
+      this.container.scrollLeft = this.state.studentsWidth-2
     }
 
     this.setState({
       scroll: scroll,
       windowWidth: window.innerWidth
     })
+
+
+
+    this.updateChildren()
   }
 
   updateChildren = () => {
+    for (let s in this.students) {
+      this.students[s].num = s;
+      let boundingRect = this.students[s].component.element.getBoundingClientRect();
+      this.students[s].rect = boundingRect;
 
+      this.students[s].offsetRight = (this.state.windowWidth - this.students[s].rect.left)/this.state.windowWidth;
+    }
   }
 
   render() {
@@ -105,18 +112,27 @@ export default class SecondPage extends React.Component {
           {/* <Students
             windowWidth={this.state.windowWidth}
             scroll={this.state.scroll}
-            ref={(imagebox) => { this.imagebox = imagebox; }}
+            studentRef={el => this.studentElement = el}
           /> */}
 
-          <ImagesContainer>
-            {list.map( i =>
-              <Student
-                key={i}
-                windowWidth={this.state.windowWidth}
-                scroll={this.props.scroll}
-                ref={(student) => { this.students[i].element = student }}
-              />
-            )}
+          <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
+            {list.map( i => {
+              let style = {
+                transform: `scale(${Math.min(Math.max(Math.abs(this.students[i].offsetRight), 0), 1.5)})`
+              }
+
+              // console.log(this.students[i].offsetRight);
+
+              return (
+                <Student
+                  key={i}
+                  num={i}
+                  style={style}
+                  offsetRight={this.students[i].offsetRight}
+                  ref={el => this.students[i].component = el}
+                />
+              )
+            })}
           </ImagesContainer>
 
         </InnerContainer>
