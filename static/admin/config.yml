@@ -13,10 +13,10 @@ public_folder: assets
 collections:
   - name: posts
     label: Posts
-    folder: src/content/posts
+    folder: src/content/students
     create: true
     fields:
-      - { name: templateKey, label: Template Key, widget: hidden, default: post}
+      - { name: templateKey, label: Template Key, widget: hidden, default: student}
       - { name: path, label: Path }
       - { name: date, label: Date, widget: date }
       - { name: title, label: Title }
@@ -29,13 +29,5 @@ collections:
         file: src/content/about.md
         fields:
           - { name: templateKey, label: Template Key, widget: hidden, default: post}
-          - { name: path, label: Path }
           - { name: title, label: Title }
-          - { name: subtitle, label: Subtitle }
           - { name: description, label: Description, widget: text }
-          - { name: body, label: Body, widget: markdown }
-          - label: Example List
-            name: exampleList
-            widget: list
-            fields:
-              - { name: text, label: Text, widget: string }

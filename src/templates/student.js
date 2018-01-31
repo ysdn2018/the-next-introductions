@@ -1,23 +1,23 @@
 import React from 'react';
 import styled from 'styled-components'
 
-// styled components
-const Title = styled.h1`
 
+// styled-components
+const Content = styled.div`
+  p {
+    max-width: 500px;
+  }
 `
 
+
 // page template component
-export default function AboutPage({ data }) {
-  const pageData = data.markdownRemark;
+export default function Post({ data }) {
+  const post = data.markdownRemark;
 
   return (
     <div>
-      <Title>{pageData.title}</Title>
-
-      <p>
-        {pageData.description}
-      </p>
-
+      <h3>{post.title}</h3>
+      <Content dangerouslySetInnerHTML={{ __html: post.html }}/>
     </div>
   );
 };
@@ -25,12 +25,12 @@ export default function AboutPage({ data }) {
 
 // template query
 export const aboutPageQuery = graphql`
-  query AboutPage($path: String!) {
+  query Student($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
+      html
       frontmatter {
         path
         title
-        description
       }
     }
   }
