@@ -1,83 +1,182 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
-import Button from '../components/Button'
+import Student from '../components/Student'
 
+const OuterContainer = styled.div`
+  height: 100%;
+  overflow: hidden;
+`
 
-// styled components
 const Container = styled.div`
+  height: calc(100% + 15px);
+  margin-bottom: -15px;
+  overflow: auto;
+  overflow-y: hidden;
+`
+
+const InnerContainer = styled.div`
+  height: 100%;
+  display: flex;
+  padding-bottom: 15px !important;
 
 `
 
-const Subtitle = styled.div`
-  text-align: left;
+const Image = styled.div`
+  width: 400px;
+  height: 400px;
+  margin-right: 20px;
+  background-color: grey;
+  transform-origin: top right;
 `
 
-const List = styled.ul`
-  li {
-    margin-bottom: 2rem;
-  }
+const ImagesContainer = styled.div`
+  display: flex;
+  height: 100%;
 `
 
-const LinkContainer = styled.li`
-
-`
-
-const LinkText = styled(Link)`
-  font-style: italic;
-  color: black;
-
-  &:hover {
-    text-decoration: none;
-  }
-`
+const list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
 
 
-// components
-function PageLink(props) {
+function Students(props) {
   return (
-    <LinkContainer>
-      <LinkText to={props.to}>
-        {props.title}
-      </LinkText>
-    </LinkContainer>
+    <ImagesContainer>
+      {list.map( i =>
+        <Student
+          key={i}
+          scroll={props.scroll}
+        />
+      )}
+    </ImagesContainer>
   )
 }
 
+//
+// <Image key={i} style={style} offsetRight={offsetRight} innerRef={(image) => { this.images[i].element = image }}>
+//   {i}
+// </Image>
 
 // page component
-export default function IndexPage({ data }) {
-  const pages = data.allSitePage.edges;
+export default class SecondPage extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <Container>
-      <Subtitle>dynamic pages:</Subtitle>
+    this.state = {
+      scroll: 0,
+      windowWidth: 1000,
+      studentsWidth: 1000
+    }
 
-      <List>
-        {pages.map( ({ node: page }, i) => (
-          <PageLink
-            to={page.path}
-            title={page.path}
-            key={page.id}
-          />
-        ))}
-      </List>
+    this.students = new Array(list.length*2).fill({});
+  }
 
-      <Button text="this is a button component" />
+  componentDidMount() {
+    this.setState({
+      windowWidth: window.innerWidth,
+      studentsWidth: this.studentsContainer.offsetWidth
+    }, this.updateChildren);
+  }
 
-    </Container>
-  )
+  handleScroll = (e) => {
+    let scroll = this.container.scrollLeft;
+    let delta = e.deltaY;
+    e.preventDefault();
+
+    this.container.scrollLeft -= (e.deltaY + e.deltaX)*0.3;
+
+    if(scroll >= this.state.studentsWidth+3) {
+      this.container.scrollLeft = 1;
+    }
+
+    if(scroll == 0) {
+      this.container.scrollLeft = this.state.studentsWidth+2
+    }
+
+    if (!(scroll == 1) && !(scroll == 0) ) {
+      this.updateChildren();
+    }
+
+    this.setState({
+      scroll: scroll,
+    })
+  }
+
+  // resetScroll = () => {
+  //   this.container.scrollLeft = 200;
+  // }
+
+  updateWindowSize() {
+    this.setState({
+      windowWidth: window.innerWidth
+    })
+  }
+
+  updateChildren = () => {
+    for (let s = 0; s < this.students.length; s++) {
+      if (this.state.scroll < 10 && s > list.length-1) {
+        let offset = this.students[s-list.length].getOffset();
+        this.students[s].setOffset(offset)
+      } else if (this.state.scroll > this.state.studentsWidth-10 && s < list.length-1) {
+        let offset = this.students[s+list.length].getOffset();
+        this.students[s].setOffset(offset)
+      }
+
+
+      else {
+        this.students[s].calcOffset();
+      }
+    }
+  }
+
+  render() {
+    return (
+      <OuterContainer onClick={this.resetScroll}>
+        <Container innerRef={(container) => { this.container = container; }}>
+          <InnerContainer onWheel={this.handleScroll}>
+
+            <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
+              {list.map(i => {
+                return (
+                  <Student
+                    key={i}
+                    num={i}
+                    image={this.props.data.file.childImageSharp.sizes}
+                    windowWidth={this.state.windowWidth}
+                    ref={el => this.students[i] = el }
+                  />
+                )
+              })}
+            </ImagesContainer>
+
+            <ImagesContainer>
+              {list.map(i => {
+                return (
+                  <Student
+                    key={i}
+                    num={i}
+                    image={this.props.data.file.childImageSharp.sizes}
+                    windowWidth={this.state.windowWidth}
+                    ref={el => this.students[list.length + i] = el}
+                  />
+                )
+              })}
+            </ImagesContainer>
+
+
+          </InnerContainer>
+        </Container>
+      </OuterContainer>
+    )
+  }
+
 }
 
-// data query
 export const query = graphql`
-  query IndexQuery {
-    allSitePage {
-      totalCount
-      edges {
-        node {
-          id
-          path
+  query StudeuntQuery {
+    file(relativePath: { eq: "assets/student.jpg" }) {
+      childImageSharp {
+        sizes(maxWidth: 600) {
+          ...GatsbyImageSharpSizes_withWebp_tracedSVG
         }
       }
     }

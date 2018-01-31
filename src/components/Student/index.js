@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import Mark from '../Mark'
+import Img from "gatsby-image"
 
 /*
   Base component
@@ -12,13 +14,61 @@ const Container = styled.div`
   width: 400px;
   height: 400px;
   margin-right: 20px;
-  background-color: grey;
+  background-color: white;
   transform-origin: top right;
+
+  .image-wrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .image {
+    height: 100%;
+  }
 `
 
 const Text = styled.p`
 
 `
+
+const MarkContainer = styled.div`
+  position: absolute;
+  top: -5.5rem;
+  right: -4.3rem;
+  opacity: 0;
+
+  ${Container}:hover & {
+    opacity: 1;
+  }
+`
+
+const StatementText = styled.div`
+  text-transform: uppercase;
+  line-height: 1;
+  position: absolute;
+  font-size: 4.5rem;
+  opacity: 0;
+
+  ${Container}:hover & {
+    opacity: 1;
+  }
+`
+
+const Verb = StatementText.extend`
+  transform: rotate(-90deg);
+  left: -11rem;
+  top: 5rem;
+
+`
+
+const Noun = StatementText.extend`
+transform: rotate(-180deg);
+right: -0.5rem;
+bottom: -5.3rem;
+`
+
+// helper function
+const constrain = (num, low, high) => Math.min(Math.max(Math.abs(num), low), high);
 
 // component
 export default class Student extends React.Component {
@@ -46,21 +96,27 @@ export default class Student extends React.Component {
     })
   }
 
-
-
   render() {
-    let style = {
-      transform: `scale(${Math.min(Math.max(Math.abs(this.state.offsetRight), 0), 1.5)})`
-    }
+    let offset = this.state.offsetRight+0.3;
 
-    // let style = {
-    //   transform: `scale(${this.state.offsetRight})`
-    // }
+    let style = {
+      transform: `scale(${constrain(Math.pow(offset, 1.5)*0.65+(0.1-offset*0.1),0,2)}) translateY(${constrain(1-offset*100, 0, 120) + (20 - offset*20)}%)`
+    }
 
     return (
       <Container innerRef={(container) => { this.element = container; }} style={style}>
-        <Text>{this.props.num}</Text>
-        <Text>{this.state.offsetRight}</Text>
+        <MarkContainer>
+          <Mark/>
+        </MarkContainer>
+
+        <Verb>[Verb]</Verb>
+        <Noun>[Noun]</Noun>
+
+        <Img
+          sizes={this.props.image}
+          outerWrapperClassName='image-wrapper'
+          className='image'
+        />
       </Container>
     )
   }
