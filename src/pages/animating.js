@@ -111,8 +111,9 @@ export default class SecondPage extends React.Component {
       if (this.state.scroll < 200 && s > list.length-1) {
         let offset = this.students[s-list.length].getOffset();
         this.students[s].setOffset(offset)
-      } else if (this.state.scroll > this.state.studentsWidth) {
-
+      } else if (this.state.scroll > this.state.studentsWidth-200 && s < list.length) {
+        let offset = this.students[s+list.length].getOffset();
+        this.students[s].setOffset(offset)
       }
 
 
