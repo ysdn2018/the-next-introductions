@@ -57,7 +57,8 @@ const StatementText = styled.div`
 const Verb = StatementText.extend`
   transform: rotate(-90deg);
   left: -11rem;
-  top: 5rem;
+  text-align: right;
+  top: 5.2rem;
 
 `
 
@@ -100,7 +101,7 @@ export default class Student extends React.Component {
     let offset = this.state.offsetRight+0.3;
 
     let style = {
-      transform: `scale(${constrain(Math.pow(offset, 1.5)*0.65+(0.1-offset*0.1),0,2)}) translateY(${constrain(1-offset*100, 0, 120) + (20 - offset*20)}%)`
+      transform: `scale(${constrain(Math.pow(offset, 1.5)*0.65+(0.1-offset*0.1),0,2)}) translateY(${constrain(1-offset*100, -1, 120) + (20 - offset*20)}%)`
     }
 
     return (
@@ -109,8 +110,8 @@ export default class Student extends React.Component {
           <Mark/>
         </MarkContainer>
 
-        <Verb>[Verb]</Verb>
-        <Noun>[Noun]</Noun>
+        <Verb>{this.props.verb}</Verb>
+        <Noun>{this.props.noun}</Noun>
 
         <Img
           sizes={this.props.image}

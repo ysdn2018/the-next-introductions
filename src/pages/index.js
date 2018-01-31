@@ -142,6 +142,8 @@ export default class SecondPage extends React.Component {
                     num={i}
                     image={this.props.data.file.childImageSharp.sizes}
                     windowWidth={this.state.windowWidth}
+                    verb={'[verb]'}
+                    noun={'[noun]'}
                     ref={el => this.students[i] = el }
                   />
                 )
@@ -156,6 +158,8 @@ export default class SecondPage extends React.Component {
                     num={i}
                     image={this.props.data.file.childImageSharp.sizes}
                     windowWidth={this.state.windowWidth}
+                    verb={'[verb]'}
+                    noun={'[noun]'}
                     ref={el => this.students[list.length + i] = el}
                   />
                 )

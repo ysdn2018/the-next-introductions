@@ -17,10 +17,12 @@ collections:
     create: true
     fields:
       - { name: templateKey, label: Template Key, widget: hidden, default: student}
-      - { name: path, label: Path }
-      - { name: date, label: Date, widget: date }
-      - { name: title, label: Title }
-      - { name: body, label: Body, widget: markdown }
+      - { name: name, label: Name }
+      - { name: verb, label: Verb }
+      - { name: noun, label: Noun }
+      - label: "Cropped Image"
+        name: "image"
+        widget: "image"
   - name: pages
     label: Pages
     files:
