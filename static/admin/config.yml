@@ -11,8 +11,8 @@ public_folder: assets
 
 # CMS File Structures
 collections:
-  - name: posts
-    label: Posts
+  - name: students
+    label: Students
     folder: src/content/students
     create: true
     fields:
@@ -21,11 +21,11 @@ collections:
       - { name: verb, label: Verb }
       - { name: noun, label: Noun }
       - { name: workImage, label: Cropped Image, widget: image}
-  - name: pages
-    label: Pages
+  - name: info
+    label: Information
     files:
       - name: about
-        label: About Page
+        label: About Info
         file: src/content/about.md
         fields:
           - { name: templateKey, label: Template Key, widget: hidden, default: post}
