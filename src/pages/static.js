@@ -172,7 +172,7 @@ export default class SecondPage extends React.Component {
 }
 
 export const query = graphql`
-  query StudeuntQuery {
+  query StaticQuery {
     file(relativePath: { eq: "assets/student.jpg" }) {
       childImageSharp {
         sizes(maxWidth: 600) {
