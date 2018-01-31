@@ -83,17 +83,21 @@ export default class SecondPage extends React.Component {
 
     if(scroll >= this.state.studentsWidth+3) {
       this.container.scrollLeft = 1;
+    } else {
+      this.updateChildren();
     }
 
     if(scroll == 0) {
-      this.container.scrollLeft = this.state.studentsWidth-2
+      this.container.scrollLeft = this.state.studentsWidth+2
     }
 
     this.setState({
       scroll: scroll,
     })
+  }
 
-    this.updateChildren()
+  resetScroll = () => {
+    this.container.scrollLeft = 200;
   }
 
   updateWindowSize() {
@@ -104,13 +108,23 @@ export default class SecondPage extends React.Component {
 
   updateChildren = () => {
     for (let s = 0; s < this.students.length; s++) {
-      this.students[s].updateSize();
+      if (this.state.scroll < 200 && s > list.length-1) {
+        let offset = this.students[s-list.length].getOffset();
+        this.students[s].setOffset(offset)
+      } else if (this.state.scroll > this.state.studentsWidth) {
+
+      }
+
+
+      else {
+        this.students[s].calcOffset();
+      }
     }
   }
 
   render() {
     return (
-      <OuterContainer>
+      <OuterContainer onClick={this.resetScroll}>
         <Container innerRef={(container) => { this.container = container; }}>
           <InnerContainer onWheel={this.handleScroll}>
 
