@@ -137,13 +137,16 @@ export default class SecondPage extends React.Component {
 
             <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
               {students.map( ({ node }, i) => {
+                console.log(node.frontmatter);
                 return (
                   <Student
                     key={node.id}
                     image={node.frontmatter.image.childImageSharp.resolutions}
-                    windowWidth={this.state.windowWidth}
+                    name={node.frontmatter.title}
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
+                    blurb={node.frontmatter.blurb}
+                    windowWidth={this.state.windowWidth}
                     ref={el => this.students[i] = el }
                   />
                 )
@@ -156,9 +159,11 @@ export default class SecondPage extends React.Component {
                   <Student
                     key={node.id}
                     image={node.frontmatter.image.childImageSharp.resolutions}
-                    windowWidth={this.state.windowWidth}
+                    name={node.frontmatter.title}
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
+                    blurb={node.frontmatter.blurb}
+                    windowWidth={this.state.windowWidth}
                     ref={el => this.students[this.length + i] = el}
                   />
                 )
@@ -184,7 +189,7 @@ export const query = graphql`
             title
             verb
             noun
-            title
+            blurb
 
             image {
               childImageSharp {

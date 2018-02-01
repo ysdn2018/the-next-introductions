@@ -16,6 +16,7 @@ const Container = styled.div`
   margin-right: 20px;
   background-color: white;
   transform-origin: top right;
+  cursor: pointer;
 
   .image-wrapper {
     height: 100%;
@@ -70,6 +71,22 @@ right: -0.5rem;
 bottom: -5.3rem;
 `
 
+const TextContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+`
+
+const InnerTextContainer = styled.div`
+  padding: 1rem;
+  width: calc(100% - 5px);
+  height: calc(100% - 5px);
+  background-color: white;
+`
+
 // helper function
 const constrain = (num, low, high) => Math.min(Math.max(Math.abs(num), low), high);
 
@@ -79,8 +96,15 @@ export default class Student extends React.Component {
     super(props);
 
     this.state = {
-      offsetRight: 0
+      offsetRight: 0,
+      showInfo: false
     }
+  }
+
+  toggleInfo = () => {
+    this.setState(prevState => ({
+      showInfo: !prevState.showInfo
+    }))
   }
 
   calcOffset = () => {
@@ -107,7 +131,7 @@ export default class Student extends React.Component {
     }
 
     return (
-      <Container innerRef={(container) => { this.element = container; }} style={style}>
+      <Container innerRef={(container) => { this.element = container; }} style={style} onClick={this.toggleInfo}>
         <MarkContainer>
           <Mark/>
         </MarkContainer>
@@ -115,11 +139,20 @@ export default class Student extends React.Component {
         <Verb>{this.props.verb}</Verb>
         <Noun>{this.props.noun}</Noun>
 
-        <Img
-          resolutions={this.props.image}
-          outerWrapperClassName='image-wrapper'
-          className='image'
-        />
+        {this.state.showInfo ? (
+          <TextContainer>
+            <InnerTextContainer>
+              <p>{this.props.blurb}</p>
+              <p>{this.props.name}</p>
+            </InnerTextContainer>
+          </TextContainer>
+        ) : (
+          <Img
+            resolutions={this.props.image}
+            outerWrapperClassName='image-wrapper'
+            className='image'
+          />
+        )}
       </Container>
     )
   }
