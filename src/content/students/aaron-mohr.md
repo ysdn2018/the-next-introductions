@@ -1,8 +1,6 @@
 ---
-templateKey: student
 title: Aaron Mohr
 verb: Dropping
 noun: Deuce
-image: /assets/sloth.jpg
+image: images/sloth.jpg
 ---
-

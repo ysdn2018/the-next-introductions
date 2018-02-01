@@ -4,7 +4,7 @@
 const path = require('path');
 const fs = require('fs');
 
-const staticImagePath = "./static/assets/";
+const staticImagePath = "./static/images/";
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   if (node.internal.mediaType == "image/png" || node.internal.mediaType === `image/jpeg`) {

@@ -114,7 +114,7 @@ export default class Student extends React.Component {
         <Noun>{this.props.noun}</Noun>
 
         <Img
-          sizes={this.props.image}
+          resolutions={this.props.image}
           outerWrapperClassName='image-wrapper'
           className='image'
         />

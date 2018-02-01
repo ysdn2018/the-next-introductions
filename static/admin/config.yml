@@ -6,8 +6,8 @@ backend:
   # Replace this with your github-username/repo-name
   # then do the netlify setup here: https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider
 
-media_folder: src/content/assets
-public_folder: assets
+media_folder: src/content/students/images
+public_folder: images
 
 # CMS File Structures
 collections:
@@ -16,7 +16,6 @@ collections:
     folder: src/content/students
     create: true
     fields:
-      - { name: templateKey, label: Template Key, widget: hidden, default: student}
       - { name: title, label: Name }
       - { name: verb, label: Verb }
       - { name: noun, label: Noun }
@@ -28,6 +27,5 @@ collections:
         label: About Info
         file: src/content/about.md
         fields:
-          - { name: templateKey, label: Template Key, widget: hidden, default: post}
           - { name: title, label: Title }
           - { name: text, label: Text, widget: text }

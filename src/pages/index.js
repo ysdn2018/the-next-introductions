@@ -36,8 +36,6 @@ const ImagesContainer = styled.div`
   height: 100%;
 `
 
-const list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];
-
 // page component
 export default class SecondPage extends React.Component {
   constructor(props) {
@@ -49,7 +47,7 @@ export default class SecondPage extends React.Component {
       studentsWidth: 1000
     }
 
-    this.students = new Array(list.length*2).fill({});
+    this.students = new Array(props.data.allMarkdownRemark.edges.length*2).fill({});
   }
 
   handleScriptLoad() {
@@ -124,6 +122,7 @@ export default class SecondPage extends React.Component {
   }
 
   render() {
+    let students = this.props.data.allMarkdownRemark.edges;
     return (
       <OuterContainer onClick={this.resetScroll}>
         <Script
@@ -135,12 +134,12 @@ export default class SecondPage extends React.Component {
           <InnerContainer onWheel={this.handleScroll}>
 
             <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
-              {list.map(i => {
+              {students.map( ({ node }, i) => {
+                console.log(node);
                 return (
                   <Student
-                    key={i}
-                    num={i}
-                    image={this.props.data.file.childImageSharp.sizes}
+                    key={node.id}
+                    image={node.frontmatter.image.childImageSharp.resolutions}
                     windowWidth={this.state.windowWidth}
                     verb={'[verb]'}
                     noun={'[noun]'}
@@ -151,12 +150,11 @@ export default class SecondPage extends React.Component {
             </ImagesContainer>
 
             <ImagesContainer>
-              {list.map(i => {
+              {students.map(({ node }, i) => {
                 return (
                   <Student
-                    key={i}
-                    num={i}
-                    image={this.props.data.file.childImageSharp.sizes}
+                    key={node.id}
+                    image={node.frontmatter.image.childImageSharp.resolutions}
                     windowWidth={this.state.windowWidth}
                     verb={'[verb]'}
                     noun={'[noun]'}
@@ -177,12 +175,22 @@ export default class SecondPage extends React.Component {
 
 export const query = graphql`
   query StudentQuery {
-    file(relativePath: { eq: "assets/susan-kim.jpg" }) {
-      childImageSharp {
-        sizes(maxWidth: 600) {
-          ...GatsbyImageSharpSizes_withWebp_tracedSVG
-        }
-      }
-    }
+    allMarkdownRemark (filter: {fileAbsolutePath: {regex: "/students/"} }) {
+  	  edges {
+  	    node {
+  	      id
+          frontmatter {
+            title
+            image {
+              childImageSharp {
+                resolutions(width: 400, height: 400) {
+                  ...GatsbyImageSharpResolutions_withWebp_tracedSVG
+                }
+              }
+            }
+          }
+  	    }
+  	  }
+  	}
   }
 `;
