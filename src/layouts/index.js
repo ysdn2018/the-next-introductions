@@ -69,7 +69,7 @@ function Header () {
 const TemplateWrapper = ({ children }) => (
   <Container>
     <Helmet
-      title="boiled"
+      title="Introducing The Next Class"
       meta={[
         { name: 'description', content: 'Sample' },
         { name: 'keywords', content: 'sample, something' },
