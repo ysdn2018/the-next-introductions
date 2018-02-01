@@ -56,9 +56,11 @@ const StatementText = styled.div`
 
 const Verb = StatementText.extend`
   transform: rotate(-90deg);
-  left: -11rem;
+  transform-origin: center;
+  left: -23rem;
   text-align: right;
-  top: 5.2rem;
+  width: 400px;
+  top: 17.6rem;
 
 `
 

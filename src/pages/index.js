@@ -47,7 +47,9 @@ export default class SecondPage extends React.Component {
       studentsWidth: 1000
     }
 
-    this.students = new Array(props.data.allMarkdownRemark.edges.length*2).fill({});
+
+    this.length = props.data.allMarkdownRemark.edges.length;
+    this.students = new Array(this.length*2).fill({});
   }
 
   handleScriptLoad() {
@@ -106,11 +108,11 @@ export default class SecondPage extends React.Component {
 
   updateChildren = () => {
     for (let s = 0; s < this.students.length; s++) {
-      if (this.state.scroll < 10 && s > list.length-1) {
-        let offset = this.students[s-list.length].getOffset();
+      if (this.state.scroll < 10 && s > this.length-1) {
+        let offset = this.students[s-this.length].getOffset();
         this.students[s].setOffset(offset)
-      } else if (this.state.scroll > this.state.studentsWidth-10 && s < list.length-1) {
-        let offset = this.students[s+list.length].getOffset();
+      } else if (this.state.scroll > this.state.studentsWidth-10 && s < this.length-1) {
+        let offset = this.students[s+this.length].getOffset();
         this.students[s].setOffset(offset)
       }
 
@@ -135,14 +137,13 @@ export default class SecondPage extends React.Component {
 
             <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
               {students.map( ({ node }, i) => {
-                console.log(node);
                 return (
                   <Student
                     key={node.id}
                     image={node.frontmatter.image.childImageSharp.resolutions}
                     windowWidth={this.state.windowWidth}
-                    verb={'[verb]'}
-                    noun={'[noun]'}
+                    verb={node.frontmatter.verb}
+                    noun={node.frontmatter.noun}
                     ref={el => this.students[i] = el }
                   />
                 )
@@ -156,9 +157,9 @@ export default class SecondPage extends React.Component {
                     key={node.id}
                     image={node.frontmatter.image.childImageSharp.resolutions}
                     windowWidth={this.state.windowWidth}
-                    verb={'[verb]'}
-                    noun={'[noun]'}
-                    ref={el => this.students[list.length + i] = el}
+                    verb={node.frontmatter.verb}
+                    noun={node.frontmatter.noun}
+                    ref={el => this.students[this.length + i] = el}
                   />
                 )
               })}
@@ -181,6 +182,10 @@ export const query = graphql`
   	      id
           frontmatter {
             title
+            verb
+            noun
+            title
+
             image {
               childImageSharp {
                 resolutions(width: 400, height: 400) {

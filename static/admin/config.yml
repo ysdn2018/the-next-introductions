@@ -19,7 +19,8 @@ collections:
       - { name: title, label: Name }
       - { name: verb, label: Verb }
       - { name: noun, label: Noun }
-      - { name: image, label: Cropped Image, widget: image}
+      - { name: image, label: Cropped Image, widget: image }
+      - { name: blurb, label: Blurb, widget: text }
   - name: info
     label: Information
     files:
