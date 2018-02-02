@@ -11,12 +11,12 @@ import Img from "gatsby-image"
 
 // styled components
 const Container = styled.div`
-  width: 400px;
-  height: 400px;
-  margin-right: 20px;
+  width: 70vmin;
+  height: 70vmin;
   background-color: white;
-  transform-origin: top right;
+  transform-origin: center center;
   cursor: pointer;
+  transform: scale(0.5);
 
   .image-wrapper {
     height: 100%;
@@ -126,8 +126,12 @@ export default class Student extends React.Component {
   render() {
     let offset = this.state.offsetRight+0.3;
 
+    // let style = {
+    //   transform: `scale(${constrain(Math.pow(offset, 1.5)*0.65+(0.1-offset*0.1),0,2)}) translateY(${constrain(1-offset*100, -1, 120) + (20 - offset*20)}%)`
+    // }
+
     let style = {
-      transform: `scale(${constrain(Math.pow(offset, 1.5)*0.65+(0.1-offset*0.1),0,2)}) translateY(${constrain(1-offset*100, -1, 120) + (20 - offset*20)}%)`
+      transform: `scale(${this.props.scale})`
     }
 
     return (
@@ -144,11 +148,12 @@ export default class Student extends React.Component {
             <InnerTextContainer>
               <p>{this.props.blurb}</p>
               <p>{this.props.name}</p>
+              <h4>{this.props.debug}</h4>
             </InnerTextContainer>
           </TextContainer>
         ) : (
           <Img
-            resolutions={this.props.image}
+            sizes={this.props.image}
             outerWrapperClassName='image-wrapper'
             className='image'
           />

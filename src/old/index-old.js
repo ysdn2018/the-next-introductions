@@ -71,7 +71,7 @@ export default function IndexPage({ data }) {
 
 // data query
 export const query = graphql`
-  query IndexQuery {
+  query OldQuery {
     allSitePage {
       totalCount
       edges {

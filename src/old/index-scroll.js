@@ -44,12 +44,11 @@ export default class SecondPage extends React.Component {
     this.state = {
       scroll: 0,
       windowWidth: 1000,
-      studentsWidth: 1000,
-      vmin: 1000
+      studentsWidth: 1000
     }
 
 
-    this.length = this.props.data.allMarkdownRemark.edges.length;
+    this.length = props.data.allMarkdownRemark.edges.length;
     this.students = new Array(this.length*2).fill({});
   }
 
@@ -69,8 +68,7 @@ export default class SecondPage extends React.Component {
   componentDidMount() {
     this.setState({
       windowWidth: window.innerWidth,
-      studentsWidth: this.studentsContainer.offsetWidth,
-      vmin: Math.min(window.innerWidth, window.innerHeight)
+      studentsWidth: this.studentsContainer.offsetWidth
     }, this.updateChildren);
   }
 
@@ -108,7 +106,7 @@ export default class SecondPage extends React.Component {
     })
   }
 
-  updateChildrenOld = () => {
+  updateChildren = () => {
     for (let s = 0; s < this.students.length; s++) {
       if (this.state.scroll < 10 && s > this.length-1) {
         let offset = this.students[s-this.length].getOffset();
@@ -118,44 +116,15 @@ export default class SecondPage extends React.Component {
         this.students[s].setOffset(offset)
       }
 
+
       else {
         this.students[s].calcOffset();
       }
     }
   }
 
-  initChildren = () => {
-    for (let s = 0; s < this.students.length; s++) {
-      this.students[s] = {
-        debug: 0,
-        scale: 0
-      };
-    }
-  }
-
-  updateChildren = () => {
-    for (let s = 0; s < this.students.length; s++) {
-      let centerScroll = this.state.scroll + this.state.windowWidth/2;
-      let studentWidth =  (this.state.vmin*0.7);
-      let studentCenterPoint = (studentWidth*s)+(studentWidth/2);
-      let distance = Math.abs(centerScroll-studentCenterPoint);
-
-      let obj = {};
-      obj.debug = distance;
-      obj.scale = Math.abs(1-distance/(this.state.windowWidth/2));
-
-      if (distance > this.state.windowWidth/2) {
-        obj.scale = 0;
-      }
-
-      this.students[s] = obj;
-
-      // this.students[s].scale =
-    }
-  }
-
   render() {
-    let studentsData = this.props.data.allMarkdownRemark.edges;
+    let students = this.props.data.allMarkdownRemark.edges;
     return (
       <OuterContainer onClick={this.resetScroll}>
         <Script
@@ -167,36 +136,34 @@ export default class SecondPage extends React.Component {
           <InnerContainer onWheel={this.handleScroll}>
 
             <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
-              {studentsData.map( ({ node }, i) => {
+              {students.map( ({ node }, i) => {
                 return (
                   <Student
                     key={node.id}
-                    image={node.frontmatter.image.childImageSharp.sizes}
+                    image={node.frontmatter.image.childImageSharp.resolutions}
                     name={node.frontmatter.title}
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
-                    debug={this.students[i].debug}
                     windowWidth={this.state.windowWidth}
-                    scale={this.students[i].scale}
+                    ref={el => this.students[i] = el }
                   />
                 )
               })}
             </ImagesContainer>
 
             <ImagesContainer>
-              {studentsData.map(({ node }, i) => {
+              {students.map(({ node }, i) => {
                 return (
                   <Student
                     key={node.id}
-                    image={node.frontmatter.image.childImageSharp.sizes}
+                    image={node.frontmatter.image.childImageSharp.resolutions}
                     name={node.frontmatter.title}
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
-                    debug={this.students[i+this.length].debug}
                     windowWidth={this.state.windowWidth}
-                    scale={this.students[i+this.length].scale}
+                    ref={el => this.students[this.length + i] = el}
                   />
                 )
               })}
@@ -212,7 +179,7 @@ export default class SecondPage extends React.Component {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query ScrollQuery {
     allMarkdownRemark (filter: {fileAbsolutePath: {regex: "/students/"} }) {
   	  edges {
   	    node {
@@ -225,8 +192,8 @@ export const query = graphql`
 
             image {
               childImageSharp {
-                sizes(maxWidth: 800) {
-                  ...GatsbyImageSharpSizes_withWebp
+                resolutions(width: 400, height: 400) {
+                  ...GatsbyImageSharpResolutions_withWebp_tracedSVG
                 }
               }
             }
