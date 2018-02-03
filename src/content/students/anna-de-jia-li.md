@@ -1,5 +1,5 @@
 ---
-title: Anna De-Jia Li
+title: De-Jia Anna Li
 verb: Seeing
 noun: Attitude
 image: images/li_anna_de_jia.jpg
@@ -9,3 +9,4 @@ blurb: >-
   illustration. Design becomes an attitude and can give birth to new concepts. I
   want to be in this interaction.
 ---
+
