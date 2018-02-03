@@ -168,7 +168,7 @@ export default class SecondPage extends React.Component {
 
             <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
               {studentsData.map( ({ node }, i) => {
-                console.log(node.frontmatter.title);
+                // console.log(node.frontmatter.title);
                 return (
                   <Student
                     key={node.id}
