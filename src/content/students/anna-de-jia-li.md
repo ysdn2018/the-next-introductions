@@ -1,5 +1,5 @@
 ---
-title: De-Jia Anna Li
+title: Anna De-Jia Li
 verb: Seeing
 noun: Attitude
 image: images/li_anna_de_jia.jpg
