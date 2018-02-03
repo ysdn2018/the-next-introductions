@@ -1,5 +1,5 @@
 ---
-title: Yanchen Tony Zhao
+title: Tony Yanchen Zhao
 verb: Creating
 noun: Experience
 image: /images/zhao_tony_yanchen.jpg
