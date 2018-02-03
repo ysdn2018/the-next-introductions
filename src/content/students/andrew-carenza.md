@@ -1,5 +1,5 @@
 ---
-title: Andrew Carenza
+title: Andrew J. Carenza
 verb: Starting
 noun: Revolution
 image: images/carenza_andrew.jpg
@@ -9,3 +9,4 @@ blurb: >-
   visualize information. When design unites itself this way it has the power to
   change perception, awaken, inform, and empower.
 ---
+
