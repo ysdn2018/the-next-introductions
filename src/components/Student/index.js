@@ -17,6 +17,7 @@ const Container = styled.div`
   transform-origin: center center;
   cursor: pointer;
   transform: scale(0.5);
+  ${'' /* transition: transform 10ms ease-in-out; */}
 
   .image-wrapper {
     height: 100%;
@@ -31,6 +32,17 @@ const Container = styled.div`
 const Text = styled.p`
 
 `
+
+const Line = styled.div`
+  height: 100%;
+  width: 3px;
+  background-color: red;
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 0;
+`
+
 
 const MarkContainer = styled.div`
   position: absolute;
@@ -90,6 +102,10 @@ const InnerTextContainer = styled.div`
 // helper function
 const constrain = (num, low, high) => Math.min(Math.max(Math.abs(num), low), high);
 
+const map = (num, in_min, in_max, out_min, out_max) => (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+
+
+
 // component
 export default class Student extends React.Component {
   constructor(props) {
@@ -97,7 +113,7 @@ export default class Student extends React.Component {
 
     this.state = {
       offsetRight: 0,
-      showInfo: false
+      showInfo: true
     }
   }
 
@@ -131,7 +147,7 @@ export default class Student extends React.Component {
     // }
 
     let style = {
-      transform: `scale(${this.props.scale})`
+      transform: `scale(${this.props.scale}) translateY(${this.props.translateY}px)`
     }
 
     return (
@@ -139,6 +155,8 @@ export default class Student extends React.Component {
         <MarkContainer>
           <Mark/>
         </MarkContainer>
+
+        <Line/>
 
         <Verb>{this.props.verb}</Verb>
         <Noun>{this.props.noun}</Noun>
@@ -148,7 +166,7 @@ export default class Student extends React.Component {
             <InnerTextContainer>
               <p>{this.props.blurb}</p>
               <p>{this.props.name}</p>
-              <h4>{this.props.debug}</h4>
+              <h1>{this.props.debug}</h1>
             </InnerTextContainer>
           </TextContainer>
         ) : (

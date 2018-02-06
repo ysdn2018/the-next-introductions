@@ -34,6 +34,17 @@ const Image = styled.div`
 const ImagesContainer = styled.div`
   display: flex;
   height: 100%;
+
+`
+
+const Line = styled.div`
+  height: 100%;
+  width: 3px;
+  background-color: red;
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 0;
 `
 
 // page component
@@ -44,6 +55,7 @@ export default class SecondPage extends React.Component {
     this.state = {
       scroll: 0,
       windowWidth: 1000,
+      windowHeight: 1000,
       studentsWidth: 1000,
       vmin: 1000
     }
@@ -69,6 +81,7 @@ export default class SecondPage extends React.Component {
   componentDidMount() {
     this.setState({
       windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
       studentsWidth: this.studentsContainer.offsetWidth,
       vmin: Math.min(window.innerWidth, window.innerHeight)
     }, this.updateChildren);
@@ -104,7 +117,9 @@ export default class SecondPage extends React.Component {
 
   updateWindowSize() {
     this.setState({
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
+      vmin: Math.min(window.innerWidth, window.innerHeight)
     })
   }
 
@@ -139,13 +154,21 @@ export default class SecondPage extends React.Component {
       let studentWidth =  (this.state.vmin*0.7);
       let studentCenterPoint = (studentWidth*s)+(studentWidth/2);
       let distance = Math.abs(centerScroll-studentCenterPoint);
+      let scaledDistance = (centerScroll-studentCenterPoint)/(this.state.windowWidth/2);
 
       let obj = {};
-      obj.debug = distance;
-      obj.scale = Math.abs(1-distance/(this.state.windowWidth/2));
+      // obj.debug = distance;
+      obj.debug = Math.abs(1-distance/(this.state.windowWidth/2))
+      obj.scale = Math.abs(1-distance/(this.state.windowWidth/2)-0.2);
+      obj.scale = 0.5;
+      obj.translateY = scaledDistance * (this.state.windowHeight)
 
-      if (distance > this.state.windowWidth/2) {
+
+
+      if (distance > this.state.windowWidth/2+(studentWidth/2)) {
         obj.scale = 0;
+      } else {
+        obj.scale = Math.abs(1-distance/(this.state.windowWidth/2));
       }
 
       this.students[s] = obj;
@@ -163,12 +186,15 @@ export default class SecondPage extends React.Component {
           onLoad={() => this.handleScriptLoad()}
         />
 
+        <Line/>
+
         <Container innerRef={(container) => { this.container = container; }}>
           <InnerContainer onWheel={this.handleScroll}>
 
             <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
               {studentsData.map( ({ node }, i) => {
                 // console.log(node.frontmatter.title);
+                // console.log(this.students[i]);
                 return (
                   <Student
                     key={node.id}
@@ -180,6 +206,7 @@ export default class SecondPage extends React.Component {
                     debug={this.students[i].debug}
                     windowWidth={this.state.windowWidth}
                     scale={this.students[i].scale}
+                    translateY={this.students[i].translateY}
                   />
                 )
               })}
@@ -198,6 +225,7 @@ export default class SecondPage extends React.Component {
                     debug={this.students[i+this.length].debug}
                     windowWidth={this.state.windowWidth}
                     scale={this.students[i+this.length].scale}
+                    translateY={this.students[i].translateY}
                   />
                 )
               })}
