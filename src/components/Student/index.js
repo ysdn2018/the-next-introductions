@@ -16,7 +16,7 @@ const Container = styled.div`
   background-color: white;
   transform-origin: center center;
   cursor: pointer;
-  transform: scale(0.5);
+  transform: scale(1);
   ${'' /* transition: transform 10ms ease-in-out; */}
 
   .image-wrapper {
@@ -36,7 +36,7 @@ const Text = styled.p`
 const Line = styled.div`
   height: 100%;
   width: 3px;
-  background-color: red;
+
   position: absolute;
   z-index: 3;
   left: 50%;
@@ -152,7 +152,7 @@ export default class Student extends React.Component {
     }
 
     return (
-      <Container innerRef={(container) => { this.element = container; }} style={{}} onClick={this.toggleInfo}>
+      <Container innerRef={this.props.studentRef} style={{}} onClick={this.toggleInfo}>
         <MarkContainer>
           <Mark/>
         </MarkContainer>

@@ -228,7 +228,7 @@ export default class SecondPage extends React.Component {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query MagicQuery {
     allMarkdownRemark (filter: {fileAbsolutePath: {regex: "/students/"} }) {
   	  edges {
   	    node {

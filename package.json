@@ -20,9 +20,11 @@
     "gatsby-source-filesystem": "^1.5.11",
     "gatsby-transformer-remark": "^1.7.26",
     "gatsby-transformer-sharp": "^1.6.16",
+    "gsap": "^1.20.3",
     "normalize.css": "^7.0.0",
     "react-load-script": "^0.0.6",
     "react-motion": "^0.5.2",
+    "scrollmagic": "^2.0.5",
     "styled-components": "^2.4.0"
   },
   "keywords": [

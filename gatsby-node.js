@@ -1,7 +1,7 @@
 /*
   this is where the pages are generated
 */
-const path = require('path');
+const Path = require('path');
 const fs = require('fs');
 
 const staticImagePath = "./static/images/";
@@ -14,6 +14,23 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
 
     fs.createReadStream("./src/content/" + node.relativePath).pipe(fs.createWriteStream(staticImagePath + node.base));
   }
+}
+
+exports.modifyWebpackConfig = function({config, env}) {
+  config.merge({
+    resolve: {
+      alias: {
+          "TweenLite": Path.resolve('node_modules', 'gsap/src/uncompressed/TweenLite.js'),
+          "TweenMax": Path.resolve('node_modules', 'gsap/src/uncompressed/TweenMax.js'),
+          "TimelineLite": Path.resolve('node_modules', 'gsap/src/uncompressed/TimelineLite.js'),
+          "TimelineMax": Path.resolve('node_modules', 'gsap/src/uncompressed/TimelineMax.js'),
+          "ScrollMagic": Path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/ScrollMagic.js'),
+          "animation.gsap": Path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/animation.gsap.js'),
+          "debug.addIndicators": Path.resolve('node_modules', 'scrollmagic/scrollmagic/uncompressed/plugins/debug.addIndicators.js')
+      }
+    }
+  });
+  return config;
 }
 
 // exports.createPages = ({ boundActionCreators, graphql }) => {

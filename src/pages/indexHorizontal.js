@@ -3,11 +3,6 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
-const ScrollMagic = require('ScrollMagic');
-require('animation.gsap');
-require('debug.addIndicators');
-const TimelineMax = require('TimelineMax');
-
 
 const OuterContainer = styled.div`
   height: 100%;
@@ -15,15 +10,17 @@ const OuterContainer = styled.div`
 `
 
 const Container = styled.div`
-  width: calc(100% + 15px);
-  margin-right: -15px;
-  overflow-y: auto;
-  height: 100%;
+  height: calc(100% + 15px);
+  margin-bottom: -15px;
+  overflow: auto;
+  overflow-y: hidden;
 `
 
 const InnerContainer = styled.div`
+  height: 100%;
+  display: flex;
   padding-bottom: 15px !important;
-  height: auto;
+
 `
 
 const Image = styled.div`
@@ -35,11 +32,15 @@ const Image = styled.div`
 `
 
 const ImagesContainer = styled.div`
+  display: flex;
+  height: 100%;
+
 `
 
 const Line = styled.div`
   height: 100%;
   width: 3px;
+  background-color: red;
   position: absolute;
   z-index: 3;
   left: 50%;
@@ -55,12 +56,10 @@ export default class SecondPage extends React.Component {
       scroll: 0,
       windowWidth: 1000,
       windowHeight: 1000,
-      studentsHeight: 1000,
+      studentsWidth: 1000,
       vmin: 1000
     }
 
-    var controller = new ScrollMagic.Controller();
-    this.controller = controller;
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
     this.students = new Array(this.length*2).fill({});
@@ -83,38 +82,33 @@ export default class SecondPage extends React.Component {
     this.setState({
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-      studentsHeight: this.studentsContainer.offsetHeight,
+      studentsWidth: this.studentsContainer.offsetWidth,
       vmin: Math.min(window.innerWidth, window.innerHeight)
-    });
-    console.log(this.students);
-    for (let s = 0; s < this.students.length; s++) {
-      // let tween = TweenMax.staggerFromTo(this.students[s], 2, {opacity: 0}, {opacity: 0.5, ease: Back.easeOut}, 0.15);
-      let scene = new ScrollMagic.Scene({triggerElement: this.students[s], duration: 300})
-          .setTween(this.students[s], {scale: 0.5})
-          .addIndicators({name: "2 (duration: 300)"})
-					.addTo(this.controller);
-    }
+    }, this.updateChildren);
   }
 
   handleScroll = (e) => {
-    let scroll = this.container.scrollTop;
-    // console.log(this.students);
+    let scroll = this.container.scrollLeft;
+    let delta = e.deltaY;
+    e.preventDefault();
 
-    if(scroll >= this.state.studentsHeight+3) {
-      this.container.scrollTop = 0;
+    this.container.scrollLeft -= (e.deltaY + e.deltaX)*0.3;
+
+    if(scroll >= this.state.studentsWidth+3) {
+      this.container.scrollLeft = 1;
     }
 
     if(scroll == 0) {
-      this.container.scrollTop = this.state.studentsHeight+2
+      this.container.scrollLeft = this.state.studentsWidth+2
     }
-    //
-    // if (!(scroll == 1) && !(scroll == 0) ) {
-    //   this.updateChildren();
-    // }
-    //
-    // this.setState({
-    //   scroll: scroll,
-    // })
+
+    if (!(scroll == 1) && !(scroll == 0) ) {
+      this.updateChildren();
+    }
+
+    this.setState({
+      scroll: scroll,
+    })
   }
 
   // resetScroll = () => {
@@ -129,6 +123,21 @@ export default class SecondPage extends React.Component {
     })
   }
 
+  updateChildrenOld = () => {
+    for (let s = 0; s < this.students.length; s++) {
+      if (this.state.scroll < 10 && s > this.length-1) {
+        let offset = this.students[s-this.length].getOffset();
+        this.students[s].setOffset(offset)
+      } else if (this.state.scroll > this.state.studentsWidth-10 && s < this.length-1) {
+        let offset = this.students[s+this.length].getOffset();
+        this.students[s].setOffset(offset)
+      }
+
+      else {
+        this.students[s].calcOffset();
+      }
+    }
+  }
 
   initChildren = () => {
     for (let s = 0; s < this.students.length; s++) {
@@ -162,7 +171,7 @@ export default class SecondPage extends React.Component {
         obj.scale = Math.abs(1-distance/(this.state.windowWidth/2));
       }
 
-      this.students[s].data = obj;
+      this.students[s] = obj;
 
       // this.students[s].scale =
     }
@@ -194,8 +203,10 @@ export default class SecondPage extends React.Component {
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
+                    debug={this.students[i].debug}
                     windowWidth={this.state.windowWidth}
-                    studentRef={el => this.students[i] = el}
+                    scale={this.students[i].scale}
+                    translateY={this.students[i].translateY}
                   />
                 )
               })}
@@ -211,8 +222,10 @@ export default class SecondPage extends React.Component {
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
+                    debug={this.students[i+this.length].debug}
                     windowWidth={this.state.windowWidth}
-                    studentRef={el => this.students[this.length + i] = el}
+                    scale={this.students[i+this.length].scale}
+                    translateY={this.students[i].translateY}
                   />
                 )
               })}
@@ -228,7 +241,7 @@ export default class SecondPage extends React.Component {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query HorizontalQuery {
     allMarkdownRemark (filter: {fileAbsolutePath: {regex: "/students/"} }) {
   	  edges {
   	    node {
