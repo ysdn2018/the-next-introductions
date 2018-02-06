@@ -113,7 +113,7 @@ export default class Student extends React.Component {
 
     this.state = {
       offsetRight: 0,
-      showInfo: true
+      showInfo: false
     }
   }
 
@@ -147,11 +147,12 @@ export default class Student extends React.Component {
     // }
 
     let style = {
-      transform: `scale(${this.props.scale}) translateY(${this.props.translateY}px)`
+      // transform: `scale(${this.props.scale}) translateY(${this.props.translateY}px)`
+      transform: `scale(${this.props.scale})`
     }
 
     return (
-      <Container innerRef={(container) => { this.element = container; }} style={style} onClick={this.toggleInfo}>
+      <Container innerRef={(container) => { this.element = container; }} style={{}} onClick={this.toggleInfo}>
         <MarkContainer>
           <Mark/>
         </MarkContainer>
