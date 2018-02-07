@@ -3,8 +3,6 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
-import scrollama from 'scrollama'
-import _ from 'lodash'
 
 const OuterContainer = styled.div`
   height: 100%;
@@ -216,7 +214,6 @@ export default class SecondPage extends React.Component {
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
                     debug={this.students[i].debug}
-                    windowWidth={this.state.windowWidth}
                     scale={this.students[i].scale}
                     translateY={this.students[i].translateY}
                   />
@@ -235,7 +232,6 @@ export default class SecondPage extends React.Component {
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
                     debug={this.students[i].debug}
-                    windowWidth={this.state.windowWidth}
                     scale={this.students[i].scale}
                     translateY={this.students[i].translateY}
                   />
