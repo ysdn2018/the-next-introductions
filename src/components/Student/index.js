@@ -13,8 +13,11 @@ import Img from "gatsby-image"
 const Container = styled.div`
   width: 70vmin;
   height: 70vmin;
+  ${'' /* top: -100vmin; */}
+  top: 0;
   background-color: white;
-  transform-origin: center center;
+  ${'' /* transform-origin: center center; */}
+  transform-origin: top center;
   cursor: pointer;
   transform: scale(1);
   ${'' /* transition: transform 10ms ease-in-out; */}
@@ -27,6 +30,13 @@ const Container = styled.div`
   .image {
     height: 100%;
   }
+`
+
+const InnerContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  transform: scale(0.1);
+  transform-origin: center center;
 `
 
 const Text = styled.p`
@@ -94,8 +104,8 @@ const TextContainer = styled.div`
 
 const InnerTextContainer = styled.div`
   padding: 1rem;
-  width: calc(100% - 5px);
-  height: calc(100% - 5px);
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
   background-color: white;
 `
 
@@ -113,7 +123,7 @@ export default class Student extends React.Component {
 
     this.state = {
       offsetRight: 0,
-      showInfo: false
+      showInfo: true
     }
   }
 
@@ -147,12 +157,14 @@ export default class Student extends React.Component {
     // }
 
     let style = {
-      // transform: `scale(${this.props.scale}) translateY(${this.props.translateY}px)`
-      transform: `scale(${this.props.scale})`
+      transform: `scale(${this.props.scale}) translateY(${this.props.translateY}px)`
+      // transform: `scale(${this.props.scale})`
     }
 
     return (
-      <Container innerRef={this.props.studentRef} style={{}} onClick={this.toggleInfo}>
+      <Container className="student" innerRef={this.props.studentRef} style={style} onClick={this.toggleInfo}>
+        <InnerContainer>
+
         <MarkContainer>
           <Mark/>
         </MarkContainer>
@@ -177,6 +189,7 @@ export default class Student extends React.Component {
             className='image'
           />
         )}
+          </InnerContainer>
       </Container>
     )
   }

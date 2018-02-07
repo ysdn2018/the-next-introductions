@@ -3,11 +3,8 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
-const ScrollMagic = require('ScrollMagic');
-require('animation.gsap');
-require('debug.addIndicators');
-const TimelineMax = require('TimelineMax');
-
+import scrollama from 'scrollama'
+import _ from 'lodash'
 
 const OuterContainer = styled.div`
   height: 100%;
@@ -24,6 +21,11 @@ const Container = styled.div`
 const InnerContainer = styled.div`
   padding-bottom: 15px !important;
   height: auto;
+
+  .is-active {
+    transition: transform 100ms ease-in-out;
+    transform: scale(1);
+  }
 `
 
 const Image = styled.div`
@@ -59,8 +61,8 @@ export default class SecondPage extends React.Component {
       vmin: 1000
     }
 
-    var controller = new ScrollMagic.Controller();
-    this.controller = controller;
+    const scroller = scrollama();
+    this.scroller = scroller;
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
     this.students = new Array(this.length*2).fill({});
@@ -85,28 +87,34 @@ export default class SecondPage extends React.Component {
       windowHeight: window.innerHeight,
       studentsHeight: this.studentsContainer.offsetHeight,
       vmin: Math.min(window.innerWidth, window.innerHeight)
-    });
+    }, this.updateChildren);
     console.log(this.students);
-    for (let s = 0; s < this.students.length; s++) {
-      // let tween = TweenMax.staggerFromTo(this.students[s], 2, {opacity: 0}, {opacity: 0.5, ease: Back.easeOut}, 0.15);
-      let scene = new ScrollMagic.Scene({triggerElement: this.students[s], duration: 300})
-          .setTween(this.students[s], {scale: 0.5})
-          .addIndicators({name: "2 (duration: 300)"})
-					.addTo(this.controller);
-    }
+
+    this.scroller
+    .setup({
+      step: '.student', // required
+      offset: 0.5, // optional, default = 0.5
+      progress: true
+    })
+    .onStepEnter(this.handleStepEnter)
+    .onStepExit(this.handleStepExit)
+    .onStepProgress(this.handleStepProgress);
+  }
+
+  animateChildren = () => {
+
   }
 
   handleScroll = (e) => {
     let scroll = this.container.scrollTop;
     // console.log(this.students);
-
-    if(scroll >= this.state.studentsHeight+3) {
-      this.container.scrollTop = 0;
-    }
-
-    if(scroll == 0) {
-      this.container.scrollTop = this.state.studentsHeight+2
-    }
+    let deltaY = e.deltaY;
+    let deltaX = e.deltaX;
+    let scope = this;
+    // window.requestAnimationFrame(() => {
+    //   scope.students[0].translateY += (deltaY + deltaX)*0.3;
+    //   scope.students[1].translateY -= (deltaY + deltaX)*0.3;
+    // })
     //
     // if (!(scroll == 1) && !(scroll == 0) ) {
     //   this.updateChildren();
@@ -140,38 +148,51 @@ export default class SecondPage extends React.Component {
   }
 
   updateChildren = () => {
-    for (let s = 0; s < this.students.length; s++) {
-      let centerScroll = this.state.scroll + this.state.windowWidth/2;
-      let studentWidth =  (this.state.vmin*0.7);
-      let studentCenterPoint = (studentWidth*s)+(studentWidth/2);
-      let distance = Math.abs(centerScroll-studentCenterPoint);
-      let scaledDistance = (centerScroll-studentCenterPoint)/(this.state.windowWidth/2);
+      for (let s = 0; s < this.students.length; s++) {
+        let centerScroll = this.state.scroll + this.state.windowWidth/2;
+        let studentWidth =  (this.state.vmin*0.7);
+        let studentCenterPoint = (studentWidth*s)+(studentWidth/2);
+        let distance = Math.abs(centerScroll-studentCenterPoint);
+        let scaledDistance = (centerScroll-studentCenterPoint)/(this.state.windowWidth/2);
 
-      let obj = {};
-      // obj.debug = distance;
-      obj.debug = Math.abs(1-distance/(this.state.windowWidth/2))
-      obj.scale = Math.abs(1-distance/(this.state.windowWidth/2)-0.2);
-      obj.scale = 0.5;
-      obj.translateY = scaledDistance * (this.state.windowHeight)
+        let obj = {};
+        // obj.debug = distance;
+        obj.debug = 0;
+        obj.translateY = 0;
 
+        this.students[s] = obj;
 
-
-      if (distance > this.state.windowWidth/2+(studentWidth/2)) {
-        obj.scale = 0;
-      } else {
-        obj.scale = Math.abs(1-distance/(this.state.windowWidth/2));
+        // this.students[s].scale =
       }
+  }
 
-      this.students[s].data = obj;
+  handleStepEnter = (response) => {
+    // response = { element, direction, index }
+    console.log('enter', response);
+    // add to color to current step
+    console.log(response.progress);
+  }
 
-      // this.students[s].scale =
-    }
+  handleStepProgress = (response) => {
+    console.log(response.progress*2);
+    if (response.progress > 0.5)
+      response.element.firstChild.style.transform = `scale(${1-(response.progress*2-1)})`
+    else
+      response.element.firstChild.style.transform = `scale(${response.progress*2})`
+    // this.students[response.index].scale = response.progress;
+  }
+
+  handleStepExit = (response) => {
+    // response = { element, direction, index }
+    console.log('exit', response);
+    // remove color from current step
+    response.element.firstChild.style.transform = `scale(${response.progress})`
   }
 
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
     return (
-      <OuterContainer onClick={this.resetScroll}>
+      <OuterContainer onClick={this.resetScroll} onWheel={this.handleScroll}>
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
@@ -180,7 +201,7 @@ export default class SecondPage extends React.Component {
         <Line/>
 
         <Container innerRef={(container) => { this.container = container; }}>
-          <InnerContainer onWheel={this.handleScroll}>
+          <InnerContainer >
 
             <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
               {studentsData.map( ({ node }, i) => {
@@ -194,8 +215,10 @@ export default class SecondPage extends React.Component {
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
+                    debug={this.students[i].debug}
                     windowWidth={this.state.windowWidth}
-                    studentRef={el => this.students[i] = el}
+                    scale={this.students[i].scale}
+                    translateY={this.students[i].translateY}
                   />
                 )
               })}
@@ -211,8 +234,10 @@ export default class SecondPage extends React.Component {
                     verb={node.frontmatter.verb}
                     noun={node.frontmatter.noun}
                     blurb={node.frontmatter.blurb}
+                    debug={this.students[i].debug}
                     windowWidth={this.state.windowWidth}
-                    studentRef={el => this.students[this.length + i] = el}
+                    scale={this.students[i].scale}
+                    translateY={this.students[i].translateY}
                   />
                 )
               })}
