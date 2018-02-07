@@ -11,15 +11,20 @@ const OuterContainer = styled.div`
 `
 
 const Container = styled.div`
-  width: calc(100% + 15px);
-  margin-right: -15px;
-  overflow-y: auto;
-  height: 100%;
+  ${'' /* width: calc(100% + 15px);
+  margin-right: -15px; */}
+  overflow-y: scroll;
 `
 
 const InnerContainer = styled.div`
+  position: fixed;
   padding-bottom: 15px !important;
-  height: auto;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 `
 
 const FakeStudent = styled.div`
@@ -32,6 +37,9 @@ const FakeStudent = styled.div`
 `
 
 const StudentsContainer = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
 `
 
 
@@ -55,8 +63,10 @@ export default class SecondPage extends React.Component {
 
     this.tl = new TimelineMax({
       paused: true,
-      // onUpdate: this.update
+      onUpdate: this.update
     });
+
+
   }
 
   handleScriptLoad() {
@@ -80,9 +90,12 @@ export default class SecondPage extends React.Component {
       vmin: Math.min(window.innerWidth, window.innerHeight)
     });
 
+    this.setup()
+  }
 
+  setup = () => {
     this.scroller = {
-      container: this.innerContainer,
+      container: this.studentsContainer,
       viewportHeight: window.innerHeight,
       stepHeight: Math.max(window.innerHeight, 2500),
       scrollHeight: 0,
@@ -94,16 +107,17 @@ export default class SecondPage extends React.Component {
 
     TweenLite.defaultEase = Linear.easeNone;
 
+    this.initChildren();
+
     TweenLite.set(this.container, {
       height: this.scroller.scrollHeight + this.scroller.viewportHeight
     });
+    console.log(this.container);
 
     TweenLite.set(this.scroller.container, {
       height: this.scroller.scrollHeight,
       force3D: true
     });
-
-    this.initChildren();
   }
 
   update = () => {
@@ -135,7 +149,6 @@ export default class SecondPage extends React.Component {
     };
 
     if (index > 0 ) {
-
       var last = this.scroller.steps[index - 1];
 
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
@@ -153,13 +166,13 @@ export default class SecondPage extends React.Component {
     let studentsData = this.props.data.allMarkdownRemark.edges;
     console.log(this.students);
     return (
-      <OuterContainer onWheel={this.handleScroll}>
+      <OuterContainer>
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
         />
 
-        <Container innerRef={(container) => { this.container = container; }}>
+        <Container innerRef={(container) => { this.container = container; }} onWheel={this.handleScroll}>
           <InnerContainer innerRef={(innerContainer) => { this.innerContainer = innerContainer; }}>
 
             <StudentsContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
