@@ -7,26 +7,19 @@ import {TimelineMax, TweenLite} from 'gsap';
 
 const OuterContainer = styled.div`
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 100%;
-  ${'' /* width: calc(100% + 15px);
-  margin-right: -15px; */}
+  overflow: hidden;
 `
 
 const Container = styled.div`
-  padding-right: 15px !important;
-  width: 100%;
+  width: calc(100% + 15px);
+  margin-right: -15px;
+  overflow-y: auto;
   height: 100%;
-  position: fixed;
-  overflow: hidden;
 `
 
 const InnerContainer = styled.div`
-
+  padding-bottom: 15px !important;
   height: auto;
-  position: absolute;
-  overflow: hidden;
 `
 
 const FakeStudent = styled.div`
@@ -62,7 +55,7 @@ export default class SecondPage extends React.Component {
 
     this.tl = new TimelineMax({
       paused: true,
-      onUpdate: this.update
+      // onUpdate: this.update
     });
   }
 
