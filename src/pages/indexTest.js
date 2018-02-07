@@ -29,11 +29,10 @@ const InnerContainer = styled.div`
 `
 
 const FakeStudent = styled.div`
-  width: 400px;
-  height: calc(100vh - 2px);
+  width: 100%;
+  height: 100vh;
   margin-right: 20px;
   background-color: grey;
-  border: 1px solid black;
   transform-origin: top right;
 `
 
@@ -58,16 +57,20 @@ export default class SecondPage extends React.Component {
       vmin: 1000
     }
 
+    this.scroller = {
+      container: null,
+      viewportHeight: 1000,
+      stepHeight: 1000,
+      scrollHeight: 0,
+      padding: 400,
+      steps: [],
+      step: 0,
+      y: 0
+    };
+
     this.length = this.props.data.allMarkdownRemark.edges.length;
     this.students = new Array(this.length*2).fill({});
     this.requestId = null;
-
-    this.tl = new TimelineMax({
-      paused: true,
-      onUpdate: this.update
-    });
-
-
   }
 
   handleScriptLoad() {
@@ -106,11 +109,16 @@ export default class SecondPage extends React.Component {
       y: 0
     };
 
+    this.tl = new TimelineMax({
+      paused: true,
+      onUpdate: this.update
+    });
+
     TweenLite.defaultEase = Linear.easeNone;
 
     this.initChildren();
 
-    TweenLite.set(this.container, {
+    TweenLite.set(this.container.firstChild, {
       height: this.scroller.scrollHeight + this.scroller.viewportHeight
     });
     console.log(this.container);
@@ -165,21 +173,23 @@ export default class SecondPage extends React.Component {
 
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
+    let scope = this;
     console.log(this.students);
     return (
-      <OuterContainer  innerRef={(container) => { this.container = container; }}>
+      <OuterContainer innerRef={(container) => { this.container = container; }} >
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
         />
 
-        <Container  onWheel={this.handleScroll}>
+        <Container onWheel={this.handleScroll}  >
           <InnerContainer innerRef={(innerContainer) => { this.innerContainer = innerContainer; }}>
 
             <StudentsContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
               {this.students.map( ({ node }, i) => (
                 <FakeStudent key={i} innerRef={el => this.students[i] = el}>
-                  <h1>hi</h1>
+                  <h1>{i}</h1>
+                  <h1>{i}</h1><h1>{i}</h1><h1>{i}</h1><h1>{i}</h1><h1>{i}</h1><h1>{i}</h1>
                 </FakeStudent>
               ))}
             </StudentsContainer>
