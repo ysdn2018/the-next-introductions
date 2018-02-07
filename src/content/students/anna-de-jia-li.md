@@ -2,7 +2,7 @@
 title: Anna De-Jia Li
 verb: Seeing
 noun: Attitude
-image: images/li_anna_de_jia.jpg
+image: /images/li_anna_de_jia.jpg
 blurb: >-
   I want to use design as a tool to integrate designers' attitude into society.
   I believe design could achieve some of the conceptual and aesthetic impacts of
