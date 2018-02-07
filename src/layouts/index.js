@@ -32,6 +32,7 @@ import NeueHaasGrotDispItalic_woff2 from "../assets/fonts/NeueHaasGrotDisp-56Ita
 // styled components
 const Container = styled.div`
   height: 100%;
+  overflow-x: hidden;
 `
 
 const InnerContainer = styled.div`

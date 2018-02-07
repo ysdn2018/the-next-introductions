@@ -7,17 +7,17 @@ import {TimelineMax, TweenLite} from 'gsap';
 
 const OuterContainer = styled.div`
   height: 100%;
-
+  width: calc(100% + 15px);
+  margin-right: -15px;
   overflow-y: scroll;
+  overflow-x: hidden;
 `
 
 const Container = styled.div`
-  ${'' /* width: calc(100% + 15px);
-  margin-right: -15px; */}
-  ${'' /* overflow-y: scroll; */}
+
 `
 
-const InnerContainer = styled.div`
+const Viewport = styled.div`
   position: fixed;
   padding-bottom: 15px !important;
   height: 100%;
@@ -34,9 +34,17 @@ const FakeStudent = styled.div`
   margin-right: 20px;
   background-color: grey;
   transform-origin: top right;
+  overflow: hidden;
 `
 
-const StudentsContainer = styled.div`
+const FakeProject = styled.div`
+  transform-origin: 0;
+  background-color: pink;
+  height: 70vmin;
+  width: 70vmin;
+`
+
+const Content = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
@@ -48,14 +56,6 @@ const StudentsContainer = styled.div`
 export default class SecondPage extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      scroll: 0,
-      windowWidth: 1000,
-      windowHeight: 1000,
-      studentsHeight: 1000,
-      vmin: 1000
-    }
 
     this.scroller = {
       container: null,
@@ -70,7 +70,6 @@ export default class SecondPage extends React.Component {
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
     this.students = new Array(this.length*2).fill({});
-    this.requestId = null;
   }
 
   handleScriptLoad() {
@@ -87,19 +86,12 @@ export default class SecondPage extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      studentsHeight: this.studentsContainer.offsetHeight,
-      vmin: Math.min(window.innerWidth, window.innerHeight)
-    });
-
     this.setup()
   }
 
   setup = () => {
     this.scroller = {
-      container: this.studentsContainer,
+      container: this.content,
       viewportHeight: window.innerHeight,
       stepHeight: Math.max(window.innerHeight, 2500),
       scrollHeight: 0,
@@ -113,6 +105,8 @@ export default class SecondPage extends React.Component {
       paused: true,
       onUpdate: this.update
     });
+
+    this.requestId = null;
 
     TweenLite.defaultEase = Linear.easeNone;
 
@@ -167,14 +161,15 @@ export default class SecondPage extends React.Component {
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
       .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
 
+    this.tl.set(this.students[index],  { progress: 0 }, {scale: 1})
+      .to(this.students[index],  { progress: 1 }, {scale: 0});
+
     this.scroller.scrollHeight += (size + padding);
     this.scroller.steps.push(step);
   }
 
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
-    let scope = this;
-    console.log(this.students);
     return (
       <OuterContainer innerRef={(container) => { this.container = container; }} >
         <Script
@@ -183,18 +178,19 @@ export default class SecondPage extends React.Component {
         />
 
         <Container onWheel={this.handleScroll}  >
-          <InnerContainer innerRef={(innerContainer) => { this.innerContainer = innerContainer; }}>
+          <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
 
-            <StudentsContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
+            <Content innerRef={(content) => { this.content = content; }}>
               {this.students.map( ({ node }, i) => (
                 <FakeStudent key={i} innerRef={el => this.students[i] = el}>
-                  <h1>{i}</h1>
-                  <h1>{i}</h1><h1>{i}</h1><h1>{i}</h1><h1>{i}</h1><h1>{i}</h1><h1>{i}</h1>
+                  <FakeProject>
+
+                  </FakeProject>
                 </FakeStudent>
               ))}
-            </StudentsContainer>
+            </Content>
 
-          </InnerContainer>
+          </Viewport>
         </Container>
       </OuterContainer>
     )
