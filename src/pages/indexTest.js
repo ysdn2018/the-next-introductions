@@ -7,20 +7,21 @@ import {TimelineMax, TweenLite} from 'gsap';
 
 const OuterContainer = styled.div`
   height: 100%;
-  overflow: hidden;
+
+  overflow-y: scroll;
 `
 
 const Container = styled.div`
   ${'' /* width: calc(100% + 15px);
   margin-right: -15px; */}
-  overflow-y: scroll;
+  ${'' /* overflow-y: scroll; */}
 `
 
 const InnerContainer = styled.div`
   position: fixed;
   padding-bottom: 15px !important;
   height: 100%;
-  width: 100%;
+  width: 50%;
   top: 0;
   left: 0;
   bottom: 0;
@@ -29,7 +30,7 @@ const InnerContainer = styled.div`
 
 const FakeStudent = styled.div`
   width: 400px;
-  height: 100vh;
+  height: calc(100vh - 2px);
   margin-right: 20px;
   background-color: grey;
   border: 1px solid black;
@@ -166,13 +167,13 @@ export default class SecondPage extends React.Component {
     let studentsData = this.props.data.allMarkdownRemark.edges;
     console.log(this.students);
     return (
-      <OuterContainer>
+      <OuterContainer  innerRef={(container) => { this.container = container; }}>
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
         />
 
-        <Container innerRef={(container) => { this.container = container; }} onWheel={this.handleScroll}>
+        <Container  onWheel={this.handleScroll}>
           <InnerContainer innerRef={(innerContainer) => { this.innerContainer = innerContainer; }}>
 
             <StudentsContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
