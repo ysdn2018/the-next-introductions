@@ -47,6 +47,10 @@ const FakeStudent = styled.div`
   background-color: grey;
   transform-origin: top right;
   overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const FakeProject = styled.div`
@@ -58,9 +62,6 @@ const FakeProject = styled.div`
 
 
 const TestBox = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
   height: 200px;
   width: 200px;
   background-color: red;
@@ -164,6 +165,12 @@ export default class SecondPage extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log((nextProps));
+  }
+
+
+
   addChild = (element, size, padding, index) => {
     var step = {
       height: element.clientHeight,
@@ -179,9 +186,9 @@ export default class SecondPage extends React.Component {
         .to(this.scroller.container, last.height, { y: "-=" + last.height }, this.scroller.scrollHeight);
     }
 
-    this.tl.set(this.box, { scale: 0.5, y: -this.scroller.viewportHeight/2 })
-      .to(this.box, size/2, { scale: 3, y: 0 })
-      .to(this.box, size/2, { scale: 0.5, y: this.scroller.viewportHeight })
+    this.tl.set(element.firstChild, { scale: 0.5, y: -this.scroller.viewportHeight/2 })
+      .to(element.firstChild, size/2, { scale: 3, y: 0 })
+      .to(element.firstChild, size/2, { scale: 0.5, y: this.scroller.viewportHeight })
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
       .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
@@ -191,7 +198,7 @@ export default class SecondPage extends React.Component {
   }
 
   handleClick = () => {
-    console.log(this.tl);
+    console.log(this.students);
   }
 
   render() {
@@ -205,15 +212,12 @@ export default class SecondPage extends React.Component {
 
         <Container>
           <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
-            <TestBox innerRef={(box) => { this.box = box;}}/>
 
 
             <Content innerRef={(content) => { this.content = content; }}>
               {this.students.map( ({ node }, i) => (
                 <FakeStudent key={i} innerRef={el => this.students[i] = el}>
-                  <FakeProject>
-                    <TestBox/>
-                  </FakeProject>
+                  <TestBox/>
                 </FakeStudent>
               ))}
             </Content>
