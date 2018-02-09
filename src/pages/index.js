@@ -3,65 +3,99 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
+import { TimelineMax, TweenLite } from 'gsap';
+import Img from 'gatsby-image'
 
 const OuterContainer = styled.div`
   height: 100%;
-  overflow: hidden;
+  width: calc(100% + 15px);
+  margin-right: -15px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
 `
 
 const Container = styled.div`
-  width: calc(100% + 15px);
-  margin-right: -15px;
-  overflow-y: auto;
+
+`
+
+const Viewport = styled.div`
+  position: fixed;
+  padding-bottom: 15px !important;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+`
+
+const Content = styled.div`
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
 `
 
-const InnerContainer = styled.div`
-  padding-bottom: 15px !important;
-  height: auto;
 
-  .is-active {
-    transition: transform 100ms ease-in-out;
-    transform: scale(1);
-  }
-`
-
-const Image = styled.div`
-  width: 400px;
-  height: 400px;
+const FakeStudent = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100vh;
   margin-right: 20px;
   background-color: grey;
   transform-origin: top right;
+  overflow: hidden;
+  border: 1px solid red;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
-const ImagesContainer = styled.div`
+const FakeProject = styled.div`
+  transform-origin: 0;
+  background-color: pink;
+  height: 70vmin;
+  width: 70vmin;
 `
 
-const Line = styled.div`
-  height: 100%;
-  width: 3px;
-  position: absolute;
-  z-index: 3;
-  left: 50%;
-  top: 0;
+
+const TestBox = styled.div`
+  height: 200px;
+  width: 200px;
+  background-color: red;
+  z-index: 2;
 `
+
+const FakeImage = styled(Img)`
+  height: 200px;
+  width: 200px;
+  background-color: red;
+  z-index: 2;
+`
+
 
 // page component
 export default class SecondPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      scroll: 0,
-      windowWidth: 1000,
-      windowHeight: 1000,
-      studentsHeight: 1000,
-      vmin: 1000
-    }
-
+    this.scroller = {
+      container: null,
+      viewportHeight: 1000,
+      stepHeight: 1000,
+      scrollHeight: 0,
+      padding: 0,
+      steps: [],
+      step: 0,
+      y: 0
+    };
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
-    this.students = new Array(this.length*2).fill({});
+    this.students = new Array(this.length).fill({});
   }
 
   handleScriptLoad() {
@@ -78,159 +112,127 @@ export default class SecondPage extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      studentsHeight: this.studentsContainer.offsetHeight,
-      vmin: Math.min(window.innerWidth, window.innerHeight)
-    }, this.updateChildren);
-    console.log(this.students);
-
-
+    this.setup()
+    window.addEventListener("scroll", this.handleScroll)
   }
 
-  animateChildren = () => {
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll)
+  }
 
+  setup = () => {
+    this.scroller = {
+      container: this.content,
+      viewportHeight: window.innerHeight,
+      stepHeight: Math.max(window.innerHeight, 2500),
+      scrollHeight: 0,
+      padding: 400,
+      steps: [],
+      step: 0,
+      y: 0
+    };
+
+    this.tl = new TimelineMax({
+      paused: true,
+      onUpdate: this.update
+    });
+
+    this.requestId = null;
+
+    TweenLite.defaultEase = Linear.easeNone;
+
+    this.initChildren();
+
+    TweenLite.set(document.body, {
+      height: this.scroller.scrollHeight + this.scroller.viewportHeight
+    });
+
+    TweenLite.set(this.scroller.container, {
+      height: this.scroller.scrollHeight,
+      force3D: true
+    });
+  }
+
+  update = () => {
+    let scroll = window.pageYOffset;
+
+    this.scroller.y = scroll;
+    this.requestId = null;
+    this.tl.time(scroll);
   }
 
   handleScroll = (e) => {
-    let scroll = this.container.scrollTop;
-    // console.log(this.students);
-    let deltaY = e.deltaY;
-    let deltaX = e.deltaX;
-    let scope = this;
-    // window.requestAnimationFrame(() => {
-    //   scope.students[0].translateY += (deltaY + deltaX)*0.3;
-    //   scope.students[1].translateY -= (deltaY + deltaX)*0.3;
-    // })
-    //
-    // if (!(scroll == 1) && !(scroll == 0) ) {
-    //   this.updateChildren();
-    // }
-    //
-    // this.setState({
-    //   scroll: scroll,
-    // })
-  }
-
-  // resetScroll = () => {
-  //   this.container.scrollLeft = 200;
-  // }
-
-  updateWindowSize() {
-    this.setState({
-      windowWidth: window.innerWidth,
-      windowHeight: window.innerHeight,
-      vmin: Math.min(window.innerWidth, window.innerHeight)
-    })
-  }
-
-
-  initChildren = () => {
-    for (let s = 0; s < this.students.length; s++) {
-      this.students[s] = {
-        debug: 0,
-        scale: 0
-      };
+    if (!this.requestId) {
+      this.requestId = requestAnimationFrame(this.update);
     }
   }
 
-  updateChildren = () => {
-      for (let s = 0; s < this.students.length; s++) {
-        let centerScroll = this.state.scroll + this.state.windowWidth/2;
-        let studentWidth =  (this.state.vmin*0.7);
-        let studentCenterPoint = (studentWidth*s)+(studentWidth/2);
-        let distance = Math.abs(centerScroll-studentCenterPoint);
-        let scaledDistance = (centerScroll-studentCenterPoint)/(this.state.windowWidth/2);
-
-        let obj = {};
-        // obj.debug = distance;
-        obj.debug = 0;
-        obj.translateY = 0;
-
-        this.students[s] = obj;
-
-        // this.students[s].scale =
-      }
+  initChildren = () => {
+    for (var i = 0; i < this.students.length; i++) {
+      this.addChild(this.students[i], this.scroller.stepHeight, this.scroller.padding, i);
+    }
   }
 
-  handleStepEnter = (response) => {
-    // response = { element, direction, index }
-    console.log('enter', response);
-    // add to color to current step
-    console.log(response.progress);
+  componentWillReceiveProps(nextProps) {
+    console.log((nextProps));
   }
 
-  handleStepProgress = (response) => {
-    console.log(response.progress*2);
-    if (response.progress > 0.5)
-      response.element.firstChild.style.transform = `scale(${1-(response.progress*2-1)})`
-    else
-      response.element.firstChild.style.transform = `scale(${response.progress*2})`
-    // this.students[response.index].scale = response.progress;
+
+
+  addChild = (element, size, padding, index) => {
+    var step = {
+      height: element.clientHeight,
+      size: size,
+      pad: padding,
+      progress: 0
+    };
+
+    if (index > 0 ) {
+      var last = this.scroller.steps[index - 1];
+
+      this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
+        .to(this.scroller.container, last.height, { y: "-=" + last.height }, this.scroller.scrollHeight);
+    }
+
+    this.tl.set(element.firstChild, { scale: 0.5, opacity: 1, y: -this.scroller.viewportHeight/2 })
+      .to(element.firstChild, size/2, { scale: 3, y: 0 })
+      .to(element.firstChild, size/2, { scale: 0.5, y: this.scroller.viewportHeight })
+
+    this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
+      .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
+
+    this.scroller.scrollHeight += (size + padding);
+    this.scroller.steps.push(step);
   }
 
-  handleStepExit = (response) => {
-    // response = { element, direction, index }
-    console.log('exit', response);
-    // remove color from current step
-    response.element.firstChild.style.transform = `scale(${response.progress})`
+  handleClick = () => {
+    console.log(this.students);
   }
 
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
+
     return (
-      <OuterContainer onClick={this.resetScroll} onWheel={this.handleScroll}>
+      <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
         />
 
-        <Line/>
-
-        <Container innerRef={(container) => { this.container = container; }}>
-          <InnerContainer >
-
-            <ImagesContainer innerRef={(studentsContainer) => { this.studentsContainer = studentsContainer; }}>
-              {studentsData.map( ({ node }, i) => {
-                // console.log(node.frontmatter.title);
-                // console.log(this.students[i]);
-                return (
-                  <Student
-                    key={node.id}
-                    image={node.frontmatter.image.childImageSharp.sizes}
-                    name={node.frontmatter.title}
-                    verb={node.frontmatter.verb}
-                    noun={node.frontmatter.noun}
-                    blurb={node.frontmatter.blurb}
-                    debug={this.students[i].debug}
-                    scale={this.students[i].scale}
-                    translateY={this.students[i].translateY}
-                  />
-                )
-              })}
-            </ImagesContainer>
-
-            <ImagesContainer>
-              {studentsData.map(({ node }, i) => {
-                return (
-                  <Student
-                    key={node.id}
-                    image={node.frontmatter.image.childImageSharp.sizes}
-                    name={node.frontmatter.title}
-                    verb={node.frontmatter.verb}
-                    noun={node.frontmatter.noun}
-                    blurb={node.frontmatter.blurb}
-                    debug={this.students[i].debug}
-                    scale={this.students[i].scale}
-                    translateY={this.students[i].translateY}
-                  />
-                )
-              })}
-            </ImagesContainer>
+        <Container>
+          <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
 
 
-          </InnerContainer>
+            <Content innerRef={(content) => { this.content = content; }}>
+              {studentsData.map( ({ node }, i) => (
+                <FakeStudent key={i} innerRef={el => this.students[i] = el}>
+                  <FakeImage sizes={node.frontmatter.image.childImageSharp.sizes} position="absolute"/>
+                  <h1>{node.frontmatter.title}</h1>
+                </FakeStudent>
+              ))}
+            </Content>
+
+          </Viewport>
         </Container>
       </OuterContainer>
     )
@@ -239,7 +241,7 @@ export default class SecondPage extends React.Component {
 }
 
 export const query = graphql`
-  query IndexQuery {
+  query IndexTestQuery {
     allMarkdownRemark (filter: {fileAbsolutePath: {regex: "/students/"} }) {
   	  edges {
   	    node {
