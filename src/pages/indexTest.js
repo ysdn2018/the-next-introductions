@@ -11,6 +11,8 @@ const OuterContainer = styled.div`
   margin-right: -15px;
   overflow-y: scroll;
   overflow-x: hidden;
+  position: relative;
+
 `
 
 const Container = styled.div`
@@ -19,9 +21,10 @@ const Container = styled.div`
 
 const Viewport = styled.div`
   position: fixed;
+  z-index: 4;
   padding-bottom: 15px !important;
   height: 100%;
-  width: 50%;
+  width: 100%;
   top: 0;
   left: 0;
   bottom: 0;
@@ -72,7 +75,7 @@ const TestBox = styled.div`
 export default class SecondPage extends React.Component {
   constructor(props) {
     super(props);
-
+    
     this.scroller = {
       container: null,
       viewportHeight: 1000,
@@ -85,7 +88,7 @@ export default class SecondPage extends React.Component {
     };
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
-    this.students = new Array(this.length*2).fill({});
+    this.students = [];
   }
 
   handleScriptLoad() {
@@ -102,7 +105,13 @@ export default class SecondPage extends React.Component {
   }
 
   componentDidMount() {
-    this.setup()
+    // if (Object.keys(this.students[0]).length > 2)
+      this.setup()
+    window.addEventListener("scroll", this.handleScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll)
   }
 
   setup = () => {
@@ -128,7 +137,7 @@ export default class SecondPage extends React.Component {
 
     this.initChildren();
 
-    TweenLite.set(this.container.firstChild, {
+    TweenLite.set(document.body, {
       height: this.scroller.scrollHeight + this.scroller.viewportHeight
     });
 
@@ -139,7 +148,7 @@ export default class SecondPage extends React.Component {
   }
 
   update = () => {
-    let scroll = this.container.scrollTop;
+    let scroll = window.pageYOffset;
 
     this.scroller.y = scroll;
     this.requestId = null;
@@ -171,9 +180,6 @@ export default class SecondPage extends React.Component {
 
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
         .to(this.scroller.container, last.height, { y: "-=" + last.height }, this.scroller.scrollHeight);
-
-      // this.tl.from(this.box, last.height, { scale: 0 }, this.scroller.scrollHeight)
-      //   .to(this.box, last.height, { scale: 3 }, this.scroller.scrollHeight);
     }
 
     this.tl.set(this.box, { scale: 0.5, y: -this.scroller.viewportHeight/2 })
@@ -191,27 +197,24 @@ export default class SecondPage extends React.Component {
   }
 
   handleClick = () => {
-    console.log(this.tl);
+    console.log(this.students);
   }
 
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
     return (
-      <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
+      <OuterContainer onClick={this.handleClick}>
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
         />
 
-        <Container onWheel={this.handleScroll}  >
-          <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
-            <TestBox innerRef={(box) => { this.box = box; }}/>
-
-
+        <Container>
+          <Viewport innerRef={(viewport) => { this.viewport = viewport; }} >
             <Content innerRef={(content) => { this.content = content; }}>
-
               {this.students.map( ({ node }, i) => (
-                <FakeStudent key={i} innerRef={el => this.students[i] = el}>
+                <FakeStudent key={i} innerRef={(student) => this.students[i] = student}>
+                  <TestBox />
                   <FakeProject>
 
                   </FakeProject>

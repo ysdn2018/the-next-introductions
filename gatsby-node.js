@@ -7,7 +7,7 @@ const fs = require('fs');
 const staticImagePath = "./static/images/";
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
-  if (node.internal.mediaType == "image/png" || node.internal.mediaType === `image/jpeg`) {
+  if ((node.internal.mediaType == "image/png" || node.internal.mediaType === `image/jpeg`) && process.env.NODE_ENV === 'production') {
     if (!fs.existsSync(staticImagePath)){
       fs.mkdirSync(staticImagePath);
     }

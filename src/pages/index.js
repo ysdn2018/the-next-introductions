@@ -86,7 +86,7 @@ export default class SecondPage extends React.Component {
     }, this.updateChildren);
     console.log(this.students);
 
-  
+
   }
 
   animateChildren = () => {
