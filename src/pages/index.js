@@ -59,8 +59,6 @@ export default class SecondPage extends React.Component {
       vmin: 1000
     }
 
-    const scroller = scrollama();
-    this.scroller = scroller;
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
     this.students = new Array(this.length*2).fill({});
@@ -88,15 +86,7 @@ export default class SecondPage extends React.Component {
     }, this.updateChildren);
     console.log(this.students);
 
-    this.scroller
-    .setup({
-      step: '.student', // required
-      offset: 0.5, // optional, default = 0.5
-      progress: true
-    })
-    .onStepEnter(this.handleStepEnter)
-    .onStepExit(this.handleStepExit)
-    .onStepProgress(this.handleStepProgress);
+  
   }
 
   animateChildren = () => {

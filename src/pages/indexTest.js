@@ -50,6 +50,16 @@ const Content = styled.div`
   width: 100%;
 `
 
+const TestBox = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 200px;
+  width: 200px;
+  background-color: red;
+  z-index: 2;
+`
+
 
 
 // page component
@@ -115,7 +125,6 @@ export default class SecondPage extends React.Component {
     TweenLite.set(this.container.firstChild, {
       height: this.scroller.scrollHeight + this.scroller.viewportHeight
     });
-    console.log(this.container);
 
     TweenLite.set(this.scroller.container, {
       height: this.scroller.scrollHeight,
@@ -156,22 +165,27 @@ export default class SecondPage extends React.Component {
 
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
         .to(this.scroller.container, last.height, { y: "-=" + last.height }, this.scroller.scrollHeight);
+
+      this.tl.from(this.box, last.height, { scale: 0 }, this.scroller.scrollHeight)
+        .to(this.box, last.height, { scale: 3 }, this.scroller.scrollHeight);
     }
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
       .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
 
-    this.tl.set(this.students[index],  { progress: 0 }, {scale: 1})
-      .to(this.students[index],  { progress: 1 }, {scale: 0});
 
     this.scroller.scrollHeight += (size + padding);
     this.scroller.steps.push(step);
   }
 
+  handleClick = () => {
+    console.log(this.tl);
+  }
+
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
     return (
-      <OuterContainer innerRef={(container) => { this.container = container; }} >
+      <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
@@ -179,8 +193,11 @@ export default class SecondPage extends React.Component {
 
         <Container onWheel={this.handleScroll}  >
           <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
+            <TestBox innerRef={(box) => { this.box = box; }}/>
+
 
             <Content innerRef={(content) => { this.content = content; }}>
+
               {this.students.map( ({ node }, i) => (
                 <FakeStudent key={i} innerRef={el => this.students[i] = el}>
                   <FakeProject>
