@@ -28,7 +28,18 @@ const Viewport = styled.div`
   right: 0;
 `
 
+const Content = styled.div`
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`
+
+
 const FakeStudent = styled.div`
+  position: relative;
   width: 100%;
   height: 100vh;
   margin-right: 20px;
@@ -44,11 +55,6 @@ const FakeProject = styled.div`
   width: 70vmin;
 `
 
-const Content = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-`
 
 const TestBox = styled.div`
   position: absolute;
@@ -166,12 +172,18 @@ export default class SecondPage extends React.Component {
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
         .to(this.scroller.container, last.height, { y: "-=" + last.height }, this.scroller.scrollHeight);
 
-      this.tl.from(this.box, last.height, { scale: 0 }, this.scroller.scrollHeight)
-        .to(this.box, last.height, { scale: 3 }, this.scroller.scrollHeight);
+      // this.tl.from(this.box, last.height, { scale: 0 }, this.scroller.scrollHeight)
+      //   .to(this.box, last.height, { scale: 3 }, this.scroller.scrollHeight);
     }
+
+    this.tl.set(this.box, { scale: 0.5, y: -this.scroller.viewportHeight/2 })
+      .to(this.box, size/2, { scale: 3, y: 0 })
+      .to(this.box, size/2, { scale: 0.5, y: this.scroller.viewportHeight })
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
       .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
+
+
 
 
     this.scroller.scrollHeight += (size + padding);
