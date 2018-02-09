@@ -3,7 +3,8 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
-import {TimelineMax, TweenLite} from 'gsap';
+import { TimelineMax, TweenLite } from 'gsap';
+import Img from 'gatsby-image'
 
 const OuterContainer = styled.div`
   height: 100%;
@@ -68,6 +69,12 @@ const TestBox = styled.div`
   z-index: 2;
 `
 
+const FakeImage = styled(Img)`
+  height: 200px;
+  width: 200px;
+  background-color: red;
+  z-index: 2;
+`
 
 
 // page component
@@ -87,7 +94,7 @@ export default class SecondPage extends React.Component {
     };
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
-    this.students = new Array(this.length*2).fill({});
+    this.students = new Array(this.length).fill({});
   }
 
   handleScriptLoad() {
@@ -203,6 +210,7 @@ export default class SecondPage extends React.Component {
 
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
+
     return (
       <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
         <Script
@@ -215,9 +223,9 @@ export default class SecondPage extends React.Component {
 
 
             <Content innerRef={(content) => { this.content = content; }}>
-              {this.students.map( ({ node }, i) => (
+              {studentsData.map( ({ node }, i) => (
                 <FakeStudent key={i} innerRef={el => this.students[i] = el}>
-                  <TestBox/>
+                  <FakeImage sizes={node.frontmatter.image.childImageSharp.sizes} position="absolute"/>
                 </FakeStudent>
               ))}
             </Content>
