@@ -201,7 +201,7 @@ export default class SecondPage extends React.Component {
       progress: 0
     };
 
-    let easing = Power1.easeInOut;
+    let easing = Power2.easeInOut;
 
     if (index > 0 ) {
       var last = this.scroller.steps[index - 1];
@@ -210,20 +210,12 @@ export default class SecondPage extends React.Component {
         .to(this.scroller.container, last.height, { y: "-=" + last.height, ease: easing }, this.scroller.scrollHeight);
     }
 
-    // this.tl.set(element.firstChild, { scale: 0.5, opacity: 1})
-    //   .to(element.firstChild, size/2, { scale: 3 })
-    //   .to(element.firstChild, size/2, { scale: 0.5 })
-
-    // ease:Power1.easeOut
-
-    this.tl.set(element.firstChild, { scale: 0.05, x: -(this.scroller.viewportWidth/2+this.scroller.vmin*0.08) }, this.scroller.scrollHeight)
+    this.tl.set(element.firstChild, { scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) }, this.scroller.scrollHeight)
     .to(element.firstChild, size/2-padding, { scale: 1, x: 0, ease: easing }, this.scroller.scrollHeight+padding)
     .set(element.firstChild, { className: "+=hide" })
-    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/2+this.scroller.vmin*0.08, ease: easing, className: "-=hide" }, this.scroller.scrollHeight+size+padding)
-    // this.tl
-    //   // .to(element.firstChild, { step: index - 1 }, { scale: 3 })
-    //   .to(element.firstChild, size, { scale: 4 })
-    //
+    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08, ease: easing, className: "-=hide" }, this.scroller.scrollHeight+size+padding)
+
+
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
             .to(step, size, { progress: 1, ease: easing  }, this.scroller.scrollHeight)
 
