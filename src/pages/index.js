@@ -217,8 +217,8 @@ export default class SecondPage extends React.Component {
     // ease:Power1.easeOut
 
     this.tl.set(element.firstChild, { scale: 0.05, x: -(this.scroller.viewportWidth/2+this.scroller.vmin*0.08) }, this.scroller.scrollHeight)
-    .to(element.firstChild, size/2-padding, { scale: 1, x: 0, ease: easing  }, this.scroller.scrollHeight+padding)
-    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/2+this.scroller.vmin*0.08, ease: easing }, this.scroller.scrollHeight+size+padding)
+    .to(element.firstChild, size/2-padding, { scale: 1, x: 0, ease: easing }, this.scroller.scrollHeight+padding)
+    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/2+this.scroller.vmin*0.08, ease: easing}, this.scroller.scrollHeight+size+padding)
     // this.tl
     //   // .to(element.firstChild, { step: index - 1 }, { scale: 3 })
     //   .to(element.firstChild, size, { scale: 4 })
@@ -236,6 +236,9 @@ export default class SecondPage extends React.Component {
 
   render() {
     let studentsData = this.props.data.allMarkdownRemark.edges;
+    console.log(studentsData.length);
+    console.log(this.students.length);
+
 
     return (
       <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
@@ -251,18 +254,17 @@ export default class SecondPage extends React.Component {
             <Content innerRef={(content) => { this.content = content; }}>
               {studentsData.map( ({ node }, i) => (
                 <React.Fragment>
-                <FakeStudent key={i} innerRef={el => this.students[i] = el}>
+                {/* <FakeStudent key={i} innerRef={el => this.students[i] = el}>
                   <FakeImage sizes={node.frontmatter.image.childImageSharp.sizes} position="absolute"/>
-                  {/* <h1>{node.frontmatter.title}</h1> */}
-                </FakeStudent>
-                {/* <Student
-                  key={node.id}
-                  image={node.frontmatter.image.childImageSharp.sizes}
-                  name={node.frontmatter.title}
-                  verb={node.frontmatter.verb}
-                  noun={node.frontmatter.noun}
-                  blurb={node.frontmatter.blurb}
-                /> */}
+                </FakeStudent> */}
+
+                  <Student
+                    key={node.id}
+                    image={node.frontmatter.image.childImageSharp.sizes}
+                    verb={node.frontmatter.verb}
+                    noun={node.frontmatter.noun}
+                    studentRef={el => this.students[i] = el}
+                  />
                 </React.Fragment>
               ))}
             </Content>

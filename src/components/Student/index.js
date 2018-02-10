@@ -11,17 +11,16 @@ import Img from "gatsby-image"
 
 // styled components
 const Container = styled.div`
-  width: 70vmin;
-  height: 70vmin;
-  position: absolute;
-  ${'' /* top: -100vmin; */}
-  top: 0;
   background-color: white;
-  ${'' /* transform-origin: center center; */}
-  transform-origin: top center;
+  transform-origin: center center;
   cursor: pointer;
-  transform: scale(1);
-  ${'' /* transition: transform 10ms ease-in-out; */}
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+  width: 100%;
 
   .image-wrapper {
     height: 100%;
@@ -34,10 +33,14 @@ const Container = styled.div`
 `
 
 const InnerContainer = styled.div`
-  height: 100%;
-  width: 100%;
+  width: 70vmin;
+  height: 70vmin;
 
   transform-origin: center center;
+
+  &.hide {
+    opacity: 0;
+  }
 `
 
 const Text = styled.p`
@@ -66,6 +69,7 @@ const MarkContainer = styled.div`
   }
 `
 
+
 const StatementText = styled.div`
   text-transform: uppercase;
   line-height: 1;
@@ -89,111 +93,30 @@ const Verb = StatementText.extend`
 `
 
 const Noun = StatementText.extend`
-transform: rotate(-180deg);
-right: -0.5rem;
-bottom: -5.3rem;
+  transform: rotate(-180deg);
+  right: -0.5rem;
+  bottom: -5.3rem;
 `
-
-const TextContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-`
-
-const InnerTextContainer = styled.div`
-  padding: 1rem;
-  width: calc(100% - 4px);
-  height: calc(100% - 4px);
-  background-color: white;
-`
-
-// helper function
-const constrain = (num, low, high) => Math.min(Math.max(Math.abs(num), low), high);
-
-const map = (num, in_min, in_max, out_min, out_max) => (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-
-
 
 // component
-export default class Student extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      offsetRight: 0,
-      showInfo: false
-    }
-  }
-
-  toggleInfo = () => {
-    this.setState(prevState => ({
-      showInfo: !prevState.showInfo
-    }))
-  }
-
-  calcOffset = () => {
-    let boundingRect = this.element.getBoundingClientRect();
-
-    this.setState({
-      offsetRight: (this.props.windowWidth - boundingRect.left)/this.props.windowWidth
-    })
-  }
-
-  getOffset = () => this.state.offsetRight;
-
-  setOffset = (offset) => {
-    this.setState({
-      offsetRight: offset
-    })
-  }
-
-  render() {
-    console.log(`${this.props.verb} the next ${this.props.noun} = ${this.props.name}`);
-    let offset = this.state.offsetRight+0.3;
-
-    // let style = {
-    //   transform: `scale(${constrain(Math.pow(offset, 1.5)*0.65+(0.1-offset*0.1),0,2)}) translateY(${constrain(1-offset*100, -1, 120) + (20 - offset*20)}%)`
-    // }
-
-    let style = {
-      transform: `scale(${this.props.scale}) translateY(${this.props.translateY}px)`
-      // transform: `scale(${this.props.scale})`
-    }
-
-    return (
-      <Container className="student" innerRef={this.props.studentRef} onClick={this.toggleInfo}>
-        <InnerContainer>
-
+export default function Student(props) {
+  return (
+    <Container innerRef={props.studentRef}>
+      <InnerContainer>
         <MarkContainer>
           <Mark/>
         </MarkContainer>
 
-        <Line/>
+        <Verb>{props.verb}</Verb>
+        <Noun>{props.noun}</Noun>
 
-        <Verb>{this.props.verb}</Verb>
-        <Noun>{this.props.noun}</Noun>
+        <Img
+          sizes={props.image}
+          outerWrapperClassName='image-wrapper'
+          className='image'
+        />
 
-        {this.state.showInfo ? (
-          <TextContainer>
-            <InnerTextContainer>
-              <p>{this.props.blurb}</p>
-              <p>{this.props.name}</p>
-              <h1>{this.props.debug}</h1>
-            </InnerTextContainer>
-          </TextContainer>
-        ) : (
-          <Img
-            sizes={this.props.image}
-            outerWrapperClassName='image-wrapper'
-            className='image'
-          />
-        )}
-          </InnerContainer>
-      </Container>
-    )
-  }
-
+      </InnerContainer>
+    </Container>
+  )
 }
