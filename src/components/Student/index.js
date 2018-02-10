@@ -38,9 +38,6 @@ const InnerContainer = styled.div`
 
   transform-origin: center center;
 
-  &.hide {
-    opacity: 0;
-  }
 `
 
 const Text = styled.p`
@@ -63,8 +60,9 @@ const MarkContainer = styled.div`
   top: -5.5rem;
   right: -4.3rem;
   opacity: 0;
+  transition: opacity 200ms ease-in-out;
 
-  ${Container}:hover & {
+  ${InnerContainer}.hide & {
     opacity: 1;
   }
 `
@@ -76,8 +74,10 @@ const StatementText = styled.div`
   position: absolute;
   font-size: 4.5rem;
   opacity: 0;
+  transition: opacity 200ms ease-in-out;
 
-  ${Container}:hover & {
+
+  ${InnerContainer}.hide & {
     opacity: 1;
   }
 `

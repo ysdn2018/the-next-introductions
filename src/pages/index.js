@@ -218,7 +218,8 @@ export default class SecondPage extends React.Component {
 
     this.tl.set(element.firstChild, { scale: 0.05, x: -(this.scroller.viewportWidth/2+this.scroller.vmin*0.08) }, this.scroller.scrollHeight)
     .to(element.firstChild, size/2-padding, { scale: 1, x: 0, ease: easing }, this.scroller.scrollHeight+padding)
-    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/2+this.scroller.vmin*0.08, ease: easing}, this.scroller.scrollHeight+size+padding)
+    .set(element.firstChild, { className: "+=hide" })
+    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/2+this.scroller.vmin*0.08, ease: easing, className: "-=hide" }, this.scroller.scrollHeight+size+padding)
     // this.tl
     //   // .to(element.firstChild, { step: index - 1 }, { scale: 3 })
     //   .to(element.firstChild, size, { scale: 4 })
