@@ -48,11 +48,14 @@ const FakeStudent = styled.div`
   background-color: grey;
   transform-origin: top right;
   overflow: hidden;
-  border: 1px solid red;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  h1 {
+    position: absolute;
+  }
 `
 
 const FakeProject = styled.div`
@@ -152,6 +155,8 @@ export default class SecondPage extends React.Component {
       height: this.scroller.scrollHeight,
       force3D: true
     });
+
+    // this.tl.progress(0.5);
   }
 
   update = () => {
@@ -193,14 +198,24 @@ export default class SecondPage extends React.Component {
 
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
         .to(this.scroller.container, last.height, { y: "-=" + last.height }, this.scroller.scrollHeight);
+
+
     }
 
-    this.tl.set(element.firstChild, { scale: 0.5, opacity: 1, y: -this.scroller.viewportHeight/2 })
-      .to(element.firstChild, size/2, { scale: 3, y: 0 })
-      .to(element.firstChild, size/2, { scale: 0.5, y: this.scroller.viewportHeight })
+    // this.tl.set(element.firstChild, { scale: 0.5, opacity: 1})
+    //   .to(element.firstChild, size/2, { scale: 3 })
+    //   .to(element.firstChild, size/2, { scale: 0.5 })
 
+
+    this.tl.set(element.firstChild, { scale: 0.5, x: -this.scroller.viewportWidth/2 }, this.scroller.scrollHeight)
+    .to(element.firstChild, size/2-padding, { scale: 3, x: 0 }, this.scroller.scrollHeight+padding)
+    .to(element.firstChild, padding, { scale: 0.5, x: this.scroller.viewportWidth/2 }, this.scroller.scrollHeight+size+padding)
+    // this.tl
+    //   // .to(element.firstChild, { step: index - 1 }, { scale: 3 })
+    //   .to(element.firstChild, size, { scale: 4 })
+    //
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
-      .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
+            .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
 
     this.scroller.scrollHeight += (size + padding);
     this.scroller.steps.push(step);
