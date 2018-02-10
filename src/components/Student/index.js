@@ -19,8 +19,9 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  height: 100vh;
+  height: calc(100vh / 3);
   width: 100%;
+  ${'' /* border-bottom: 1px solid red; */}
 
   .image-wrapper {
     height: 100%;

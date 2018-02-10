@@ -135,10 +135,10 @@ export default class SecondPage extends React.Component {
       container: this.content,
       viewportHeight: window.innerHeight,
       viewportWidth: window.innerWidth,
-      stepHeight: Math.max(window.innerHeight, 2500),
+      stepHeight: Math.max(window.innerHeight, 2500)/3,
       vmin: Math.min(window.innerHeight, window.innerWidth),
       scrollHeight: 0,
-      padding: 200,
+      padding: 0,
       steps: [],
       step: 0,
       y: 0
@@ -201,7 +201,7 @@ export default class SecondPage extends React.Component {
       progress: 0
     };
 
-    let easing = Power2.easeInOut;
+    let easing = Power1.easeInOut;
 
     if (index > 0 ) {
       var last = this.scroller.steps[index - 1];
@@ -210,10 +210,11 @@ export default class SecondPage extends React.Component {
         .to(this.scroller.container, last.height, { y: "-=" + last.height, ease: easing }, this.scroller.scrollHeight);
     }
 
-    this.tl.set(element.firstChild, { scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) }, this.scroller.scrollHeight)
-    .to(element.firstChild, size/2-padding, { scale: 1, x: 0, ease: easing }, this.scroller.scrollHeight+padding)
-    .set(element.firstChild, { className: "+=hide" })
-    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08, ease: easing, className: "-=hide" }, this.scroller.scrollHeight+size+padding)
+    TweenLite.set(element.firstChild, {scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) });
+
+    this.tl.set(element.firstChild, { scale: 0.1, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2)
+    .to(element.firstChild, size/2, { scale: 1, x: 0, ease: easing, className: "+=hide" }, this.scroller.scrollHeight-size-padding)
+    .to(element.firstChild, size/2, { scale: 0.1, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=hide" }, this.scroller.scrollHeight)
 
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
