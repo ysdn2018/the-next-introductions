@@ -45,7 +45,6 @@ const FakeStudent = styled.div`
   width: 100%;
   height: 100vh;
   margin-right: 20px;
-  background-color: grey;
   transform-origin: top right;
   overflow: hidden;
 
@@ -53,9 +52,16 @@ const FakeStudent = styled.div`
   justify-content: center;
   align-items: center;
 
+
   h1 {
     position: absolute;
   }
+`
+
+const InnerBox = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
 `
 
 const FakeProject = styled.div`
@@ -74,10 +80,11 @@ const TestBox = styled.div`
 `
 
 const FakeImage = styled(Img)`
-  height: 200px;
-  width: 200px;
   background-color: red;
   z-index: 2;
+
+  height: 70vmin;
+  width: 70vmin;
 `
 
 
@@ -129,8 +136,9 @@ export default class SecondPage extends React.Component {
       viewportHeight: window.innerHeight,
       viewportWidth: window.innerWidth,
       stepHeight: Math.max(window.innerHeight, 2500),
+      vmin: Math.min(window.innerHeight, window.innerWidth),
       scrollHeight: 0,
-      padding: 400,
+      padding: 200,
       steps: [],
       step: 0,
       y: 0
@@ -193,36 +201,37 @@ export default class SecondPage extends React.Component {
       progress: 0
     };
 
+    let easing = Power1.easeInOut;
+
     if (index > 0 ) {
       var last = this.scroller.steps[index - 1];
 
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
-        .to(this.scroller.container, last.height, { y: "-=" + last.height }, this.scroller.scrollHeight);
-
-
+        .to(this.scroller.container, last.height, { y: "-=" + last.height, ease: easing }, this.scroller.scrollHeight);
     }
 
     // this.tl.set(element.firstChild, { scale: 0.5, opacity: 1})
     //   .to(element.firstChild, size/2, { scale: 3 })
     //   .to(element.firstChild, size/2, { scale: 0.5 })
 
+    // ease:Power1.easeOut
 
-    this.tl.set(element.firstChild, { scale: 0.5, x: -this.scroller.viewportWidth/2 }, this.scroller.scrollHeight)
-    .to(element.firstChild, size/2-padding, { scale: 3, x: 0 }, this.scroller.scrollHeight+padding)
-    .to(element.firstChild, padding, { scale: 0.5, x: this.scroller.viewportWidth/2 }, this.scroller.scrollHeight+size+padding)
+    this.tl.set(element.firstChild, { scale: 0.05, x: -(this.scroller.viewportWidth/2+this.scroller.vmin*0.08) }, this.scroller.scrollHeight)
+    .to(element.firstChild, size/2-padding, { scale: 1, x: 0, ease: easing  }, this.scroller.scrollHeight+padding)
+    .to(element.firstChild, size/4, { scale: 0.05, x: this.scroller.viewportWidth/2+this.scroller.vmin*0.08, ease: easing }, this.scroller.scrollHeight+size+padding)
     // this.tl
     //   // .to(element.firstChild, { step: index - 1 }, { scale: 3 })
     //   .to(element.firstChild, size, { scale: 4 })
     //
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
-            .to(step, size, { progress: 1 }, this.scroller.scrollHeight)
+            .to(step, size, { progress: 1, ease: easing  }, this.scroller.scrollHeight)
 
     this.scroller.scrollHeight += (size + padding);
     this.scroller.steps.push(step);
   }
 
   handleClick = () => {
-    console.log(this.students);
+    console.log(window.pageYOffset);
   }
 
   render() {
@@ -244,7 +253,7 @@ export default class SecondPage extends React.Component {
                 <React.Fragment>
                 <FakeStudent key={i} innerRef={el => this.students[i] = el}>
                   <FakeImage sizes={node.frontmatter.image.childImageSharp.sizes} position="absolute"/>
-                  <h1>{node.frontmatter.title}</h1>
+                  {/* <h1>{node.frontmatter.title}</h1> */}
                 </FakeStudent>
                 {/* <Student
                   key={node.id}
@@ -280,7 +289,7 @@ export const query = graphql`
 
             image {
               childImageSharp {
-                sizes(maxWidth: 800) {
+                sizes(maxWidth: 1000) {
                   ...GatsbyImageSharpSizes_withWebp
                 }
               }
