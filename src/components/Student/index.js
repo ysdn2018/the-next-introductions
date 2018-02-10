@@ -13,6 +13,7 @@ import Img from "gatsby-image"
 const Container = styled.div`
   width: 70vmin;
   height: 70vmin;
+  position: absolute;
   ${'' /* top: -100vmin; */}
   top: 0;
   background-color: white;
@@ -35,7 +36,7 @@ const Container = styled.div`
 const InnerContainer = styled.div`
   height: 100%;
   width: 100%;
-  transform: scale(0.1);
+
   transform-origin: center center;
 `
 
@@ -123,7 +124,7 @@ export default class Student extends React.Component {
 
     this.state = {
       offsetRight: 0,
-      showInfo: true
+      showInfo: false
     }
   }
 
@@ -150,6 +151,7 @@ export default class Student extends React.Component {
   }
 
   render() {
+    console.log(`${this.props.verb} the next ${this.props.noun} = ${this.props.name}`);
     let offset = this.state.offsetRight+0.3;
 
     // let style = {
@@ -162,7 +164,7 @@ export default class Student extends React.Component {
     }
 
     return (
-      <Container className="student" innerRef={this.props.studentRef} style={style} onClick={this.toggleInfo}>
+      <Container className="student" innerRef={this.props.studentRef} onClick={this.toggleInfo}>
         <InnerContainer>
 
         <MarkContainer>

@@ -124,6 +124,7 @@ export default class SecondPage extends React.Component {
     this.scroller = {
       container: this.content,
       viewportHeight: window.innerHeight,
+      viewportWidth: window.innerWidth,
       stepHeight: Math.max(window.innerHeight, 2500),
       scrollHeight: 0,
       padding: 400,
@@ -225,10 +226,20 @@ export default class SecondPage extends React.Component {
 
             <Content innerRef={(content) => { this.content = content; }}>
               {studentsData.map( ({ node }, i) => (
+                <React.Fragment>
                 <FakeStudent key={i} innerRef={el => this.students[i] = el}>
                   <FakeImage sizes={node.frontmatter.image.childImageSharp.sizes} position="absolute"/>
                   <h1>{node.frontmatter.title}</h1>
                 </FakeStudent>
+                {/* <Student
+                  key={node.id}
+                  image={node.frontmatter.image.childImageSharp.sizes}
+                  name={node.frontmatter.title}
+                  verb={node.frontmatter.verb}
+                  noun={node.frontmatter.noun}
+                  blurb={node.frontmatter.blurb}
+                /> */}
+                </React.Fragment>
               ))}
             </Content>
 
