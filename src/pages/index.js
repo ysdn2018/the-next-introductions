@@ -145,7 +145,11 @@ export default class SecondPage extends React.Component {
     };
 
 
-    this.scroller.scrollHeight = this.scroller.stepHeight/2;
+    setTimeout(() => {
+        let firstProj = (this.scroller.stepHeight*2+this.scroller.stepHeight/2)
+        window.scrollTo(0, firstProj);
+        this.tl.time(firstProj);
+    }, 2);
 
 
     this.tl = new TimelineMax({
@@ -165,9 +169,14 @@ export default class SecondPage extends React.Component {
 
     TweenLite.set(this.scroller.container, {
       height: this.scroller.scrollHeight,
+      top: -this.scroller.viewportHeight/4,
       force3D: true
     });
 
+
+
+    // this.tl.time( this.scroller.stepHeight/2);
+    // this.tl.progress(0.50);
     // this.tl.progress(0.5);
   }
 
@@ -212,13 +221,14 @@ export default class SecondPage extends React.Component {
 
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
         .to(this.scroller.container, last.height, { y: "-=" + last.height, ease: easing }, this.scroller.scrollHeight);
+
     }
 
     TweenLite.set(element.firstChild, {scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) });
 
-    this.tl.set(element.firstChild, { scale: 0.1, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2 )
+    this.tl.set(element.firstChild, { scale: 0.2, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2 )
     .to(element.firstChild, size/2, { scale: 1, x: 0, ease: easing, className: "+=hide" }, this.scroller.scrollHeight-size-padding)
-    .to(element.firstChild, size/2, { scale: 0.1, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=hide" }, this.scroller.scrollHeight)
+    .to(element.firstChild, size/2, { scale: 0.2, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=hide" }, this.scroller.scrollHeight)
 
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
@@ -229,7 +239,8 @@ export default class SecondPage extends React.Component {
   }
 
   handleClick = () => {
-    console.log(window.pageYOffset);
+    console.log(this.tl.time());
+    this.forceUpdate();
   }
 
   render() {
@@ -251,21 +262,13 @@ export default class SecondPage extends React.Component {
 
             <Content innerRef={(content) => { this.content = content; }}>
               {studentsData.map( ({ node }, i) => (
-                <React.Fragment>
-                {/* <FakeStudent key={i} innerRef={el => this.students[i] = el}>
-                  <FakeImage sizes={node.frontmatter.image.childImageSharp.sizes} position="absolute"/>
-                </FakeStudent> */}
-
-                  {console.log(node.frontmatter.title)}
-
-                  <Student
-                    key={node.id}
-                    image={node.frontmatter.image.childImageSharp.sizes}
-                    verb={node.frontmatter.verb}
-                    noun={node.frontmatter.noun}
-                    studentRef={el => this.students[i] = el}
-                  />
-                </React.Fragment>
+                <Student
+                  key={node.id}
+                  image={node.frontmatter.image.childImageSharp.sizes}
+                  verb={node.frontmatter.verb}
+                  noun={node.frontmatter.noun}
+                  studentRef={el => this.students[i] = el}
+                />
               ))}
             </Content>
 

@@ -21,7 +21,6 @@ const Container = styled.div`
 
   height: 50vh;
   width: 100%;
-  border-bottom: 1px solid red;
 
   .image-wrapper {
     height: 100%;
