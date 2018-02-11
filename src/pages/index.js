@@ -105,7 +105,7 @@ export default class SecondPage extends React.Component {
     };
 
     this.length = this.props.data.allMarkdownRemark.edges.length;
-    this.students = new Array(this.length).fill({});
+    this.students = new Array(this.length+3).fill({});
   }
 
   handleScriptLoad() {
@@ -183,9 +183,23 @@ export default class SecondPage extends React.Component {
   update = () => {
     let scroll = window.pageYOffset;
 
+    this.infiniteScroll(scroll);
+
     this.scroller.y = scroll;
     this.requestId = null;
-    this.tl.time(scroll);
+    this.tl.time(-scroll);
+  }
+
+  infiniteScroll = (scroll) => {
+    if (scroll < this.scroller.stepHeight*2+this.scroller.stepHeight/2 - 100) {
+      window.scrollTo(0, (this.scroller.stepHeight + this.scroller.padding)*(this.scroller.steps.length-2) + 100);
+    }
+
+    if (scroll > (this.scroller.stepHeight + this.scroller.padding)*(this.scroller.steps.length-2) + 100) {
+      window.scrollTo(0, this.scroller.stepHeight*2+this.scroller.stepHeight/2 - 100);
+    }
+
+
   }
 
   handleScroll = (e) => {
@@ -208,7 +222,7 @@ export default class SecondPage extends React.Component {
 
   addChild = (element, size, padding, index) => {
     var step = {
-      height: element.clientHeight,
+      height: element.getBoundingClientRect().height,
       size: size,
       pad: padding,
       progress: 0
@@ -239,15 +253,14 @@ export default class SecondPage extends React.Component {
   }
 
   handleClick = () => {
-    console.log(this.tl.time());
+    console.log(window.pageYOffset);
     this.forceUpdate();
   }
 
   render() {
-    let studentsData = this.props.data.allMarkdownRemark.edges;
-    console.log(studentsData.length);
-    console.log(this.students.length);
-
+    let studentsDataPre = this.props.data.allMarkdownRemark.edges;
+    let studentDataEnd = studentsDataPre.slice(1,4);
+    let studentsData = studentsDataPre.concat(studentDataEnd);
 
     return (
       <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
@@ -263,7 +276,7 @@ export default class SecondPage extends React.Component {
             <Content innerRef={(content) => { this.content = content; }}>
               {studentsData.map( ({ node }, i) => (
                 <Student
-                  key={node.id}
+                  key={i}
                   image={node.frontmatter.image.childImageSharp.sizes}
                   verb={node.frontmatter.verb}
                   noun={node.frontmatter.noun}
