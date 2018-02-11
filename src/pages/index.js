@@ -93,6 +93,10 @@ export default class SecondPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      currentStudent: 0
+    }
+
     this.scroller = {
       container: null,
       viewportHeight: 1000,
@@ -214,8 +218,12 @@ export default class SecondPage extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log((nextProps));
+
+
+  componentWillMount() {
+    let studentsDataPre = this.shuffleArray(this.props.data.allMarkdownRemark.edges);
+    let studentDataEnd = studentsDataPre.slice(1,4);
+    this.studentsData = studentsDataPre.concat(studentDataEnd);
   }
 
   shuffleArray = (array) => {
@@ -244,12 +252,17 @@ export default class SecondPage extends React.Component {
 
     }
 
+    function logMe(i) {
+      console.log(this.studentsData[index].node.frontmatter.noun);
+    }
+
     TweenLite.set(element.firstChild, {scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) });
 
     this.tl.set(element.firstChild, { scale: 0.2, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2 )
+    .call(logMe, [index], this, this.scroller.scrollHeight-size/2)
     .to(element.firstChild, size/2, { scale: 1, x: 0, ease: easing, className: "+=hide" }, this.scroller.scrollHeight-size-padding)
-    .to(element.firstChild, size/2, { scale: 0.2, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=hide" }, this.scroller.scrollHeight)
 
+    .to(element.firstChild, size/2, { scale: 0.2, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=hide" }, this.scroller.scrollHeight)
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
             .to(step, size, { progress: 1, ease: easing  }, this.scroller.scrollHeight)
@@ -264,10 +277,6 @@ export default class SecondPage extends React.Component {
   }
 
   render() {
-    let studentsDataPre = this.shuffleArray(this.props.data.allMarkdownRemark.edges);
-    let studentDataEnd = studentsDataPre.slice(1,4);
-    let studentsData = studentsDataPre.concat(studentDataEnd);
-
     return (
       <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
         <Script
@@ -278,9 +287,8 @@ export default class SecondPage extends React.Component {
         <Container>
           <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
 
-
             <Content innerRef={(content) => { this.content = content; }}>
-              {studentsData.map( ({ node }, i) => (
+              {this.studentsData.map( ({ node }, i) => (
                 <Student
                   key={i}
                   image={node.frontmatter.image.childImageSharp.sizes}
