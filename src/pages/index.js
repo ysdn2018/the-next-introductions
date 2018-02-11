@@ -218,7 +218,13 @@ export default class SecondPage extends React.Component {
     console.log((nextProps));
   }
 
-
+  shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
 
   addChild = (element, size, padding, index) => {
     var step = {
@@ -258,7 +264,7 @@ export default class SecondPage extends React.Component {
   }
 
   render() {
-    let studentsDataPre = this.props.data.allMarkdownRemark.edges;
+    let studentsDataPre = this.shuffleArray(this.props.data.allMarkdownRemark.edges);
     let studentDataEnd = studentsDataPre.slice(1,4);
     let studentsData = studentsDataPre.concat(studentDataEnd);
 
