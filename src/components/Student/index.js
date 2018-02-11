@@ -11,9 +11,7 @@ import Img from "gatsby-image"
 
 // styled components
 const Container = styled.div`
-  background-color: white;
   transform-origin: center center;
-  cursor: pointer;
 
   display: flex;
   justify-content: center;
@@ -33,6 +31,7 @@ const Container = styled.div`
 `
 
 const InnerContainer = styled.div`
+  cursor: pointer;
   width: 70vmin;
   height: 70vmin;
 
@@ -62,7 +61,7 @@ const MarkContainer = styled.div`
   opacity: 0;
   transition: opacity 200ms ease-in-out;
 
-  ${InnerContainer}.hide & {
+  ${InnerContainer}.show-statement & {
     opacity: 1;
   }
 `
@@ -77,7 +76,7 @@ const StatementText = styled.div`
   transition: opacity 200ms ease-in-out;
 
 
-  ${InnerContainer}.hide & {
+  ${InnerContainer}.show-statement & {
     opacity: 1;
   }
 `
@@ -102,7 +101,7 @@ const Noun = StatementText.extend`
 export default function Student(props) {
   return (
     <Container innerRef={props.studentRef}>
-      <InnerContainer>
+      <InnerContainer onClick={() => props.handleClick(props.index)}>
         <MarkContainer>
           <Mark/>
         </MarkContainer>

@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
 import { TimelineMax, TweenLite } from 'gsap';
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 import Img from 'gatsby-image'
 
 const OuterContainer = styled.div`
@@ -163,7 +164,7 @@ export default class SecondPage extends React.Component {
 
     this.requestId = null;
 
-    TweenLite.defaultEase = Linear.easeNone;
+    TweenLite.defaultEase = Power1.easeInOut;
 
     this.initChildren();
 
@@ -176,12 +177,6 @@ export default class SecondPage extends React.Component {
       top: -this.scroller.viewportHeight/4,
       force3D: true
     });
-
-
-
-    // this.tl.time( this.scroller.stepHeight/2);
-    // this.tl.progress(0.50);
-    // this.tl.progress(0.5);
   }
 
   update = () => {
@@ -189,9 +184,13 @@ export default class SecondPage extends React.Component {
 
     this.infiniteScroll(scroll);
 
-    this.scroller.y = scroll;
-    this.requestId = null;
-    this.tl.time(-scroll);
+    if (this.infoOpen) {
+      this.closeInfo(this.state.currentStudent);
+    } else {
+      this.scroller.y = scroll;
+      this.requestId = null;
+      this.tl.time(-scroll);
+    }
   }
 
   infiniteScroll = (scroll) => {
@@ -202,8 +201,6 @@ export default class SecondPage extends React.Component {
     if (scroll > (this.scroller.stepHeight + this.scroller.padding)*(this.scroller.steps.length-2) + 100) {
       window.scrollTo(0, this.scroller.stepHeight*2+this.scroller.stepHeight/2 - 100);
     }
-
-
   }
 
   handleScroll = (e) => {
@@ -239,7 +236,8 @@ export default class SecondPage extends React.Component {
       height: element.getBoundingClientRect().height,
       size: size,
       pad: padding,
-      progress: 0
+      progress: 0,
+      position: this.scroller.scrollHeight
     };
 
     let easing = Power1.easeInOut;
@@ -259,10 +257,8 @@ export default class SecondPage extends React.Component {
     TweenLite.set(element.firstChild, {scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) });
 
     this.tl.set(element.firstChild, { scale: 0.2, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2 )
-    .call(logMe, [index], this, this.scroller.scrollHeight-size/2)
-    .to(element.firstChild, size/2, { scale: 1, x: 0, ease: easing, className: "+=hide" }, this.scroller.scrollHeight-size-padding)
-
-    .to(element.firstChild, size/2, { scale: 0.2, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=hide" }, this.scroller.scrollHeight)
+      .to(element.firstChild, size/2, { scale: 1, x: 0, ease: easing, className: "+=show-statement" }, this.scroller.scrollHeight-size-padding)
+      .to(element.firstChild, size/2, { scale: 0.2, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=show-statement" }, this.scroller.scrollHeight)
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
             .to(step, size, { progress: 1, ease: easing  }, this.scroller.scrollHeight)
@@ -271,14 +267,52 @@ export default class SecondPage extends React.Component {
     this.scroller.steps.push(step);
   }
 
-  handleClick = () => {
-    console.log(window.pageYOffset);
-    this.forceUpdate();
+
+  closeInfo = (studentIndex) => {
+    this.infoOpen = fales;
+
+    let holdScroll = this.scroller.y;
+
+    let tl = new TimelineMax({onComplete: () => {
+      window.scrollTo(0, holdScroll);
+      this.update();
+    }});
+
+    tl.to(this.students[studentIndex].firstChild, 0.4, { x: 0 })
+      .to(this.students[studentIndex-1].firstChild, 0.3, { opacity: 1 }, "fadeOut")
+      .to(this.students[studentIndex+1].firstChild, 0.3, { opacity: 1 }, "fadeOut")
+  }
+
+  openInfo = (studentIndex) => {
+    let studentPos = this.scroller.scrollHeight-this.scroller.steps[studentIndex].position;
+    let tl = new TimelineMax({onComplete: () => {
+        this.infoOpen = true;
+        this.update();
+    }});
+
+    tl.to(window, studentPos*0.0004 , {scrollTo: studentPos})
+      .to(this.students[studentIndex].firstChild, 0.4, { x: this.scroller.viewportWidth/2 - this.scroller.vmin*0.7/2 - 100, className: "+=show-statement" })
+      .to(this.students[studentIndex-1].firstChild, 0.3, { opacity: 0 }, "fadeOut")
+      .to(this.students[studentIndex+1].firstChild, 0.3, { opacity: 0 }, "fadeOut")
+  }
+
+  handleClick = (studentIndex) => {
+    this.setState({
+      currentStudent: studentIndex
+    })
+
+    if (!this.infoOpen) {
+      this.openInfo(studentIndex);
+    } else {
+      this.closeInfo(studentIndex);
+    }
   }
 
   render() {
+    let currentStudent = this.studentsData[this.state.currentStudent].node.frontmatter;
+
     return (
-      <OuterContainer onClick={this.handleClick} innerRef={(container) => { this.container = container; }} >
+      <OuterContainer innerRef={(container) => { this.container = container; }} >
         <Script
           url="https://identity.netlify.com/v1/netlify-identity-widget.js"
           onLoad={() => this.handleScriptLoad()}
@@ -291,6 +325,8 @@ export default class SecondPage extends React.Component {
               {this.studentsData.map( ({ node }, i) => (
                 <Student
                   key={i}
+                  handleClick={this.handleClick}
+                  index={i}
                   image={node.frontmatter.image.childImageSharp.sizes}
                   verb={node.frontmatter.verb}
                   noun={node.frontmatter.noun}
