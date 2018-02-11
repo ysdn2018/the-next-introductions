@@ -135,14 +135,18 @@ export default class SecondPage extends React.Component {
       container: this.content,
       viewportHeight: window.innerHeight,
       viewportWidth: window.innerWidth,
-      stepHeight: Math.max(window.innerHeight, 2500)/3,
+      stepHeight: Math.max(window.innerHeight, 2500)/2,
       vmin: Math.min(window.innerHeight, window.innerWidth),
       scrollHeight: 0,
-      padding: 0,
+      padding: 1,
       steps: [],
       step: 0,
       y: 0
     };
+
+
+    this.scroller.scrollHeight = this.scroller.stepHeight/2;
+
 
     this.tl = new TimelineMax({
       paused: true,
@@ -212,7 +216,7 @@ export default class SecondPage extends React.Component {
 
     TweenLite.set(element.firstChild, {scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) });
 
-    this.tl.set(element.firstChild, { scale: 0.1, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2)
+    this.tl.set(element.firstChild, { scale: 0.1, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2 )
     .to(element.firstChild, size/2, { scale: 1, x: 0, ease: easing, className: "+=hide" }, this.scroller.scrollHeight-size-padding)
     .to(element.firstChild, size/2, { scale: 0.1, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=hide" }, this.scroller.scrollHeight)
 
@@ -251,6 +255,8 @@ export default class SecondPage extends React.Component {
                 {/* <FakeStudent key={i} innerRef={el => this.students[i] = el}>
                   <FakeImage sizes={node.frontmatter.image.childImageSharp.sizes} position="absolute"/>
                 </FakeStudent> */}
+
+                  {console.log(node.frontmatter.title)}
 
                   <Student
                     key={node.id}
