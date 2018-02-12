@@ -59,6 +59,11 @@ const InnerContainer = styled.div`
 
     margin-right: -50vmin;
   }
+
+  &.show-info + div > div {
+    opacity: 1;
+    transform: translateX(-25vw);
+  }
 `
 
 const Text = styled.p`
@@ -99,11 +104,6 @@ const Info = styled.div`
   max-width: 400px;
   font-size: 1.4rem;
   transition: 250ms cubic-bezier(.14,.6,.36,1);
-
-  ${Container}.show-info & {
-    opacity: 1 !important;
-    transform: translateX(-25vw);
-  }
 `
 
 
@@ -116,7 +116,7 @@ const StatementText = styled.div`
   transition: all 200ms ease-in-out;
 
   ${InnerContainer}.show-statement & {
-    opacity: 1 !important;
+    opacity: 1;
   }
 `
 
