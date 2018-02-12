@@ -3,6 +3,7 @@ import Link from 'gatsby-link'
 import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
+import Statement from '../components/Statement'
 import { TimelineMax, TweenLite } from 'gsap';
 import ScrollToPlugin from "gsap/ScrollToPlugin";
 import Img from 'gatsby-image'
@@ -86,6 +87,18 @@ const FakeImage = styled(Img)`
 
   height: 70vmin;
   width: 70vmin;
+`
+
+
+
+/* Intro Stuff */
+
+const IntroContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `
 
 
@@ -327,12 +340,16 @@ export default class SecondPage extends React.Component {
 
     return (
       <OuterContainer innerRef={(container) => { this.container = container; }} >
-        <Script
-          url="https://identity.netlify.com/v1/netlify-identity-widget.js"
-          onLoad={() => this.handleScriptLoad()}
-        />
 
         <Container>
+
+          <IntroContainer>
+            <Statement
+              verb="Introducting"
+              noun="Graduates"
+            />
+          </IntroContainer>
+
           <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
 
             <Content innerRef={(content) => { this.content = content; }}>
@@ -353,6 +370,7 @@ export default class SecondPage extends React.Component {
             </Content>
 
           </Viewport>
+
         </Container>
       </OuterContainer>
     )
