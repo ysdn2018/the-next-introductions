@@ -96,7 +96,8 @@ export default class SecondPage extends React.Component {
 
     this.state = {
       currentStudent: 0,
-      infoOpen: false
+      infoOpen: false,
+      orientation: 'LANDSCAPE'
     }
 
     this.scroller = {
@@ -274,6 +275,7 @@ export default class SecondPage extends React.Component {
       infoOpen: false
     }, () => this.update());
 
+    this.students[studentIndex].classList.remove("show-info")
     this.students[studentIndex].firstChild.classList.remove("show-info")
     this.students[studentIndex-1].firstChild.classList.remove("hide")
     this.students[studentIndex+1].firstChild.classList.remove("hide")
@@ -291,7 +293,8 @@ export default class SecondPage extends React.Component {
       this.scroller.y = window.pageYOffset;
 
       setTimeout(() => {
-        this.students[studentIndex].firstChild.classList.add("show-info")
+        this.students[studentIndex].classList.add("show-info")
+        this.students[studentIndex].firstChild.classList.add("show-info","show-statement")
         this.students[studentIndex-1].firstChild.classList.add("hide")
         this.students[studentIndex+1].firstChild.classList.add("hide")
       }, 2)
@@ -341,6 +344,9 @@ export default class SecondPage extends React.Component {
                   image={node.frontmatter.image.childImageSharp.sizes}
                   verb={node.frontmatter.verb}
                   noun={node.frontmatter.noun}
+                  blurb={node.frontmatter.blurb}
+                  name={node.frontmatter.title}
+                  orientation={this.state.orientation}
                   studentRef={el => this.students[i] = el}
                 />
               ))}
