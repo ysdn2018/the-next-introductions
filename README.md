@@ -1,12 +1,8 @@
-# Boiled
-A minimal & opinionated Gatsby boilerplate.
+# The Next Introductions
 
-Basic setup of [Gatsby](https://www.gatsbyjs.org/) with [Styled-Components](https://www.styled-components.com/), and [Netlify CMS](https://www.netlifycms.org/).
+Introducing the next graduating class.
 
-To get your own version, click the button below.
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/huntercaron/boiled)
-
+Using GSAP, Gatsby, Netlify CMS.
 
 ## Getting Started
 
@@ -28,27 +24,6 @@ Once that is done, get the site running and live-reloading by running `gatsby de
 
 You're good to go! Your site will be at http://localhost:8000/.
 
-## Setting up Netlify CMS
-Netlify CMS is essentially a lightweight CMS text editor for your site.
-
-It edits your static files and uses git to update them, meaning it has no speed impact on your actual site, it just gives you a slick backend.
-
-It's all setup on the site, you just need to setup Github authentication for yourself.
-
-### Github authentication
-First you’ll need to add your deployed site as an OAuth application in your GitHub settings. [This guide](https://www.netlify.com/docs/authentication-providers/#using-an-authentication-provider) shows you how (disregard the example code at the bottom).
-
-Then in your code in 'static/admin/config.yml' you'll want to let the cms know where your github repo is.
-
-Just change the `repo` field (on line 8) to your username and repo name.
-```
-  repo: your-username/your-repo-name
-```
-
-Then you're all set! Go to www.your-site-url.com/admin/ and Netlify CMS will be ready for you!
-
-More info about the whole process [here](https://www.gatsbyjs.org/docs/netlify-cms/).
-
 ## Docs & Guides
 - For other Gatsby commands look [here](https://www.gatsbyjs.org/docs/).
 - I also strongly recommended the Gatsby tutorial [here](https://www.gatsbyjs.org/tutorial/).
@@ -63,9 +38,3 @@ More info about the whole process [here](https://www.gatsbyjs.org/docs/netlify-c
   * [Atom IDE](https://ide.atom.io/) \(error reporting, auto completion & more\)
 * [Firefox](https://www.mozilla.org/en-US/firefox/) \(Great Dev-Tools\)
 * [Hyper](https://hyper.is/) \(A nicer terminal\)
-
-## Versions
-### version 1.0.0
-Setup and examples of normal pages, and dynamic pages generated from markdown files (in src/pages/content).
-### version 1.1.0
-Now comes with Netlify CMS installed.
