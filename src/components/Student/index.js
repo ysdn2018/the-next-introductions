@@ -37,6 +37,9 @@ const InnerContainer = styled.div`
 
   transform-origin: center center;
 
+  &.show-info {
+    opacity: 0.5;
+  }
 `
 
 const Text = styled.p`

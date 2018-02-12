@@ -143,7 +143,6 @@ export default class SecondPage extends React.Component {
       viewportWidth: window.innerWidth,
       stepHeight: Math.max(window.innerHeight, 2500)/2,
       vmin: Math.min(window.innerHeight, window.innerWidth),
-      vmax: Math.max(window.innerHeight, window.innerWidth),
       scrollHeight: 0,
       padding: 1,
       steps: [],
@@ -157,6 +156,7 @@ export default class SecondPage extends React.Component {
         window.scrollTo(0, firstProj);
         this.tl.time(firstProj);
     }, 2);
+
 
     this.tl = new TimelineMax({
       paused: true,
@@ -272,37 +272,39 @@ export default class SecondPage extends React.Component {
   closeInfo = (studentIndex) => {
     this.setState({
       infoOpen: false
-    })
+    }, () => this.update());
 
-    let holdScroll = this.scroller.y;
-
-    let tl = new TimelineMax({onComplete: () => {
-      window.scrollTo(0, holdScroll);
-      this.update();
-    }});
-
-    tl.to(this.students[studentIndex].firstChild, 0.4, { x: 0 })
-      .to(this.students[studentIndex-1].firstChild, 0.3, { opacity: 1 }, "fadeOut")
-      .to(this.students[studentIndex+1].firstChild, 0.3, { opacity: 1 }, "fadeOut")
+    this.students[studentIndex].firstChild.classList.remove("show-info")
+    this.students[studentIndex-1].firstChild.classList.remove("hide")
+    this.students[studentIndex+1].firstChild.classList.remove("hide")
   }
 
   openInfo = (studentIndex) => {
     let studentPos = this.scroller.scrollHeight-this.scroller.steps[studentIndex].position;
     let distance = Math.abs(studentPos - this.scroller.y);
 
-    let tl = new TimelineMax({onComplete: () => {
+    let infoSetup = () => {
       this.setState({
         infoOpen: true
       })
+
       this.scroller.y = window.pageYOffset;
-    }});
 
-    console.log(distance);
+      setTimeout(() => {
+        this.students[studentIndex].firstChild.classList.add("show-info")
+        this.students[studentIndex-1].firstChild.classList.add("hide")
+        this.students[studentIndex+1].firstChild.classList.add("hide")
+      }, 2)
+    }
 
-    tl.to(window, ((distance > 10) ? distance*0.0015 : 0) , {scrollTo: studentPos})
-      .to(this.students[studentIndex].firstChild, 0.3, { x: this.scroller.viewportWidth/2 - this.scroller.vmin*0.7/2 - 100, width: this.scroller.vmax/2-100, height: this.scroller.vmax/2-100, className: "+=show-statement" })
-      .to(this.students[studentIndex-1].firstChild, 0.3, { opacity: 0 }, "fadeOut")
-      .to(this.students[studentIndex+1].firstChild, 0.3, { opacity: 0 }, "fadeOut")
+    if (distance > 100) {
+      let tl = new TimelineMax({onComplete: () => {
+        infoSetup();
+      }});
+      tl.to(window, distance*0.001, {scrollTo: studentPos})
+    } else {
+      infoSetup();
+    }
   }
 
   handleClick = (studentIndex) => {
