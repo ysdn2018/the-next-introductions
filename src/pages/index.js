@@ -95,7 +95,8 @@ export default class SecondPage extends React.Component {
     super(props);
 
     this.state = {
-      currentStudent: 0
+      currentStudent: 0,
+      infoOpen: false
     }
 
     this.scroller = {
@@ -142,6 +143,7 @@ export default class SecondPage extends React.Component {
       viewportWidth: window.innerWidth,
       stepHeight: Math.max(window.innerHeight, 2500)/2,
       vmin: Math.min(window.innerHeight, window.innerWidth),
+      vmax: Math.max(window.innerHeight, window.innerWidth),
       scrollHeight: 0,
       padding: 1,
       steps: [],
@@ -156,14 +158,13 @@ export default class SecondPage extends React.Component {
         this.tl.time(firstProj);
     }, 2);
 
-
     this.tl = new TimelineMax({
       paused: true,
       onUpdate: this.update
     });
 
     this.requestId = null;
-
+    this.infoOpen = false;
     TweenLite.defaultEase = Power1.easeInOut;
 
     this.initChildren();
@@ -184,7 +185,7 @@ export default class SecondPage extends React.Component {
 
     this.infiniteScroll(scroll);
 
-    if (this.infoOpen) {
+    if (this.state.infoOpen) {
       this.closeInfo(this.state.currentStudent);
     } else {
       this.scroller.y = scroll;
@@ -269,7 +270,9 @@ export default class SecondPage extends React.Component {
 
 
   closeInfo = (studentIndex) => {
-    this.infoOpen = fales;
+    this.setState({
+      infoOpen: false
+    })
 
     let holdScroll = this.scroller.y;
 
@@ -285,13 +288,19 @@ export default class SecondPage extends React.Component {
 
   openInfo = (studentIndex) => {
     let studentPos = this.scroller.scrollHeight-this.scroller.steps[studentIndex].position;
+    let distance = Math.abs(studentPos - this.scroller.y);
+
     let tl = new TimelineMax({onComplete: () => {
-        this.infoOpen = true;
-        this.update();
+      this.setState({
+        infoOpen: true
+      })
+      this.scroller.y = window.pageYOffset;
     }});
 
-    tl.to(window, studentPos*0.0004 , {scrollTo: studentPos})
-      .to(this.students[studentIndex].firstChild, 0.4, { x: this.scroller.viewportWidth/2 - this.scroller.vmin*0.7/2 - 100, className: "+=show-statement" })
+    console.log(distance);
+
+    tl.to(window, ((distance > 10) ? distance*0.0015 : 0) , {scrollTo: studentPos})
+      .to(this.students[studentIndex].firstChild, 0.3, { x: this.scroller.viewportWidth/2 - this.scroller.vmin*0.7/2 - 100, width: this.scroller.vmax/2-100, height: this.scroller.vmax/2-100, className: "+=show-statement" })
       .to(this.students[studentIndex-1].firstChild, 0.3, { opacity: 0 }, "fadeOut")
       .to(this.students[studentIndex+1].firstChild, 0.3, { opacity: 0 }, "fadeOut")
   }
@@ -301,7 +310,7 @@ export default class SecondPage extends React.Component {
       currentStudent: studentIndex
     })
 
-    if (!this.infoOpen) {
+    if (!this.state.infoOpen) {
       this.openInfo(studentIndex);
     } else {
       this.closeInfo(studentIndex);
