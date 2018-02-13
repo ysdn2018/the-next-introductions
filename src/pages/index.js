@@ -4,9 +4,11 @@ import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
 import Statement from '../components/Statement'
+import Intro from '../components/Intro'
 import { TimelineMax, TweenLite } from 'gsap';
 import ScrollToPlugin from "gsap/ScrollToPlugin";
 import Img from 'gatsby-image'
+import _ from 'lodash';
 
 const OuterContainer = styled.div`
   height: 100%;
@@ -99,6 +101,7 @@ const IntroContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 10;
 `
 
 
@@ -296,6 +299,7 @@ export default class SecondPage extends React.Component {
   openInfo = (studentIndex) => {
     let studentPos = this.scroller.scrollHeight-this.scroller.steps[studentIndex].position;
     let distance = Math.abs(studentPos - this.scroller.y);
+
     this.setState({
       infoOpen: true
     })
@@ -311,7 +315,6 @@ export default class SecondPage extends React.Component {
     }
 
     if (distance > 100) {
-      console.log("no gsap");
       let tl = new TimelineMax({onComplete: () => {
         infoSetup();
       }});
@@ -342,11 +345,13 @@ export default class SecondPage extends React.Component {
       <OuterContainer innerRef={(container) => { this.container = container; }} >
 
         <Container>
-
           <IntroContainer>
             <Statement
               verb="Introducting"
               noun="Graduates"
+            />
+            <Intro
+              students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(2,3)[0])}
             />
           </IntroContainer>
 

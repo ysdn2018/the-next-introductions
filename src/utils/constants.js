@@ -70,6 +70,14 @@ const animations = {
       height: 200px;
     }
   `,
+  slideUp: keyframes`
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-110%);
+    }
+  `,
   starScale: keyframes`
     0% {
       width: 60%;

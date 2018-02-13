@@ -41,7 +41,7 @@ module.exports = {
       },
     },
     `gatsby-plugin-sharp`,
-        `gatsby-plugin-lodash`,
+    `gatsby-plugin-lodash`,
     `gatsby-plugin-netlify`
   ],
 }
