@@ -38,7 +38,6 @@ const NavButton = styled.a`
   text-decoration: none;
   color: black;
   text-transform: uppercase;
-  padding-left: 10px;
   text-align: center;
   &:hover {
     text-decoration: underline;
@@ -307,9 +306,9 @@ export default class SecondPage extends React.Component {
 
     TweenLite.set(element.firstChild, {scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) });
 
-    this.tl.set(element.firstChild, { scale: 0.2, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2 )
+    this.tl.set(element.firstChild, { scale: 0.25, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08), top: 0 }, this.scroller.scrollHeight-size*2 )
       .to(element.firstChild, size/2, { scale: 1, x: 0, ease: easing, className: "+=show-statement" }, this.scroller.scrollHeight-size-padding)
-      .to(element.firstChild, size/2, { scale: 0.2, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=show-statement" }, this.scroller.scrollHeight)
+      .to(element.firstChild, size/2, { scale: 0.25, x: this.scroller.viewportWidth/3+this.scroller.vmin*0.08,  ease: easing, className: "-=show-statement" }, this.scroller.scrollHeight)
 
     this.tl.set(this.scroller, { step: index }, this.scroller.scrollHeight)
             .to(step, size, { progress: 1, ease: easing  }, this.scroller.scrollHeight)
