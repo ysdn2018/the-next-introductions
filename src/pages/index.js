@@ -9,6 +9,8 @@ import { TimelineMax, TweenLite } from 'gsap';
 import ScrollToPlugin from "gsap/ScrollToPlugin";
 import Img from 'gatsby-image'
 import _ from 'lodash';
+// polyfill
+require('intersection-observer');
 
 const OuterContainer = styled.div`
   height: 100%;
