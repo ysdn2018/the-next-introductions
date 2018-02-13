@@ -25,6 +25,36 @@ const Container = styled.div`
 
 `
 
+const NavButton = styled.a`
+  width: 100%;
+  border-bottom: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  background-color: white;
+  z-index: 2;
+  height: 4rem;
+  text-decoration: none;
+  color: black;
+  text-transform: uppercase;
+  padding-left: 10px;
+  text-align: center;
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const TopNavButton = NavButton.extend`
+  border-bottom: 1px solid black;
+  top: 0;
+`
+
+const BottomNavButton = NavButton.extend`
+  border-top: 1px solid black;
+  bottom: 0;
+`
+
 const Viewport = styled.div`
   position: fixed;
   padding-bottom: 15px !important;
@@ -104,6 +134,7 @@ const IntroContainer = styled.div`
   width: 100%;
   height: 100%;
   z-index: 10;
+  pointer-events: none;
 `
 
 
@@ -174,7 +205,7 @@ export default class SecondPage extends React.Component {
         let firstProj = (this.scroller.stepHeight*2+this.scroller.stepHeight/2)
         window.scrollTo(0, firstProj);
         this.tl.time(firstProj);
-    }, 2);
+    }, 4000);
 
 
     this.tl = new TimelineMax({
@@ -347,6 +378,10 @@ export default class SecondPage extends React.Component {
       <OuterContainer innerRef={(container) => { this.container = container; }} >
 
         <Container>
+          <TopNavButton href="#">
+            The Next
+          </TopNavButton>
+
           <IntroContainer>
             <Statement
               verb="Introducting"
@@ -378,6 +413,9 @@ export default class SecondPage extends React.Component {
 
           </Viewport>
 
+          <BottomNavButton href="#">
+            Info
+          </BottomNavButton>
         </Container>
       </OuterContainer>
     )
