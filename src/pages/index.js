@@ -122,7 +122,6 @@ export default class SecondPage extends React.Component {
 
     this.state = {
       currentStudent: 0,
-      infoOpen: false,
       navOpen: true,
       orientation: 'LANDSCAPE'
     }
@@ -298,9 +297,8 @@ export default class SecondPage extends React.Component {
 
 
   closeInfo = (studentIndex) => {
-    this.setState({
-      infoOpen: false
-    }, () => this.update());
+    this.infoOpen = false;
+    this.update();
 
     this.students[studentIndex].firstChild.classList.remove("show-info")
     this.students[studentIndex-1].firstChild.classList.remove("hide")
@@ -311,9 +309,7 @@ export default class SecondPage extends React.Component {
     let studentPos = this.scroller.scrollHeight-this.scroller.steps[studentIndex].position;
     let distance = Math.abs(studentPos - this.scroller.y);
 
-    this.setState({
-      infoOpen: true
-    })
+    this.infoOpen = true;
 
     let infoSetup = () => {
       this.scroller.y = window.pageYOffset;
@@ -340,12 +336,14 @@ export default class SecondPage extends React.Component {
       currentStudent: studentIndex
     })
 
-    console.log(this.state.infoOpen);
+    console.log("clicked");
 
-    if (!this.state.infoOpen) {
-      this.openInfo(studentIndex);
-    } else {
+    console.log(`InfoOpen: ${this.infoOpen} HasClass: ${this.students[studentIndex].firstChild.classList.contains("show-info")}`);
+
+    if (this.infoOpen || this.students[studentIndex].firstChild.classList.contains("show-info")) {
       this.closeInfo(studentIndex);
+    } else {
+      this.openInfo(studentIndex);
     }
   }
 

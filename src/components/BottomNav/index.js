@@ -11,12 +11,17 @@ import Grid from '../Grid'
 
 const BottomNavButton = NavButton.extend`
   border-top: 1px solid black;
-  bottom: 0;
+  top: 0;
 `
 
 
 // styled components
 const Container = styled.div`
+  z-index: 5;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30vh;
 `
 
 const Text = styled.p`
@@ -24,7 +29,7 @@ const Text = styled.p`
 `
 
 const InnerNav = styled.div`
-  height: 30vh;
+  position: relative;
 `
 
 // component
@@ -36,7 +41,7 @@ export default function BottomNav(props) {
       </BottomNavButton>
 
       <InnerNav>
-
+        <h1>no</h1>
         <Grid />
 
       </InnerNav>
