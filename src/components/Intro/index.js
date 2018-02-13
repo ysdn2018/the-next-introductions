@@ -18,7 +18,7 @@ const Container = styled.div`
   top: 0;
   background-color: white;
 
-  animation: ${animations.fadeOut} 0.6s ${props => props.students.length*0.12+2.8}s ease-out forwards;
+  animation: ${animations.fadeOut} 0.6s ${props => props.students.length*0.12+3.3}s ease-out forwards;
 `
 
 const Student = styled(StaticStudent)`
@@ -40,7 +40,7 @@ const StudentContainer = styled.div`
 
   animation: ${animations.fadeIn};
   animation-duration: 0s;
-  animation-delay: ${props => props.index*0.12 + 1.8}s;
+  animation-delay: ${props => props.index*0.12 + 2.3}s;
   animation-direction: alternate;
   animation-fill-mode: forwards;
   animation-timing-function: step-end;

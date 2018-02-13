@@ -18,7 +18,7 @@ const StatementContainer = styled.div`
   background-color: white;
   z-index: 10;
 
-  animation: ${animations.slideUp} 1.2s 1.5s ease-in-out forwards;
+  animation: ${animations.slideUp} 1.2s 2s ease-in-out forwards;
 
   display: flex;
   flex-direction: column;
@@ -30,15 +30,7 @@ const StatementContainer = styled.div`
 
   h1 {
     opacity: 0;
-    animation: ${animations.fadeIn} 0.2s ease-out forwards;
-  }
-
-  @media (max-width: ${breakpoints.mobile}) {
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    height: calc(100vh - 1.75rem);
-    animation: ${animations.growUp} 0.8s 1s ease-in-out forwards;
-    border-bottom: 1px solid black;
+    animation: ${animations.fadeIn} 0.4s ease-out forwards;
   }
 `
 

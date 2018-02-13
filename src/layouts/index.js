@@ -106,19 +106,20 @@ injectGlobal`
   }
 
   body {
-      margin: 0;
-      height: 100%;
+    overflow-y:scroll;
+    margin: 0;
+    height: 100%;
 
-      font-size: 1.6em;
-      line-height: 1.6;
-      font-weight: 400;
-      font-family: 'Haas Grot Text', 'Helvetica', 'Arial', sans-serif;
-      color: #222;
-      webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      -ms-text-size-adjust: 100%;
-      -webkit-text-size-adjust: 100%;
-      text-rendering: optimizeLegibility;
+    font-size: 1.6em;
+    line-height: 1.6;
+    font-weight: 400;
+    font-family: 'Haas Grot Text', 'Helvetica', 'Arial', sans-serif;
+    color: #222;
+    webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
   }
 
   #___gatsby {

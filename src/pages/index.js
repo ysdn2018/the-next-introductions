@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import Script from "react-load-script";
 import Student from '../components/Student'
 import Statement from '../components/Statement'
+import NavButton from '../components/NavButton'
+import BottomNav from '../components/BottomNav'
 import Intro from '../components/Intro'
 import { TimelineMax, TweenLite } from 'gsap';
 import ScrollToPlugin from "gsap/ScrollToPlugin";
@@ -25,33 +27,9 @@ const Container = styled.div`
 
 `
 
-const NavButton = styled.a`
-  width: 100%;
-  border-bottom: 1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  background-color: white;
-  z-index: 2;
-  height: 4rem;
-  text-decoration: none;
-  color: black;
-  text-transform: uppercase;
-  text-align: center;
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
 const TopNavButton = NavButton.extend`
   border-bottom: 1px solid black;
   top: 0;
-`
-
-const BottomNavButton = NavButton.extend`
-  border-top: 1px solid black;
-  bottom: 0;
 `
 
 const Viewport = styled.div`
@@ -145,6 +123,7 @@ export default class SecondPage extends React.Component {
     this.state = {
       currentStudent: 0,
       infoOpen: false,
+      navOpen: true,
       orientation: 'LANDSCAPE'
     }
 
@@ -412,9 +391,8 @@ export default class SecondPage extends React.Component {
 
           </Viewport>
 
-          <BottomNavButton href="#">
-            Info
-          </BottomNavButton>
+          <BottomNav open={this.state.navOpen}/>
+
         </Container>
       </OuterContainer>
     )
