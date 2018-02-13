@@ -44,26 +44,6 @@ const InnerContainer = styled.div`
   width 250ms cubic-bezier(.14,.6,.36,1),
   height 250ms cubic-bezier(.14,.6,.36,1),
   opacity 250ms cubic-bezier(.14,.6,.36,1);
-
-  &:active ${StatementText} {
-      opacity: 0.5;
-  }
-
-  &.hide {
-    opacity: 0 !important;
-  }
-
-  &.show-info {
-    width: 35vw;
-    height: 35vw;
-
-    margin-right: -50vmin;
-  }
-
-  &.show-info + div > div {
-    opacity: 1;
-    transform: translateX(-25vw);
-  }
 `
 
 const Text = styled.p`
@@ -74,16 +54,8 @@ const MarkContainer = styled.div`
   position: absolute;
   top: -5.5rem;
   right: -4.3rem;
-  opacity: 0;
+  opacity: 1;
   transition: all 200ms cubic-bezier(.14,.6,.36,1);
-
-  ${InnerContainer}.show-statement & {
-    opacity: 1;
-  }
-
-  ${InnerContainer}:hover & {
-    transform: translate(10px, -10px);
-  }
 `
 
 const InfoContainer = styled.div`
@@ -98,21 +70,12 @@ const InfoContainer = styled.div`
   align-items: center;
 `
 
-const Info = styled.div`
-  opacity: 0;
-  width: 40%;
-  max-width: 400px;
-  font-size: 1.4rem;
-  transition: 250ms cubic-bezier(.14,.6,.36,1);
-`
-
-
 const StatementText = styled.div`
   text-transform: uppercase;
   line-height: 1;
   position: absolute;
   font-size: 4.5rem;
-  opacity: 0;
+  opacity: 1;
   transition: all 200ms ease-in-out;
 
 `
@@ -125,21 +88,12 @@ const Verb = StatementText.extend`
   width: 400px;
   top: 17.6rem;
 
-
-  ${InnerContainer}:hover & {
-    transform: translateX(-10px) rotate(-90deg);
-  }
-
 `
 
 const Noun = StatementText.extend`
   transform: rotate(-180deg);
   right: -0.3rem;
   bottom: -5.1rem;
-
-  ${InnerContainer}:hover & {
-    transform: translateY(10px) rotate(-180deg);
-  }
 `
 
 // component
@@ -160,13 +114,6 @@ export default function Student(props) {
           className='image'
         />
       </InnerContainer>
-
-      <InfoContainer>
-        <Info>
-          <p>{props.blurb}</p>
-          <p>{props.name}</p>
-        </Info>
-      </InfoContainer>
 
     </Container>
   )

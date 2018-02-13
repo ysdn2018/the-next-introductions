@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Img from 'gatsby-image'
 import StaticStudent from '../StaticStudent'
+import {animations} from "../../utils/constants.js"
 
 /*
   Base component
@@ -22,18 +23,32 @@ const Student = styled(StaticStudent)`
   position: absolute;
 `
 
+const StudentContainer = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+
+
 // component
 export default function Intro(props) {
   return (
     <Container>
+
       {props.students.map(({node}, i) =>
+        <StudentContainer key={i}>
           <Student
-            key={i}
             index={i}
             image={node.frontmatter.image.childImageSharp.sizes}
             verb={node.frontmatter.verb}
             noun={node.frontmatter.noun}
           />
+        </StudentContainer>
       )}
     </Container>
   )

@@ -6,7 +6,7 @@ module.exports = {
     title: `the next base`,
   },
   plugins: [
-    `gatsby-plugin-react-next`,
+    `gatsby-plugin-preact`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-netlify-cms`,
     `gatsby-plugin-styled-components`,
