@@ -16,6 +16,9 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   top: 0;
+  background-color: white;
+
+  animation: ${animations.fadeOut} 0.6s ${props => props.students.length*0.12+2.8}s ease-out forwards;
 `
 
 const Student = styled(StaticStudent)`
@@ -31,6 +34,16 @@ const StudentContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: ${props => props.index == 0 ? "1" : "0"};
+
+  background-color: white;
+
+  animation: ${animations.fadeIn};
+  animation-duration: 0s;
+  animation-delay: ${props => props.index*0.12 + 1.8}s;
+  animation-direction: alternate;
+  animation-fill-mode: forwards;
+  animation-timing-function: step-end;
 `
 
 
@@ -38,12 +51,11 @@ const StudentContainer = styled.div`
 // component
 export default function Intro(props) {
   return (
-    <Container>
+    <Container students={props.students}>
 
       {props.students.map(({node}, i) =>
-        <StudentContainer key={i}>
+        <StudentContainer key={i} index={i}>
           <Student
-            index={i}
             image={node.frontmatter.image.childImageSharp.sizes}
             verb={node.frontmatter.verb}
             noun={node.frontmatter.noun}

@@ -353,7 +353,7 @@ export default class SecondPage extends React.Component {
               noun="Graduates"
             />
             <Intro
-              students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(2,3)[0])}
+              students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(0,2)).concat(this.studentsData.slice(2,3)[0])}
             />
           </IntroContainer>
 

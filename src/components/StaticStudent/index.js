@@ -34,7 +34,6 @@ const Container = styled.div`
 const InnerContainer = styled.div`
   position: relative;
   z-index: 2;
-  cursor: pointer;
   width: 70vmin;
   height: 70vmin;
 

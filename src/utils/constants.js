@@ -54,6 +54,14 @@ const animations = {
       opacity: 1;
     }
   `,
+  fadeOut: keyframes`
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  `,
   growIn: keyframes`
     from {
       width: 100%;

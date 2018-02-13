@@ -16,6 +16,7 @@ const StatementContainer = styled.div`
   padding: 0 ${ spacing.padding.smaller };
   color: black;
   background-color: white;
+  z-index: 10;
 
   animation: ${animations.slideUp} 1.2s 1.5s ease-in-out forwards;
 
@@ -25,6 +26,11 @@ const StatementContainer = styled.div`
 
   &:hover .image {
     opacity: 1;
+  }
+
+  h1 {
+    opacity: 0;
+    animation: ${animations.fadeIn} 0.2s ease-out forwards;
   }
 
   @media (max-width: ${breakpoints.mobile}) {
@@ -39,7 +45,7 @@ const StatementContainer = styled.div`
 const OuterContainer = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 1rem;
 `
 
 const StatementText = styled.h1`
