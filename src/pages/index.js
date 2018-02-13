@@ -352,9 +352,9 @@ export default class SecondPage extends React.Component {
               verb="Introducting"
               noun="Graduates"
             />
-            <Intro
+            {/* <Intro
               students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(2,3)[0])}
-            />
+            /> */}
           </IntroContainer>
 
           <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
