@@ -52,17 +52,16 @@ const Container = styled.div`
 
   &:hover {
     @media (min-width: 550px) {
+      transform: translateY(${props => props.open ? "0" : "calc(100% - 4.5rem)"});
+    }
+    @media (min-width: ${breakpoints.mobile}) {
       transform: translateY(${props => props.open ? "0" : "calc(380px - 4.5rem)"});
     }
   }
 
   @media (max-width: ${breakpoints.mobile}) {
-    transform: translateY(${props => props.open ? "0" : "calc(90vh - 3.86rem)"});
-    height: 90vh;
-
-    &:hover {
-      transform: translateY(${props => props.open ? "0" : "calc(90vh - 4.5rem)"});
-    }
+    transform: translateY(${props => props.open ? "0" : "calc(100% - 3.86rem)"});
+    height: 90%;
   }
 `
 
@@ -178,12 +177,12 @@ const EventInfo = GridBlock.extend`
   }
 
   @media (max-width: 450px) {
-    height: calc(${calcRows(2)}% - 25px);
+    height: calc(${calcRows(2)}% - 24px);
   }
 
   @media (min-width: 500px) and (max-width: ${breakpoints.mobile}) {
     font-size: 1.8rem;
-    height: calc(${calcRows(2)}% - 36px);
+    height: calc(${calcRows(2)}% - 35px);
   }
 
 `

@@ -243,7 +243,7 @@ export default class SecondPage extends React.Component {
     if (this.scroller.viewportWidth < 500) {
       TweenLite.set(this.scroller.container, {
         height: this.scroller.scrollHeight,
-        top: -this.scroller.viewportHeight/3,
+        top: -this.scroller.viewportHeight/3.4,
         force3D: true
       });
     } else {

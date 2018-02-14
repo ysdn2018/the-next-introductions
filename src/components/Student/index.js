@@ -88,7 +88,7 @@ const InnerContainer = styled.div`
     }
 
     @media (max-width: 550px) {
-      margin-top: -40vh;
+      margin-top: -30vh;
       width: 34vh;
       height: 34vh;
     }
@@ -104,6 +104,10 @@ const InnerContainer = styled.div`
     }
 
     @media (min-width: 700px) and (max-width: ${breakpoints.mobile}) {
+      transform: translateY(30vh);
+    }
+
+    @media (max-width: 550px) {
       transform: translateY(30vh);
     }
   }
