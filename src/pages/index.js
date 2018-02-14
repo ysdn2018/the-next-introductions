@@ -240,11 +240,20 @@ export default class SecondPage extends React.Component {
       height: this.scroller.scrollHeight + this.scroller.viewportHeight
     });
 
-    TweenLite.set(this.scroller.container, {
-      height: this.scroller.scrollHeight,
-      top: -this.scroller.viewportHeight/4,
-      force3D: true
-    });
+    if (this.scroller.viewportWidth < 500) {
+      TweenLite.set(this.scroller.container, {
+        height: this.scroller.scrollHeight,
+        top: -this.scroller.viewportHeight/3,
+        force3D: true
+      });
+    } else {
+      TweenLite.set(this.scroller.container, {
+        height: this.scroller.scrollHeight,
+        top: -this.scroller.viewportHeight/4,
+        force3D: true
+      });
+    }
+
   }
 
   update = () => {
@@ -322,10 +331,6 @@ export default class SecondPage extends React.Component {
       this.tl.set(this.scroller, { step: index - 1 }, this.scroller.scrollHeight)
         .to(this.scroller.container, last.height, { y: "-=" + last.height, ease: easing }, this.scroller.scrollHeight);
 
-    }
-
-    function logMe(i) {
-      console.log(this.studentsData[index].node.frontmatter.noun);
     }
 
     TweenLite.set(element.firstChild, {scale: 0.05, x: -(this.scroller.viewportWidth/3+this.scroller.vmin*0.08) });
