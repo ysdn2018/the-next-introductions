@@ -28,6 +28,12 @@ const Container = styled.div`
   height: 380px;
   background-color: white;
   padding-top: calc(4rem - 1px);
+  transition: transform 200ms cubic-bezier(.14,.6,.36,1);
+  transform: translateY(${props => props.open ? "0" : "calc(380px - 3.86rem)"});
+
+  &:hover {
+    transform: translateY(${props => props.open ? "0" : "calc(380px - 4.5rem)"});
+  }
 `
 
 const Text = styled.p`
@@ -91,7 +97,7 @@ export default class BottomNav extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container open={this.props.open}>
         <BottomNavButton onClick={this.props.handleClick} onMouseEnter={() => this.handleStatement("Close", "Info")} onMouseLeave={() => this.resetStatement()}>
           {this.props.open ? "Close" : "Info"}
         </BottomNavButton>

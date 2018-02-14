@@ -31,7 +31,27 @@ const Container = styled.div`
 const TopNavButton = NavButton.extend`
   border-bottom: 1px solid black;
   top: 0;
+  text-align: center;
   position: fixed;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:hover p:nth-child(2) {
+    text-decoration: underline;
+  }
+
+  p:first-child, p:last-child {
+    opacity: 0;
+  }
+
+  &:hover p:first-child, &:hover p:last-child  {
+    opacity: 1;
+  }
 `
 
 const Viewport = styled.div`
@@ -125,7 +145,7 @@ export default class SecondPage extends React.Component {
 
     this.state = {
       currentStudent: 0,
-      navOpen: true,
+      navOpen: false,
       orientation: 'LANDSCAPE'
     }
 
@@ -222,6 +242,12 @@ export default class SecondPage extends React.Component {
       this.requestId = null;
       this.tl.time(-scroll);
     }
+
+    if (this.state.navOpen) {
+      this.setState({
+        navOpen: false
+      })
+    }
   }
 
   infiniteScroll = (scroll) => {
@@ -312,6 +338,12 @@ export default class SecondPage extends React.Component {
     let studentPos = this.scroller.scrollHeight-this.scroller.steps[studentIndex].position;
     let distance = Math.abs(studentPos - this.scroller.y);
 
+    if (this.state.navOpen) {
+      this.setState({
+        navOpen: false
+      })
+    }
+
     this.infoOpen = true;
 
     let infoSetup = () => {
@@ -348,7 +380,7 @@ export default class SecondPage extends React.Component {
 
   handleNavClick = () => {
     this.setState(prevState => ({
-      infoOpen: !prevState.infoOpen
+      navOpen: !prevState.navOpen
     }))
   }
 
@@ -359,8 +391,10 @@ export default class SecondPage extends React.Component {
       <OuterContainer innerRef={(container) => { this.container = container; }} >
 
         <Container>
-          <TopNavButton href="#">
-            The Next
+          <TopNavButton href="http://announcing.thenext.website/" target="_blank">
+            <p>Open</p>
+            <p>The Next</p>
+            <p>Website</p>
           </TopNavButton>
 
           <IntroContainer>

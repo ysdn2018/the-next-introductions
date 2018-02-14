@@ -47,6 +47,7 @@ const InnerContainer = styled.div`
   transition: margin 250ms cubic-bezier(.14,.6,.36,1),
   width 250ms cubic-bezier(.14,.6,.36,1),
   height 250ms cubic-bezier(.14,.6,.36,1),
+  font-size 250ms cubic-bezier(.14,.6,.36,1),
   opacity 250ms cubic-bezier(.14,.6,.36,1);
 
   &:active ${StatementText} {
@@ -54,7 +55,7 @@ const InnerContainer = styled.div`
   }
 
   &:hover .image {
-    transform: scale(1.06);
+    transform: scale(1.04);
   }
 
   &.hide {
@@ -64,6 +65,8 @@ const InnerContainer = styled.div`
   &.show-info {
     width: 35vw;
     height: 35vw;
+
+    font-size: 1rem !important;
 
     margin-right: -50vmin;
   }

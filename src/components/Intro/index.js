@@ -50,7 +50,6 @@ const StudentContainer = styled.div`
 
 // component
 export default function Intro(props) {
-  console.log(props.students.length);
   return (
     <Container students={props.students}>
 
