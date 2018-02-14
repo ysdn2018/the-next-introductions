@@ -4,8 +4,8 @@ verb: Defining
 noun: Moment
 image: images/mohr_aaron.jpg
 blurb: >-
-  The use of interactive design has the ability to influence users in a more
-  immersive way than ever seen before. I seek to use interactive technologies to
-  push the world forward and help to define our role within 21st century design.
+  Design has the ability to form intersectional connections amongst all facets
+  of life. I seek to design in a way that finds intersectionality through
+  harmonious interaction amongst people and their surroundings.
 ---
 
