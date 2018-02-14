@@ -361,10 +361,6 @@ export default class SecondPage extends React.Component {
       })
     }
 
-    console.log("hello");
-    this.infoOpen = true;
-    console.log(distance);
-
     let infoSetup = () => {
       this.scroller.y = window.pageYOffset;
 
@@ -389,8 +385,6 @@ export default class SecondPage extends React.Component {
     this.setState({
       currentStudent: studentIndex
     })
-
-        console.log(`InfoOpen: ${this.infoOpen} HasClass: ${this.students[studentIndex].firstChild.classList.contains("show-info")}`);
 
     if (this.infoOpen || this.students[studentIndex].firstChild.classList.contains("show-info")) {
       this.closeInfo(studentIndex);
