@@ -127,9 +127,9 @@ export default class BottomNav extends React.Component {
             <h2>{this.state.noun}</h2>
           </Statement>
 
-          <Essay rowStart={0} rowEnd={3} colStart={2} colEnd={4} wAdjust={-3} pad onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
+          {/* <Essay rowStart={0} rowEnd={3} colStart={2} colEnd={4} wAdjust={-3} pad onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
             <p>We are the next creators, the next innovators, explorers and storytellers. Here’s a glimspe into the creative minds of York University/Sheridan College’s Class of 2018.</p>
-          </Essay>
+          </Essay> */}
 
           <Grid />
         </InnerNav>
