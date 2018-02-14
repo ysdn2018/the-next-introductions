@@ -1,7 +1,7 @@
 ---
 title: Patrick Descartin
-verb: Experiencing
-noun: Moment
+verb: Setting
+noun: Stage
 image: images/descartin_patrick.jpg
 blurb: >-
   There are no limitations to what design can be. I use design as a tool to
@@ -9,3 +9,4 @@ blurb: >-
   Design gives me the opportunity to create more memorable moments and
   experiences for people.
 ---
+
