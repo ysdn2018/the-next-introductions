@@ -47,6 +47,15 @@ const TopNavButton = NavButton.extend`
 
   p:first-child, p:last-child {
     opacity: 0;
+    width: 20%;
+  }
+
+  p:first-child {
+    text-align: left;
+  }
+
+  p:last-child {
+    text-align: right;
   }
 
   &:hover p:first-child, &:hover p:last-child  {

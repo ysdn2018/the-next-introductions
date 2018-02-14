@@ -10,11 +10,10 @@ import { grid, animations, spacing, breakpoints } from '../../utils/constants.js
 
 // styled components
 const GridBlock = styled.div`
-
   overflow: hidden;
-    z-index: 2;
+  z-index: 2;
   min-width: 0;
-  background-color: ${props => props.theme.bg};
+  background-color: white;
   position: absolute;
   margin: -1px;
   color: ${props => props.theme.fg};

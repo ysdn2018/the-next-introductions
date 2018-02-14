@@ -11,6 +11,14 @@ import { grid, animations, spacing, breakpoints } from '../../utils/constants.js
   Copy this directory and rename to your choosing
 */
 
+function calcColumns(colStart) {
+  let distance = 0;
+  for (let i = 0; i < colStart; i++) {
+    distance += grid.columns[i];
+  }
+  return distance;
+}
+
 
 const BottomNavButton = NavButton.extend`
   border-top: 1px solid black;
@@ -65,6 +73,16 @@ const Statement = GridBlock.extend`
   }
 `
 
+const Essay = GridBlock.extend`
+  left: calc(${calcColumns(2)}% - 4px);
+  font-size: 1.9rem;
+  line-height: 1.4;
+
+  p {
+    margin: 0;
+  }
+`
+
 const InnerNav = styled.div`
   position: relative;
   height: 100%;
@@ -91,7 +109,7 @@ export default class BottomNav extends React.Component {
   resetStatement = () => {
     this.setState({
       verb: 'Introducing',
-      noun: 'Class'
+      noun: 'Graduates'
     })
   }
 
@@ -108,6 +126,10 @@ export default class BottomNav extends React.Component {
             <h2>The Next</h2>
             <h2>{this.state.noun}</h2>
           </Statement>
+
+          <Essay rowStart={0} rowEnd={3} colStart={2} colEnd={4} wAdjust={-3} pad onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
+            <p>We are the next creators, the next innovators, explorers and storytellers. Here’s a glimspe into the creative minds of York University/Sheridan College’s Class of 2018.</p>
+          </Essay>
 
           <Grid />
         </InnerNav>
