@@ -68,8 +68,8 @@ const InnerContainer = styled.div`
   }
 
   &.show-info {
-    width: 35vh;
-    height: 35vh;
+    width: 35vw;
+    height: 35vw;
     margin-right: -50vmin;
     font-size: 1rem !important;
 
@@ -80,6 +80,12 @@ const InnerContainer = styled.div`
       width: 38vh;
       height: 38vh;
     }
+
+    @media (max-width: 550px) {
+      margin-top: -40vh;
+      width: 34vh;
+      height: 34vh;
+    }
   }
 
   &.show-info + div > div {
@@ -88,7 +94,7 @@ const InnerContainer = styled.div`
 
     @media (max-width: ${breakpoints.mobile}) {
       opacity: 1;
-      transform: translateY(25vh);
+      transform: translateY(18vh);
     }
   }
 `

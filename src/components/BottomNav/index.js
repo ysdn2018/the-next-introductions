@@ -48,6 +48,10 @@ const Container = styled.div`
   @media (max-width: ${breakpoints.mobile}) {
     transform: translateY(${props => props.open ? "0" : "calc(80vh - 3.86rem)"});
     height: 80vh;
+
+    &:hover {
+      transform: translateY(${props => props.open ? "0" : "calc(80vh - 4.5rem)"});
+    }
   }
 `
 
@@ -128,15 +132,31 @@ export default class BottomNav extends React.Component {
         </BottomNavButton>
 
         <InnerNav>
-          <Statement rowStart={0} rowEnd={4} colStart={0} colEnd={1} wAdjust={0} pad onMouseEnter={() => this.handleStatement(" ", " ")} onMouseLeave={() => this.resetStatement()}>
+          <Statement
+            rowStart={0}
+            rowEnd={4}
+            colStart={0}
+            colEnd={1}
+            wAdjust={0}
+            pad
+            onMouseEnter={() => this.handleStatement(" ", " ")} onMouseLeave={() => this.resetStatement()}>
+
             <h2>{this.state.verb}</h2>
             <h2>The Next</h2>
             <h2>{this.state.noun}</h2>
           </Statement>
 
-          {/* <Essay rowStart={0} rowEnd={3} colStart={2} colEnd={4} wAdjust={-3} pad onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
-            <p>We are the next creators, the next innovators, explorers and storytellers. Here’s a glimspe into the creative minds of York University/Sheridan College’s Class of 2018.</p>
-          </Essay> */}
+          <Essay
+            rowStart={0}
+            rowEnd={3}
+            colStart={2}
+            colEnd={4}
+            wAdjust={-3}
+            pad
+            onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
+            
+            <p>{this.props.text}</p>
+          </Essay>
 
           <Grid />
         </InnerNav>

@@ -448,6 +448,7 @@ export default class SecondPage extends React.Component {
           <BottomNav
             open={this.state.navOpen}
             handleClick={this.handleNavClick}
+            text={this.props.data.markdownRemark.frontmatter.text}
           />
 
         </Container>
@@ -480,5 +481,12 @@ export const query = graphql`
   	    }
   	  }
   	}
+
+    markdownRemark ( fileAbsolutePath:{ regex: "/about/"}) {
+      frontmatter {
+        title
+        text
+      }
+    }
   }
 `;
