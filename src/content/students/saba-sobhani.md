@@ -1,7 +1,7 @@
 ---
 title: Saba Sobhani
-verb: Telling
-noun: Story
+verb: Starting
+noun: Conversation
 image: images/sobhani_saba.jpg
 blurb: >-
   One of my favourite things about being a designer is the ability to shed new
