@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { breakpoints } from '../../utils/constants.js'
 
 // styled components
 const Container = styled.div`
@@ -13,6 +14,10 @@ const MarkText = styled.div`
   line-height: 1;
   position: relative;
   font-size: 4.5rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 2.8rem;
+  }
 `
 
 const The = MarkText.extend`
@@ -23,6 +28,10 @@ const Next = MarkText.extend`
   display: inline;
   margin-top: 0.35rem;
   width: 4rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-top: 0.18rem;
+  }
 `
 
 // component

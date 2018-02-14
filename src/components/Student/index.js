@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Mark from '../Mark'
 import Img from "gatsby-image"
+import { breakpoints } from '../../utils/constants.js'
 
 /*
   Base component
@@ -51,7 +52,7 @@ const InnerContainer = styled.div`
   opacity 250ms cubic-bezier(.14,.6,.36,1);
 
   &.first-student {
-    will-change: width, height, opacity, margin; 
+    will-change: width, height, opacity, margin;
   }
 
   &:active ${StatementText} {
@@ -67,17 +68,28 @@ const InnerContainer = styled.div`
   }
 
   &.show-info {
-    width: 35vw;
-    height: 35vw;
-
+    width: 35vh;
+    height: 35vh;
+    margin-right: -50vmin;
     font-size: 1rem !important;
 
-    margin-right: -50vmin;
+
+    @media (max-width: ${breakpoints.mobile}) {
+      margin-right: 0;
+      margin-top: -33vh;
+      width: 38vh;
+      height: 38vh;
+    }
   }
 
   &.show-info + div > div {
     opacity: 1;
     transform: translateX(-25vw);
+
+    @media (max-width: ${breakpoints.mobile}) {
+      opacity: 1;
+      transform: translateY(25vh);
+    }
   }
 `
 
@@ -98,6 +110,14 @@ const MarkContainer = styled.div`
 
   ${InnerContainer}:hover & {
     transform: translate(10px, -10px);
+
+    @media (max-width: 550px) {
+      transform: none;
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    top: -3.81rem;
   }
 `
 
@@ -119,6 +139,11 @@ const Info = styled.div`
   max-width: 400px;
   font-size: 1.4rem;
   transition: 250ms cubic-bezier(.14,.6,.36,1);
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 1.3rem;
+    width: 80%;
+  }
 `
 
 
@@ -133,6 +158,10 @@ const StatementText = styled.div`
   ${InnerContainer}.show-statement & {
     opacity: 1;
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 2.8rem;
+  }
 `
 
 const Verb = StatementText.extend`
@@ -146,8 +175,16 @@ const Verb = StatementText.extend`
 
   ${InnerContainer}:hover & {
     transform: translateX(-10px) rotate(-90deg);
+
+    @media (max-width: 550px) {
+      transform: rotate(-90deg);
+    }
   }
 
+  @media (max-width: ${breakpoints.mobile}) {
+    top: 18.5rem;
+    left: -21.8rem;
+  }
 `
 
 const Noun = StatementText.extend`
@@ -157,6 +194,14 @@ const Noun = StatementText.extend`
 
   ${InnerContainer}:hover & {
     transform: translateY(10px) rotate(-180deg);
+
+    @media (max-width: 550px) {
+      transform: rotate(-180deg);
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    bottom: -3.3rem;
   }
 `
 

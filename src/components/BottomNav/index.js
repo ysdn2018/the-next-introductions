@@ -40,7 +40,14 @@ const Container = styled.div`
   transform: translateY(${props => props.open ? "0" : "calc(380px - 3.86rem)"});
 
   &:hover {
-    transform: translateY(${props => props.open ? "0" : "calc(380px - 4.5rem)"});
+    @media (min-width: 550px) {
+      transform: translateY(${props => props.open ? "0" : "calc(380px - 4.5rem)"});
+    }
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    transform: translateY(${props => props.open ? "0" : "calc(80vh - 3.86rem)"});
+    height: 80vh;
   }
 `
 

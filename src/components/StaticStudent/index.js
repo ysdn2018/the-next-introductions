@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Mark from '../Mark'
 import Img from "gatsby-image"
+import { breakpoints } from '../../utils/constants.js'
 
 /*
   Base component
@@ -55,6 +56,11 @@ const MarkContainer = styled.div`
   right: -4.3rem;
   opacity: 1;
   transition: all 200ms cubic-bezier(.14,.6,.36,1);
+
+
+  @media (max-width: ${breakpoints.mobile}) {
+    top: -3.81rem;
+  }
 `
 
 const InfoContainer = styled.div`
@@ -77,6 +83,9 @@ const StatementText = styled.div`
   opacity: 1;
   transition: all 200ms ease-in-out;
 
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 2.8rem;
+  }
 `
 
 const Verb = StatementText.extend`
@@ -87,12 +96,20 @@ const Verb = StatementText.extend`
   width: 400px;
   top: 17.6rem;
 
+  @media (max-width: ${breakpoints.mobile}) {
+    top: 18.5rem;
+    left: -21.8rem;
+  }
 `
 
 const Noun = StatementText.extend`
   transform: rotate(-180deg);
   right: -0.3rem;
   bottom: -5.1rem;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    bottom: -3.3rem;
+  }
 `
 
 // component
