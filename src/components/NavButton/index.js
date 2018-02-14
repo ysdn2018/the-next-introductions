@@ -8,10 +8,11 @@ const NavButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
+  position: absolute;
   background-color: white;
   z-index: 2;
   height: 4rem;
+  cursor: pointer;
   text-decoration: none;
   color: black;
   text-transform: uppercase;

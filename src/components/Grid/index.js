@@ -12,7 +12,7 @@ const Container = styled.div`
   @media (max-width: ${breakpoints.mobile}) {
     opacity: 0;
     animation: ${animations.fadeIn} 0.8s 1s ease-in-out forwards;
-    border-right: 1px solid ${props => props.theme.fg};
+    border-right: 1px solid black;
   }
 `
 
@@ -33,21 +33,21 @@ const CellRow = styled.div`
   height: ${props => props.height}%;
   width: 100%;
   display: flex;
-  border-bottom: 1px solid ${props => props.theme.fg};
+  border-bottom: 1px solid black;
   margin-top: -1px;
 `
 
 const Cell = styled.div`
   width: ${props => props.width}%;
   height: 100%;
-  border-left: 1px solid ${props => props.theme.fg};
+  border-left: 1px solid black;
   margin-right: -1px;
 
 
   &:hover {
-    background-color: ${props => props.hoverOn ? props.theme.fg : "none"};
+    background-color: ${props => props.hoverOn ? black : "none"};
     div {
-      background-color: ${props => props.hoverOn ? props.theme.fg : "none"};
+      background-color: ${props => props.hoverOn ? black : "none"};
     }
   }
 

@@ -9,6 +9,7 @@ import BottomNav from '../components/BottomNav'
 import Intro from '../components/Intro'
 import { TimelineMax, TweenLite } from 'gsap';
 import ScrollToPlugin from "gsap/ScrollToPlugin";
+import { animations } from '../utils/constants.js'
 import Img from 'gatsby-image'
 import _ from 'lodash';
 // polyfill
@@ -30,6 +31,7 @@ const Container = styled.div`
 const TopNavButton = NavButton.extend`
   border-bottom: 1px solid black;
   top: 0;
+  position: fixed;
 `
 
 const Viewport = styled.div`
@@ -111,7 +113,8 @@ const IntroContainer = styled.div`
   width: 100%;
   height: 100%;
   z-index: 10;
-  pointer-events: none;
+  animation: ${animations.allowInteraction} 0s 4.5s ease-out forwards;
+
 `
 
 
@@ -212,7 +215,7 @@ export default class SecondPage extends React.Component {
 
     this.infiniteScroll(scroll);
 
-    if (this.state.infoOpen) {
+    if (this.infoOpen) {
       this.closeInfo(this.state.currentStudent);
     } else {
       this.scroller.y = scroll;
@@ -331,20 +334,22 @@ export default class SecondPage extends React.Component {
     }
   }
 
-  handleClick = (studentIndex) => {
+  handleStudentClick = (studentIndex) => {
     this.setState({
       currentStudent: studentIndex
     })
-
-    console.log("clicked");
-
-    console.log(`InfoOpen: ${this.infoOpen} HasClass: ${this.students[studentIndex].firstChild.classList.contains("show-info")}`);
 
     if (this.infoOpen || this.students[studentIndex].firstChild.classList.contains("show-info")) {
       this.closeInfo(studentIndex);
     } else {
       this.openInfo(studentIndex);
     }
+  }
+
+  handleNavClick = () => {
+    this.setState(prevState => ({
+      infoOpen: !prevState.infoOpen
+    }))
   }
 
   render() {
@@ -374,7 +379,7 @@ export default class SecondPage extends React.Component {
               {this.studentsData.map( ({ node }, i) => (
                 <Student
                   key={i}
-                  handleClick={this.handleClick}
+                  handleClick={this.handleStudentClick}
                   index={i}
                   image={node.frontmatter.image.childImageSharp.sizes}
                   verb={node.frontmatter.verb}
@@ -389,7 +394,10 @@ export default class SecondPage extends React.Component {
 
           </Viewport>
 
-          <BottomNav open={this.state.navOpen}/>
+          <BottomNav
+            open={this.state.navOpen}
+            handleClick={this.handleNavClick}
+          />
 
         </Container>
       </OuterContainer>

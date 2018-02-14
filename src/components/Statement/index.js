@@ -13,7 +13,7 @@ const StatementContainer = styled.div`
   border: 1px solid black;
   height: 100%;
   width: 100%;
-  padding: 0 ${ spacing.padding.smaller };
+  padding: 0 ${ spacing.padding.normal };
   color: black;
   background-color: white;
   z-index: 10;
@@ -45,7 +45,7 @@ const StatementText = styled.h1`
   line-height: 1;
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 5rem;
+  font-size: 5.8rem;
   text-align: left;
   z-index: 1;
 
@@ -57,7 +57,7 @@ const StatementText = styled.h1`
 const TheNext = styled.h1`
   position: relative;
   text-transform: uppercase;
-  font-size: 5rem;
+  font-size: 5.8rem;
   line-height: 1;
   margin-top: 0;
   margin-bottom: 0;

@@ -8,7 +8,7 @@ import { keyframes } from 'styled-components';
 const grid = {
   columns: [37,24,16,11,7,5],
   columnsReverse: [5,7,11,16,24,37],
-  rows: [5,7,11,16,24,37],
+  rows: [13,19,28,42],
   rowWidthFix: [0,5,0,0,0,2]
 };
 
@@ -112,6 +112,14 @@ const animations = {
     }
     to {
       visibility: visible;
+    }
+  `,
+  allowInteraction: keyframes`
+    from {
+      pointer-events: auto;
+    }
+    to {
+      pointer-events: none;
     }
   `,
   showBg: keyframes`

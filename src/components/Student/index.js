@@ -21,13 +21,17 @@ const Container = styled.div`
   height: 50vh;
   width: 100%;
 
+
   .image-wrapper {
     height: 100%;
     width: 100%;
+    overflow: hidden;
   }
 
   .image {
+    transition: transform 250ms cubic-bezier(.14,.6,.36,1);
     height: 100%;
+    transform-origin: center center;
   }
 `
 
@@ -47,6 +51,10 @@ const InnerContainer = styled.div`
 
   &:active ${StatementText} {
       opacity: 0.5;
+  }
+
+  &:hover .image {
+    transform: scale(1.06);
   }
 
   &.hide {

@@ -18,7 +18,7 @@ const Container = styled.div`
   top: 0;
   background-color: white;
 
-  animation: ${animations.fadeOut} 0.6s ${props => props.students.length*0.12+3.3}s ease-out forwards;
+  animation: ${animations.fadeOut} 0.6s ${props => props.students.length*0.12+3.2}s ease-out forwards;
 `
 
 const Student = styled(StaticStudent)`
@@ -50,6 +50,7 @@ const StudentContainer = styled.div`
 
 // component
 export default function Intro(props) {
+  console.log(props.students.length);
   return (
     <Container students={props.students}>
 
