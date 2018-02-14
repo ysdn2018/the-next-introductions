@@ -122,7 +122,11 @@ const Essay = GridBlock.extend`
   }
 
   @media (min-width: 1500px) {
-    left: calc(${calcColumns(2)}% - 6px);
+    left: calc(${calcColumns(2)}% - 5px);
+  }
+
+  @media (min-width: 1500px) {
+    left: calc(${calcColumns(2)}% - 8px);
   }
 
   @media (max-width: ${breakpoints.mobile}) {
@@ -209,7 +213,7 @@ const InstagramContainer = GridBlock.extend`
   }
 
   @media (min-width: 1500px) {
-    left: calc(${calcColumns(5)}% - 13px);
+    left: calc(${calcColumns(5)}% - 15px);
   }
 
 
@@ -223,8 +227,12 @@ const InstagramContainer = GridBlock.extend`
     left: 1px;
     margin-top: -2px;
     top: calc(${calcRows(2)}% - 4px);
-    height: calc(${calcRows(2)}% - 12px);
+    height: calc(${calcRows(2)}% - 20px);
     width: calc(${calcColumns(1)}% + 0px);
+  }
+
+  @media (min-width: 500px) and (max-width: ${breakpoints.mobile}) {
+    height: calc(${calcRows(2)}% - 26px);
   }
 `
 
