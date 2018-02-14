@@ -213,8 +213,8 @@ export default class SecondPage extends React.Component {
 
     setTimeout(() => {
         let firstProj = (this.scroller.stepHeight*2+this.scroller.stepHeight/2)
-        window.scrollTo(0, firstProj);
-        this.tl.time(firstProj);
+        window.scrollTo(0, firstProj+this.scroller.stepHeight);
+        this.tl.time(firstProj+this.scroller.stepHeight);
     }, 4000);
 
     setTimeout(() => {
@@ -267,12 +267,12 @@ export default class SecondPage extends React.Component {
   }
 
   infiniteScroll = (scroll) => {
-    if (scroll < this.scroller.stepHeight*2+this.scroller.stepHeight/2 - 100) {
-      window.scrollTo(0, (this.scroller.stepHeight + this.scroller.padding)*(this.scroller.steps.length-2) + 100);
+    if (scroll < this.scroller.stepHeight*2+this.scroller.stepHeight/2 - 150) {
+      window.scrollTo(0, (this.scroller.stepHeight + this.scroller.padding)*(this.scroller.steps.length-2) + 150);
     }
 
-    if (scroll > (this.scroller.stepHeight + this.scroller.padding)*(this.scroller.steps.length-2) + 100) {
-      window.scrollTo(0, this.scroller.stepHeight*2+this.scroller.stepHeight/2 - 100);
+    if (scroll > (this.scroller.stepHeight + this.scroller.padding)*(this.scroller.steps.length-2) + 150) {
+      window.scrollTo(0, this.scroller.stepHeight*2+this.scroller.stepHeight/2 - 150);
     }
   }
 
@@ -360,7 +360,9 @@ export default class SecondPage extends React.Component {
       })
     }
 
+    console.log("hello");
     this.infoOpen = true;
+    console.log(distance);
 
     let infoSetup = () => {
       this.scroller.y = window.pageYOffset;
@@ -386,6 +388,8 @@ export default class SecondPage extends React.Component {
     this.setState({
       currentStudent: studentIndex
     })
+
+        console.log(`InfoOpen: ${this.infoOpen} HasClass: ${this.students[studentIndex].firstChild.classList.contains("show-info")}`);
 
     if (this.infoOpen || this.students[studentIndex].firstChild.classList.contains("show-info")) {
       this.closeInfo(studentIndex);
@@ -420,7 +424,7 @@ export default class SecondPage extends React.Component {
                 noun="Graduates"
               />
               <Intro
-                students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(0,2)).concat(this.studentsData.slice(2,3)[0])}
+                students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(0,2)).concat(this.studentsData.slice(1,2)[0])}
               />
             </IntroContainer>
           }
