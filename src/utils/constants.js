@@ -6,8 +6,8 @@ import { keyframes } from 'styled-components';
 
 
 const grid = {
-  columns: [37,24,16,11,7,5],
-  columnsReverse: [5,7,11,16,24,37],
+  columns: [36,24,16,10,7,5,3],
+  columnsReverse: [3,5,7,10,16,24,37],
   rows: [13,19,28,42],
   rowWidthFix: [0,5,0,0,0,2]
 };

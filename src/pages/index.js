@@ -146,6 +146,7 @@ export default class SecondPage extends React.Component {
     this.state = {
       currentStudent: 0,
       navOpen: false,
+      loaded: false,
       orientation: 'LANDSCAPE'
     }
 
@@ -206,6 +207,12 @@ export default class SecondPage extends React.Component {
         window.scrollTo(0, firstProj);
         this.tl.time(firstProj);
     }, 4000);
+
+    setTimeout(() => {
+      this.setState({
+        loaded: true
+      })
+    }, 4500);
 
 
     this.tl = new TimelineMax({
@@ -397,15 +404,17 @@ export default class SecondPage extends React.Component {
             <p>Website</p>
           </TopNavButton>
 
-          <IntroContainer>
-            <Statement
-              verb="Introducting"
-              noun="Graduates"
-            />
-            <Intro
-              students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(0,2)).concat(this.studentsData.slice(2,3)[0])}
-            />
-          </IntroContainer>
+          {!this.state.loaded &&
+            <IntroContainer innerRef={el => this.introContainer = el}>
+              <Statement
+                verb="Introducting"
+                noun="Graduates"
+              />
+              <Intro
+                students={_.sampleSize(this.studentsData, 5).concat(this.studentsData.slice(0,2)).concat(this.studentsData.slice(2,3)[0])}
+              />
+            </IntroContainer>
+          }
 
           <Viewport innerRef={(viewport) => { this.viewport = viewport; }}>
 
