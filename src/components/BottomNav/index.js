@@ -172,12 +172,12 @@ const EventInfo = GridBlock.extend`
     font-size: 1.5rem;
     left: calc(${calcColumns(1)}% - 2px);
     top: calc(${calcRows(2)}% + 0px);
-    height: calc(${calcRows(2)}% - 37px);
+    height: calc(${calcRows(2)}% - 34px);
     width: calc(64% + 3px);
   }
 
   @media (max-width: 450px) {
-    height: calc(${calcRows(2)}% - 26px);
+    height: calc(${calcRows(2)}% - 22px);
   }
 
   @media (min-width: 500px) and (max-width: ${breakpoints.mobile}) {

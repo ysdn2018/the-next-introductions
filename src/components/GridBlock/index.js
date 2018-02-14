@@ -16,7 +16,7 @@ const GridBlock = styled.div`
   background-color: white;
   position: absolute;
   margin: -1px;
-  color: ${props => props.theme.fg};
+  color: black;
 
   opacity: 0;
   transform-origin: right;
@@ -32,7 +32,7 @@ const GridBlock = styled.div`
   &:hover {
   }
 
-  border: 1px solid ${props => props.theme.fg};
+  border: 1px solid black;
   ${props => props.borderNo && 'border-' + props.borderNo + ': none;'}
   ${props => props.pad && 'padding: ' + spacing.padding.normal + ';'}
 
