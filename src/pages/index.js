@@ -415,7 +415,7 @@ export default class SecondPage extends React.Component {
           {!this.state.loaded &&
             <IntroContainer innerRef={el => this.introContainer = el}>
               <Statement
-                verb="Introducting"
+                verb="Introducing"
                 noun="Graduates"
               />
               <Intro

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import NavButton from '../NavButton'
+import Instagram from '../Instagram'
 import Grid from '../Grid'
 import GridBlock from '../GridBlock'
 import { grid, animations, spacing, breakpoints } from '../../utils/constants.js'
@@ -18,6 +19,16 @@ function calcColumns(colStart) {
   }
   return distance;
 }
+
+function calcRows(colStart) {
+  let distance = 0;
+  for (let i = 0; i < colStart; i++) {
+    distance += grid.rows[i];
+  }
+  return distance;
+}
+
+
 
 
 const BottomNavButton = NavButton.extend`
@@ -46,11 +57,11 @@ const Container = styled.div`
   }
 
   @media (max-width: ${breakpoints.mobile}) {
-    transform: translateY(${props => props.open ? "0" : "calc(80vh - 3.86rem)"});
-    height: 80vh;
+    transform: translateY(${props => props.open ? "0" : "calc(90vh - 3.86rem)"});
+    height: 90vh;
 
     &:hover {
-      transform: translateY(${props => props.open ? "0" : "calc(80vh - 4.5rem)"});
+      transform: translateY(${props => props.open ? "0" : "calc(90vh - 4.5rem)"});
     }
   }
 `
@@ -68,6 +79,7 @@ const Statement = GridBlock.extend`
   background-color: white;
   padding: 0.3rem;
   padding-left: 0.4rem;
+  z-index: 4;
 
   h2 {
     line-height: 1.2;
@@ -75,12 +87,18 @@ const Statement = GridBlock.extend`
     margin-top: -3px;
 
     @media (max-width: ${breakpoints.mobile}) {
-      font-size: 1.6rem;
+      font-size: 3rem;
     }
   }
 
   h2:nth-child(2) {
     text-align: right;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    height: calc(${calcRows(2)}%);
+    width: 100%;
+
   }
 `
 
@@ -89,6 +107,7 @@ const Essay = GridBlock.extend`
   font-size: 1.9rem;
   line-height: 1.4;
   padding: 0.5rem ${spacing.padding.bigger};
+  z-index: 4;
 
   p {
     margin: 0;
@@ -106,29 +125,107 @@ const Essay = GridBlock.extend`
     left: calc(${calcColumns(2)}% - 6px);
   }
 
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+    left: 1px;
+    margin-top: -2px;
+    top: calc(${calcRows(3)}% - 4px);
+  }
+
+  @media (min-width: 500px) and (max-width: ${breakpoints.mobile}) {
+    p {
+      max-width: 500px;
+    }
+  }
+
 `
 
 const EventInfo = GridBlock.extend`
   left: calc(${calcColumns(3)}% - 6px);
-  font-size: 1.3rem;
+  font-size: 1.6rem;
   display: flex;
   justify-content: space-between;
   flex-direction:column;
-  line-height: 1.4;
+  line-height: 1.3;
   padding: 0.5rem ${spacing.padding.bigger};
+  z-index: 3;
 
   p {
     margin: 0;
   }
 
   @media (min-width: 1400px) {
-    left: calc(${calcColumns(3)}% - 9px);
+    left: calc(${calcColumns(3)}% - 11px);
   }
 
   @media (max-width: 1100px) {
     left: calc(${calcColumns(3)}% - 9px);
   }
 
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+    left: 1px;
+    margin-top: -2px;
+    font-size: 1.5rem;
+    left: calc(${calcColumns(1)}% - 2px);
+    top: calc(${calcRows(2)}% + 0px);
+    height: calc(${calcRows(2)}% - 36px);
+    width: calc(64% + 3px);
+  }
+
+  @media (max-width: 450px) {
+    height: calc(${calcRows(2)}% - 26px);
+  }
+
+  @media (min-width: 500px) and (max-width: ${breakpoints.mobile}) {
+    font-size: 1.8rem;
+    height: calc(${calcRows(2)}% - 36px);
+  }
+
+`
+
+const InstagramContainer = GridBlock.extend`
+  left: calc(${calcColumns(5)}% - 6px);
+  font-size: 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction:column;
+  line-height: 1.3;
+
+  p {
+    margin: 0;
+  }
+
+  @media (min-width: 1100px) {
+    left: calc(${calcColumns(5)}% - 8px);
+  }
+
+  @media (min-width: 1300px) {
+    left: calc(${calcColumns(5)}% - 10px);
+  }
+
+  @media (min-width: 1400px) {
+    left: calc(${calcColumns(5)}% - 13px);
+  }
+
+  @media (min-width: 1500px) {
+    left: calc(${calcColumns(5)}% - 13px);
+  }
+
+
+  @media (max-width: 1100px) {
+    left: calc(${calcColumns(5)}% - 10px);
+  }
+
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 100%;
+    left: 1px;
+    margin-top: -2px;
+    top: calc(${calcRows(2)}% - 4px);
+    height: calc(${calcRows(2)}% - 12px);
+    width: calc(${calcColumns(1)}% + 0px);
+  }
 `
 
 const InnerNav = styled.div`
@@ -175,6 +272,12 @@ export default class BottomNav extends React.Component {
             colStart={0}
             colEnd={1}
             wAdjust={0}
+
+            mRowStart={0}
+            mRowEnd={1}
+            mColStart={0}
+            mColEnd={7}
+            wAdjust={-2}
             pad>
 
             <h2>{this.state.verb}</h2>
@@ -188,6 +291,12 @@ export default class BottomNav extends React.Component {
             colStart={2}
             colEnd={4}
             wAdjust={-2}
+
+            mRowStart={3}
+            mRowEnd={4}
+            mColStart={0}
+            mColEnd={7}
+            wAdjust={-2}
             pad
             onMouseEnter={() => this.handleStatement(" ", " ")} onMouseLeave={() => this.resetStatement()}>
 
@@ -200,9 +309,30 @@ export default class BottomNav extends React.Component {
             colStart={3}
             colEnd={7}
             wAdjust={0}
+            mColStart={3}
+            mColEnd={7}
+
+            mRowStart={2}
+            mRowEnd={3}
             pad
             onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
+            <p>Design Grad Show by <br />York University / Sheridan College</p>
+            <p>April 11-13, 2018 <br /> Gladstone Hotel</p>
           </EventInfo>
+
+          <InstagramContainer
+            rowStart={0}
+            rowEnd={2}
+            colStart={5}
+            colEnd={7}
+            wAdjust={0}
+
+            mRowStart={2}
+            mRowEnd={3}
+            wAdjust={-2}
+            onMouseEnter={() => this.handleStatement("Follow", "Instagram")} onMouseLeave={() => this.resetStatement()}>
+            <Instagram />
+          </InstagramContainer>
 
           <Grid />
         </InnerNav>

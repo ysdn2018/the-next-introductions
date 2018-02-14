@@ -6,30 +6,32 @@ import { breakpoints } from '../../utils/constants.js'
 const Container = styled.a`
   height: 70px;
   flex: 1;
-  max-width: 73px;
-  width: 100%;
+  width: 100% !important;
   padding: 0 1rem;
 
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-left: 1px solid ${props => props.theme.bg};
-  background-color: ${props => props.theme.bg};
+  border-left: 1px solid white;
+  background-color: white;
   padding-bottom: 2px;
+  text-decoration: none;
+  height: 100%;
+
 
 
   #instagram {
-    stroke: ${props => props.theme.fg};
+    stroke: black;
   }
 
   &:hover {
-    border-left: 1px solid ${props => props.theme.fg};
-    color: ${props => props.theme.bg};
-    background-color: ${props => props.theme.fg};
+    border-left: 1px solid black;
+    color: white;
+    background-color: black;
 
     #instagram {
-      stroke: ${props => props.theme.bg};
+      stroke: white;
     }
   }
 

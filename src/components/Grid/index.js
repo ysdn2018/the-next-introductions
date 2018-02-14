@@ -10,8 +10,6 @@ const Container = styled.div`
   position: relative;
 
   @media (max-width: ${breakpoints.mobile}) {
-    opacity: 0;
-    animation: ${animations.fadeIn} 0.8s 1s ease-in-out forwards;
     border-right: 1px solid black;
   }
 `

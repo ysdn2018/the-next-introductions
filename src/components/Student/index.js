@@ -81,6 +81,12 @@ const InnerContainer = styled.div`
       height: 38vh;
     }
 
+    @media (min-width: 700px) and (max-width: ${breakpoints.mobile}) {
+      margin-top: -26vh;
+      width: 50vh;
+      height: 50vh;
+    }
+
     @media (max-width: 550px) {
       margin-top: -40vh;
       width: 34vh;
@@ -95,6 +101,10 @@ const InnerContainer = styled.div`
     @media (max-width: ${breakpoints.mobile}) {
       opacity: 1;
       transform: translateY(18vh);
+    }
+
+    @media (min-width: 700px) and (max-width: ${breakpoints.mobile}) {
+      transform: translateY(30vh);
     }
   }
 `
