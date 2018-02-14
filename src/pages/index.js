@@ -449,6 +449,7 @@ export default class SecondPage extends React.Component {
             open={this.state.navOpen}
             handleClick={this.handleNavClick}
             text={this.props.data.markdownRemark.frontmatter.text}
+            windowWidth={this.scroller.viewportWidth}
           />
 
         </Container>
