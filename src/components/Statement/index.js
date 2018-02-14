@@ -32,6 +32,10 @@ const StatementContainer = styled.div`
     opacity: 0;
     animation: ${animations.fadeIn} 0.4s ease-out forwards;
   }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    padding: 0 ${ spacing.padding.smaller };
+  }
 `
 
 const OuterContainer = styled.div`

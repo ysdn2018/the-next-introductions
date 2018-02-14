@@ -88,10 +88,47 @@ const Essay = GridBlock.extend`
   left: calc(${calcColumns(2)}% - 4px);
   font-size: 1.9rem;
   line-height: 1.4;
+  padding: 0.5rem ${spacing.padding.bigger};
 
   p {
     margin: 0;
   }
+
+  @media (min-width: 1400px) {
+    left: calc(${calcColumns(2)}% - 6px);
+  }
+
+  @media (max-width: 1100px) {
+    left: calc(${calcColumns(2)}% - 3px);
+  }
+
+  @media (min-width: 1500px) {
+    left: calc(${calcColumns(2)}% - 6px);
+  }
+
+`
+
+const EventInfo = GridBlock.extend`
+  left: calc(${calcColumns(3)}% - 6px);
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: space-between;
+  flex-direction:column;
+  line-height: 1.4;
+  padding: 0.5rem ${spacing.padding.bigger};
+
+  p {
+    margin: 0;
+  }
+
+  @media (min-width: 1400px) {
+    left: calc(${calcColumns(3)}% - 9px);
+  }
+
+  @media (max-width: 1100px) {
+    left: calc(${calcColumns(3)}% - 9px);
+  }
+
 `
 
 const InnerNav = styled.div`
@@ -138,8 +175,7 @@ export default class BottomNav extends React.Component {
             colStart={0}
             colEnd={1}
             wAdjust={0}
-            pad
-            onMouseEnter={() => this.handleStatement(" ", " ")} onMouseLeave={() => this.resetStatement()}>
+            pad>
 
             <h2>{this.state.verb}</h2>
             <h2>The Next</h2>
@@ -151,12 +187,22 @@ export default class BottomNav extends React.Component {
             rowEnd={3}
             colStart={2}
             colEnd={4}
-            wAdjust={-3}
+            wAdjust={-2}
             pad
-            onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
-            
+            onMouseEnter={() => this.handleStatement(" ", " ")} onMouseLeave={() => this.resetStatement()}>
+
             <p>{this.props.text}</p>
           </Essay>
+
+          <EventInfo
+            rowStart={3}
+            rowEnd={4}
+            colStart={3}
+            colEnd={7}
+            wAdjust={0}
+            pad
+            onMouseEnter={() => this.handleStatement("Meet", "Graduates")} onMouseLeave={() => this.resetStatement()}>
+          </EventInfo>
 
           <Grid />
         </InnerNav>

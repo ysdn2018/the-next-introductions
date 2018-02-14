@@ -19,6 +19,9 @@ import NeueHaasGrotDispItalic_eot from "../assets/fonts/NeueHaasGrotDisp-56Itali
 import NeueHaasGrotDispItalic_woff from "../assets/fonts/NeueHaasGrotDisp-56Italic-Web.woff"
 import NeueHaasGrotDispItalic_woff2 from "../assets/fonts/NeueHaasGrotDisp-56Italic-Web.woff2"
 
+import facebookCard from "../assets/images/facebook_card.png"
+import twitterCard from "../assets/images/twitter_card.png"
+
 
 /*
   Layout File
@@ -70,10 +73,21 @@ function Header () {
 const TemplateWrapper = ({ children }) => (
   <Container>
     <Helmet
-      title="Introducing The Next Class"
+      title="Introducing The Next Graduates"
       meta={[
-        { name: 'description', content: 'Sample' },
-        { name: 'keywords', content: 'sample, something' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'},
+        { name: 'description', content: 'Introducing The Next Graduates from York University/Sheridan College' },
+        { name: 'keywords', content: 'York University, Sheridan College, ysdn, design, york, sheridan, the next, the next gradshow' },
+        { property: 'author', content: 'York University/Sheridan College Joint Program in Design' },
+        { property: 'og:url', content: 'http://scrolling.thenext.website' },
+        { property: 'og:title', content: 'INTRODUCING THE NEXT GRADUATES' },
+        { property: 'og:description', content: 'Introducing The Next Graduates from York University/Sheridan College' },
+        { property: 'og:image', content: 'http://scrolling.thenext.website' + facebookCard },
+        { property: 'twitter:card', content: 'summary_large_image' },
+        { property: 'twitter:title', content: 'INTRODUCING THE NEXT GRADUATES' },
+        { property: 'twitter:description', content: 'Introducing The Next Graduates from York University/Sheridan College' },
+        { property: 'twitter:image', content: 'http://scrolling.thenext.website' + twitterCard },
+        { property: 'twitter:image:alt', content: 'INTRODUCING THE NEXT GRADUATES' },
       ]}
     />
 
