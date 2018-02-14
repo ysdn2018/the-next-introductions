@@ -108,7 +108,7 @@ const InnerContainer = styled.div`
     }
 
     @media (max-width: 550px) {
-      transform: translateY(30vh);
+      transform: translateY(25vh);
     }
   }
 `
