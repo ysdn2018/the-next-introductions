@@ -50,6 +50,10 @@ const InnerContainer = styled.div`
   font-size 250ms cubic-bezier(.14,.6,.36,1),
   opacity 250ms cubic-bezier(.14,.6,.36,1);
 
+  &.first-student {
+    will-change: width, height, opacity, margin; 
+  }
+
   &:active ${StatementText} {
       opacity: 0.5;
   }

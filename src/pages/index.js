@@ -210,6 +210,7 @@ export default class SecondPage extends React.Component {
       y: 0
     };
 
+    this.students[this.students.length-3].firstChild.classList.add("first-student")
 
     setTimeout(() => {
         let firstProj = (this.scroller.stepHeight*2+this.scroller.stepHeight/2)
@@ -374,7 +375,7 @@ export default class SecondPage extends React.Component {
       }, 2)
     }
 
-    if (distance > 100) {
+    if (distance > 100 && !this.students[studentIndex].firstChild.classList.contains("first-student") ) {
       let tl = new TimelineMax({onComplete: () => {
         infoSetup();
       }});
