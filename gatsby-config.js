@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: [
     // `gatsby-plugin-preact`,
+    `gatsby-plugin-react-next`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-netlify-cms`,
     `gatsby-plugin-styled-components`,
