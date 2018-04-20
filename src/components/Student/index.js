@@ -227,6 +227,7 @@ const Noun = StatementText.extend`
 
 // component
 export default function Student(props) {
+  // console.log(`${props.name} : ${props.verb} The Next ${props.noun}`);
   return (
     <Container innerRef={props.studentRef}>
       <InnerContainer onClick={() => props.handleClick(props.index)}>
